@@ -25,4 +25,30 @@
   color: $background;
   background-color: $accent;
   transition: all 0.3s ease;
+  background-size: cover;
 }
+
+//.primary-button {
+//  &:hover {
+//    transform: translateY(-2px);
+//  }
+//  &:disabled {
+//    cursor: default;
+//    opacity: 0.4;
+//    &:hover {
+//      transform: none;
+//    }
+//  }
+//  width: 227px; /* Set the width of the button container */
+//  height: 112px; /* Set the height of the button container */
+//  cursor: pointer;
+//  background-image: url('../../assets/button.png'); /* Replace 'your_image_url_here' with the URL of your background image */
+//  background-size: cover; /* Ensure the background image covers the entire container */
+//  background-repeat: no-repeat; /* Prevent the background image from repeating */
+//  transition: all 0.3s ease;
+//  /*color: $textColor;*/
+//  color: $background;
+//  background-color: $accent;
+//  transition: all 0.3s ease;
+//
+//}
