@@ -19,6 +19,7 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* this is for firstly open the mainpage */}
         <Route path="/" element={<Mainpage />} />
 
         <Route path="/game/*" element={<GameGuard />}>
