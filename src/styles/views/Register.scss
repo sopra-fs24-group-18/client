@@ -1,12 +1,23 @@
 @import "../theme";
 
+.background-container {
+  background-image: url('../../assets/background2.png');
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .register {
   &.container {
     background-image: url('../../assets/window_enroll.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    margin-top: 1em;
+    margin-top: 5em;
     min-height: 600px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
@@ -16,10 +27,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
+    width: 40%;
     max-width: 30em;
     height: 20em;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 300;
     padding-left: 37px;
     padding-right: 37px;
@@ -50,7 +61,8 @@
   &.button-container {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
+    margin-top: 1em;
   }
 }
+
 

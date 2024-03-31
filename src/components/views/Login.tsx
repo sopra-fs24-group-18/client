@@ -78,6 +78,7 @@ const Login = () => {
   };
 
   return (
+    <div className="background-container">
       <BaseContainer>
         <div className="login container">
           <div className="login form">
@@ -101,6 +102,14 @@ const Login = () => {
                 Login
               </Button>
             </div>
+            <div className="register button-container">
+              <Button
+                width="100%"
+                onClick={() => navigate("/")}
+              >
+                Exit
+              </Button>
+            </div>
             {/* Display message */}
             {message.text && (
                 <div className={`message-container ${message.type}`}>
@@ -110,6 +119,7 @@ const Login = () => {
           </div>
         </div>
       </BaseContainer>
+    </div>
   );
 };
 
