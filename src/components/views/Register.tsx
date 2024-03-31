@@ -33,6 +33,7 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
+
 const Register = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState<string>(null);
@@ -63,7 +64,7 @@ const Register = () => {
   <div className="background-container">
     <BaseContainer>
       <div className="register container">
-        <div className="register form">
+        <div className="register form"><br /><br />
           <FormField
             label="Username"
             value={username}
