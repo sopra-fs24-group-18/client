@@ -35,6 +35,7 @@ $borderRadius: 0.75em;
   these allow you to create small snippets that you can insert with a one-liner in other stylesheets
   for an example, see styles/views/Login.scss
 */
+
 @mixin center {
   display: flex;
   align-items: center;
