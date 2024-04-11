@@ -13,7 +13,6 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
-
 interface DropdownProps {
   title: string;
   options: string[];
@@ -33,13 +32,17 @@ const DropdownMenu: React.FC<DropdownProps> = ({ title, options, onSelect }) => 
   return (
     <div className="dropdown">
       <div className="dropdown-title">{title}</div>
-      <button
-        className="button-dropdown"
-        onClick={() => setIsVisible(!isVisible)}
-        aria-label={`Toggle ${title}`}
-      >
-        {selectedOption || 'Choose'}
-      </button>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <button
+          className="button-dropdown"
+          onClick={() => setIsVisible(!isVisible)}
+          aria-label={`Toggle ${title}`}
+        >
+        </button>
+        <div className="selected-option">
+          {selectedOption}
+        </div>
+      </div>
       {isVisible && (
         <div className="menu-container">
           {options.map((option, index) => (
@@ -60,12 +63,18 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
   const [playerNumber, setPlayerNumber] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    console.log({ gameMode, playerNumber });
+  const handleSubmit = async () => {
+    try {
+      const payload = await api.post('/rooms', { gameMode, playerNumber: Number(playerNumber) });
+      console.log({ gameMode, playerNumber: Number(playerNumber) });
+      // navigate('/success');
+    } catch (error) {
+      console.error(`Failed to create room: ${error}`);
+    }
   };
 
   const handleCancel = () => {
-    navigate(-1);
+    navigate(`profile`);
   };
 
   return (
@@ -79,7 +88,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
         <DropdownMenu
           title="Game Mode"
-          options={['Easy', 'Hard']}
+          options={['Item', 'Price']}
           onSelect={setGameMode}
         />
 
