@@ -65,7 +65,8 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
   const handleSubmit = async () => {
     try {
-      const payload = await api.post('/rooms', { gameMode, playerNumber: Number(playerNumber) });
+     //const creatRoom = await api.post('/rooms', { gameMode, playerNumber: Number(playerNumber) });
+
       console.log({ gameMode, playerNumber: Number(playerNumber) });
       // navigate('/success');
     } catch (error) {
