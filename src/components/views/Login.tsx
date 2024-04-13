@@ -62,7 +62,7 @@ const Login = () => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized: Incorrect username or password
-        displayMessage("login failed because username does not exist or password is wrong.", "error-message");
+        displayMessage("Login failed because username does not exist or password is wrong.", "error-message");
       }
       else{
         displayMessage(`Something went wrong during the login: ${handleError(error)}`, "error-message");
@@ -112,7 +112,8 @@ const Login = () => {
             </div>
             {/* Display message */}
             {message.text && (
-                <div className={`message-container ${message.type}`}>
+                <div style={{ fontSize: "16px", fontFamily: '"Microsoft YaHei", sans-serif' }}>
+                {/*<div className={`message-container ${message.type}`}>*/}
                   {message.text}
                 </div>
             )}
