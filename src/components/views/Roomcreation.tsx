@@ -91,10 +91,12 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         alert('User ID is not available. Please log in again.');
         return;
       }
-     const creatRoom = await api.post('/rooms', { roomName, gameMode, playerNumber: Number(playerNumber) });
+     const creatRoom = await api.post('/rooms', { roomName, userId, playerNumber: Number(playerNumber), gameMode });
 
-      console.log({ gameMode, playerNumber: Number(playerNumber) });
-      navigate('/room/${roomName}');
+      console.log({ roomName, userId, playerNumber: Number(playerNumber), gameMode });
+      const enterRoom = await api.post('/rooms/{roomCode}/{userId}/enter', {roomName, userId});
+      navigate('/rooms/{roomCode}/{userId}/enter');
+
     } catch (error) {
       console.error(`Failed to create room: ${error}`);
       alert(`Failed to create room: ${error}`)
@@ -118,7 +120,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
         <DropdownMenu
           title="Game Mode"
-          options={['Item', 'Price']}
+          options={['GUESSING', 'BUDGET']}
           onSelect={setGameMode}
         />
             <FormField
