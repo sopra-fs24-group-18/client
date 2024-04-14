@@ -21,10 +21,54 @@
     min-height: 600px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
-    display:flex;
+    //display:flex;
+    //flex-direction: column;
+  }
+  &.form {
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    max-width: 30em;
+    height: 20em;
+    font-size: 20px;
+    font-weight: 300;
+    padding-left: 80px;
+    padding-right: 37px;
+    border-radius: 0.75em;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    margin-top: 40px;
+    margin-left: 200px;
+  }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 52%;
+  }
+  &.input {
+    height: 35px;
+    //padding-left: 15px;
+    margin-left: -4px;
+    //border: none;
+    //border-radius: 0.75em;
+    padding: 10px;
+    //border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background: transparentize(white, 0.85);
+    color: $textColor;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
+
+  }
+  &.label {
+    color: $textColor;
+    margin-bottom: 10px;
+    text-transform: lowercase;
+    font-weight: 300;
   }
 }
+
 .dropdown {
   //background: #97ABFF;
   position: relative;
@@ -32,11 +76,11 @@
   flex-direction: column;
   align-items: flex-start;
   width:50%;
-  margin-left: 500px;
+
 
 .dropdown-title {
   align-self: flex-start;
-  margin-bottom: auto;
+  margin-bottom: -10px;
   color: #FFFFFF;
 }
 .selected-option {
@@ -47,7 +91,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.5);
   background-size: cover;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
   display: flex; //for putting text in center
   align-items: center;
   justify-content: center;
@@ -62,7 +106,7 @@
   cursor: pointer;
   background-color: transparent;
   align-self: flex-start;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   margin-top:20px;
 }
 
@@ -101,7 +145,8 @@
   width: 50px;
   height: 50px;
   background-color: #123597;
-  margin-right:10px;
+  margin-left:70px;
+  margin-right: 40px;
   margin-top: 30px;
 
 }
