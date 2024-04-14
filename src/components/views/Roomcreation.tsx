@@ -13,6 +13,25 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
+const FormField = (props) => {
+  return (
+    <div className="creation field">
+      <label className="creation label">{props.label}</label>
+      <input
+        className="creation input"
+        placeholder="enter here.."
+        value={props.value}
+        onChange={(e) => props.onChange(e.target.value)}
+      />
+    </div>
+  );
+};
+
+FormField.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+};
 interface DropdownProps {
   title: string;
   options: string[];
@@ -62,25 +81,35 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
   const [gameMode, setGameMode] = useState('');
   const [playerNumber, setPlayerNumber] = useState('');
   const navigate = useNavigate();
+  const [roomName, setRoomName] = useState('');
+
 
   const handleSubmit = async () => {
     try {
-     //const creatRoom = await api.post('/rooms', { gameMode, playerNumber: Number(playerNumber) });
+      const userId = localStorage.getItem('userid');//or not use localstorage
+      if (!userId) {
+        alert('User ID is not available. Please log in again.');
+        return;
+      }
+     const creatRoom = await api.post('/rooms', { userId, roomName, gameMode, playerNumber: Number(playerNumber) });
 
-      console.log({ gameMode, playerNumber: Number(playerNumber) });
-      // navigate('/success');
+      console.log({ userId, gameMode, playerNumber: Number(playerNumber) });
+      navigate('/room/${roomName}');
     } catch (error) {
       console.error(`Failed to create room: ${error}`);
+      alert(`Failed to create room: ${error}`)
     }
   };
 
   const handleCancel = () => {
-    navigate(`profile`);
+    navigate(`/profile`);
   };
 
   return (
     <div className="background-container">
       <div className="creation container">
+          <div className="creation form">
+
         <DropdownMenu
           title="Player Number"
           options={['1', '2', '3']}
@@ -92,13 +121,19 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
           options={['Item', 'Price']}
           onSelect={setGameMode}
         />
+            <FormField
+              label="Room Name"
+              value={roomName}
+              onChange={(un: string) => setRoomName(un)}
+            />
 
         <div className="button-group">
-          <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerNumber}>
+          <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerNumber|| !roomName}>
           </button>
           <button className="button-cancel" onClick={handleCancel}>
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
