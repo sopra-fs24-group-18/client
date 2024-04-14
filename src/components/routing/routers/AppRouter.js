@@ -6,6 +6,7 @@ import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
 import Mainpage from '../../views/Mainpage';
 import Register from '../../views/Register';
+import Shop from '../../views/Shop';
 
 /**
  * Main router of your application.
@@ -32,6 +33,7 @@ const AppRouter = () => {
         </Route>
 
         <Route path="/register" element={<Register/>} />
+        <Route path="/shop" element={<Shop/>} />
 
       </Routes>
     </BrowserRouter>

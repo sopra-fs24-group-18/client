@@ -1,0 +1,90 @@
+@import "../theme";
+
+.background-container {
+  background-image: url('../../assets/background2.png');
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shop {
+  &.container {
+    background-image: url('../../assets/window_shop.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 5em;
+    min-height: 600px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+  }
+  &.hint{
+    background-image: url('../../assets/hint.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 80px;
+    height: 80px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  &.bomb{
+    background-image: url('../../assets/bomb.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 80px;
+    height: 80px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  &.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    max-width: 30em;
+    height: 20em;
+    font-size: 20px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    border-radius: 0.75em;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .buy-button {
+    &:hover {
+        transform: translateY(-2px);
+    }
+    background-image: url('../../assets/Button_lightblue.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 0;
+    margin: 0; // space between buttons
+    width: 150px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  &.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+
+}
+
+
