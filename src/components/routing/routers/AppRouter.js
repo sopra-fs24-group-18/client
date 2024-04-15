@@ -34,6 +34,7 @@ const AppRouter = () => {
 
         <Route path="/register" element={<Register/>} />
         <Route path="/shop" element={<Shop/>} />
+        <Route path="/userId/shop" element={<Shop/>} />
 
       </Routes>
     </BrowserRouter>
