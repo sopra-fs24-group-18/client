@@ -10,8 +10,6 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState<string>(null); // name --> password(string)
-  const [username, setUsername] = useState<string>(null);
   const [timeLeft, setTimeLeft] = useState(30);
   const [message, setMessage] = useState({ text: "", type: "" });
 
@@ -26,31 +24,21 @@ const Purchase = () => {
     return () => clearTimeout(timer);
   }, [timeLeft]);
 
-  const doPurchase = async () => {
+  const doPurchase = async (toolType) => {
     try {
-      const requestBody = JSON.stringify({ username, password }); // name --> password
-      const response = await api.post("/login", requestBody);
 
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
-
-      // Store the token and userid into the local storage.
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("current_user_id", user.id)
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate("/");
+  // purchase successfully worked --> navigate to the gameRoom
+      navigate("/gameRoom");
 
       // Show success message
-      //displayMessage("Login successful!", "success-message");
+      // displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
 
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Unauthorized: Incorrect username or password
-        displayMessage("Login failed because username does not exist or password is wrong.", "error-message");
+      if (error.response && error.response.status === 403) {
+        displayMessage("You don't have enough points.", "error-message");
       }
       else{
-        displayMessage(`Something went wrong during the login: ${handleError(error)}`, "error-message");
+        displayMessage(`Something went wrong during the purchase: ${handleError(error)}`, "error-message");
       }
     }
   };
@@ -86,7 +74,7 @@ const Purchase = () => {
             <div className="register button-container" style={{display: "flex",justifyContent: 'space-between', margin: 0, padding: 0}} >
               <button className="shop hint"></button>
               <button className="shop buy-button"
-                onClick={() => navigate("/gameRoom")}
+                onClick={() => doPurchase("HINT")}
               >
                 Buy
               </button>
@@ -97,11 +85,15 @@ const Purchase = () => {
 
             {/* Disturb Others */}
             <div style={{ textAlign: 'left'}}>
-              Bomb: 20 Points
+              Blur: 20 Points
             </div>
             <div className="register button-container" style={{display: "flex",justifyContent: 'space-between', margin: 0, padding: 0}} >
               <button className="shop bomb"></button>
-              <button className="shop buy-button"> Buy </button>
+              <button className="shop buy-button"
+                onClick={() => doPurchase("BLUR")}
+              >
+                Buy
+              </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: '"Microsoft YaHei", sans-serif' }}>
               You can use this tool to disturb other player.
