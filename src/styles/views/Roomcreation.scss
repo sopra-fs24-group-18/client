@@ -114,7 +114,7 @@
   position: absolute;
   left: 50px;
   top: 60px;
-  background-color: transparent;
+  background-color: black;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   z-index: 1;
   display: flex;
@@ -124,16 +124,16 @@
 }
 
 .menu-container button {
-  background: transparentize(white, 0.85); /* 初始背景透明度设置 */
+  background: transparentize(white, 0.85);
   margin: 5px 0;
   cursor: pointer;
   color: #FFFFFF;
   border: none;
-  transition: background-color 0.3s, box-shadow 0.3s; /* 添加过渡效果使变化更平滑 */
+  transition: background-color 0.3s, box-shadow 0.3s;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* 鼠标滑过时的背景颜色变化 */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加轻微的阴影效果 */
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 }}
 

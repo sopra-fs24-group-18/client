@@ -94,8 +94,8 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
      const creatRoom = await api.post('/rooms', { roomName, userId, playerNumber: Number(playerNumber), gameMode });
 
       console.log({ roomName, userId, playerNumber: Number(playerNumber), gameMode });
-      const enterRoom = await api.post('/rooms/{roomCode}/{userId}/enter', {roomName, userId});
-      navigate('/rooms/{roomCode}/{userId}/enter');
+      //const enterRoom = await api.post('/rooms/{roomCode}/{userId}/enter', {roomName, userId});
+      navigate('/rooms/{roomCode}/{userId}/enter)');
 
     } catch (error) {
       console.error(`Failed to create room: ${error}`);
