@@ -86,22 +86,35 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
   const handleSubmit = async () => {
     try {
-      const userId = localStorage.getItem('userid');//or not use localstorage
+      const userId = localStorage.getItem('userid');
       if (!userId) {
         alert('User ID is not available. Please log in again.');
         return;
       }
-     const creatRoom = await api.post('/rooms', { roomName, userId, playerNumber: Number(playerNumber), gameMode });
+      // request to create room
+      const response = await api.post('/rooms', {
+        roomName,
+        userId,
+        playerNumber: Number(playerNumber),
+        gameMode
+      });
 
-      console.log({ roomName, userId, playerNumber: Number(playerNumber), gameMode });
-      //const enterRoom = await api.post('/rooms/{roomCode}/{userId}/enter', {roomName, userId});
-      navigate('/rooms/{roomCode}/{userId}/enter)');
-
+      //check response
+      if(response.data && response.data.roomCode) {
+        const { roomCode } = response.data;
+        // store it for using in game room
+        localStorage.setItem('roomCode', roomCode);
+        navigate(`/rooms/${roomCode}/${userId}/enter`);
+        console.log('Room created:', { roomCode, roomName, userId, playerNumber: Number(playerNumber), gameMode });
+      } else {
+        alert('Failed to retrieve room code after creation');
+      }
     } catch (error) {
       console.error(`Failed to create room: ${error}`);
-      alert(`Failed to create room: ${error}`)
+      alert(`Failed to create room: ${error}`);
     }
   };
+
 
   const handleCancel = () => {
     navigate(`/profile`);
