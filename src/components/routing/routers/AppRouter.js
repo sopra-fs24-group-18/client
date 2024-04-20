@@ -7,6 +7,8 @@ import Login from "../../views/Login";
 import Mainpage from '../../views/Mainpage';
 import Register from '../../views/Register';
 import Roomcreation from '../../views/Roomcreation';
+import Gameroom from "../../views/Gameroom";
+import Gameroommock from "../../views/Gameroommock";
 
 /**
  * Main router of your application.
@@ -34,6 +36,8 @@ const AppRouter = () => {
 
         <Route path="/register" element={<Register/>} />
         <Route path="/roomcreation" element={<Roomcreation/>} />
+        <Route path="/gameroom" element={<Gameroom/>} />
+        <Route path="/gameroomo" element={<Gameroommock/>} />
 
       </Routes>
     </BrowserRouter>
