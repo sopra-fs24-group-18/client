@@ -86,12 +86,13 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
   const handleSubmit = async () => {
     try {
-      const ownerId = localStorage.getItem('userid');
-      const userId = localStorage.getItem('userid');
+      const ownerId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");
       if (!ownerId) {
         alert('Owner ID is not available. Please log in again.');
         return;
       }
+      console.log('test:', { name, ownerId, playerNumber: Number(playerAmount), gameMode });
       // request to create room
       const response = await api.post('/rooms', {
         name,
@@ -134,7 +135,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
         <DropdownMenu
           title="Game Mode"
-          options={['GUESSING', 'BUDGET']}
+          options={["GUESSING", "BUDGET"]}
           onSelect={setGameMode}
         />
             <FormField
