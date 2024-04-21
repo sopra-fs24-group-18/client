@@ -79,23 +79,24 @@ interface RoomCreationProps {}
 
 const RoomCreation: React.FC<RoomCreationProps> = () => {
   const [gameMode, setGameMode] = useState('');
-  const [playerNumber, setPlayerNumber] = useState('');
+  const [playerAmount, setPlayerAmount] = useState('');
   const navigate = useNavigate();
-  const [roomName, setRoomName] = useState('');
+  const [name, setRoomName] = useState('');
 
 
   const handleSubmit = async () => {
     try {
+      const ownerId = localStorage.getItem('userid');
       const userId = localStorage.getItem('userid');
-      if (!userId) {
-        alert('User ID is not available. Please log in again.');
+      if (!ownerId) {
+        alert('Owner ID is not available. Please log in again.');
         return;
       }
       // request to create room
       const response = await api.post('/rooms', {
-        roomName,
-        userId,
-        playerNumber: Number(playerNumber),
+        name,
+        ownerId,
+        playerNumber: Number(playerAmount),
         gameMode
       });
 
@@ -105,7 +106,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         // store it for using in game room
         localStorage.setItem('roomCode', roomCode);
         navigate(`/rooms/${roomCode}/${userId}/enter`);
-        console.log('Room created:', { roomCode, roomName, userId, playerNumber: Number(playerNumber), gameMode });
+        console.log('Room created:', { roomCode, name, ownerId, playerNumber: Number(playerAmount), gameMode });
       } else {
         alert('Failed to retrieve room code after creation');
       }
@@ -128,7 +129,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         <DropdownMenu
           title="Player Number"
           options={['1', '2', '3']}
-          onSelect={setPlayerNumber}
+          onSelect={setPlayerAmount}
         />
 
         <DropdownMenu
@@ -138,12 +139,12 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         />
             <FormField
               label="Room Name"
-              value={roomName}
+              value={name}
               onChange={(un: string) => setRoomName(un)}
             />
 
         <div className="button-group">
-          <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerNumber|| !roomName}>
+          <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerAmount|| !name}>
           </button>
           <button className="button-cancel" onClick={handleCancel}>
           </button>
