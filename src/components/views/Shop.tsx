@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { api, handleError } from "helpers/api";
 import User from "models/User";
+import Tool from "models/Tool";
 import {useNavigate} from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Shop.scss";
@@ -13,13 +14,34 @@ const Purchase = () => {
   const [timeLeft, setTimeLeft] = useState(30);
   const [message, setMessage] = useState({ text: "", type: "" });
 
+  const [user, setUser] = useState<User[]>([]);
+  const [tools, setTools] = useState<Tool[]>([]);
+
+  const userId = localStorage.getItem("current_user_id");
+  localStorage.setItem("myScore", "100");
+  // fetch current user data
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const response = await api.get(`/users/${userId}`);
+        setUser(response.data);
+        console.log("User data fetched successfully:", response.data);
+      } catch (error) {
+        console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+      }
+    }
+
+    fetchUser();
+  }, [userId]);
+
+  // timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeLeft(timeLeft - 1);
     }, 1000);
     if (timeLeft === 0) {
       clearTimeout(timer);
-      navigate("/shop");
+      navigate("/users/:userId/shop");
     }
     return () => clearTimeout(timer);
   }, [timeLeft]);
@@ -28,7 +50,7 @@ const Purchase = () => {
     try {
 
   // purchase successfully worked --> navigate to the gameRoom
-      navigate("/gameRoom");
+  //    navigate("/gameRoom");
 
       // Show success message
       // displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
@@ -65,6 +87,7 @@ const Purchase = () => {
             {/* Display Points */}
             <div style={{ position: 'absolute', top: 50, right: 100, textAlign: 'center'}}>
               Your Point: <br />
+              myScore
             </div>
 
             {/* Get Hints */}

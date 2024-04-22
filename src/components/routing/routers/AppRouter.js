@@ -7,6 +7,7 @@ import Login from "../../views/Login";
 import Mainpage from '../../views/Mainpage';
 import Register from '../../views/Register';
 import Shop from '../../views/Shop';
+import Gameroom_point from '../../views/Gameroom_point';
 
 /**
  * Main router of your application.
@@ -33,8 +34,8 @@ const AppRouter = () => {
         </Route>
 
         <Route path="/register" element={<Register/>} />
-        <Route path="/shop" element={<Shop/>} />
-        <Route path="/userId/shop" element={<Shop/>} />
+        <Route path="/users/:userId/shop" element={<Shop/>} />
+        <Route path="/gameroom_point" element={<Gameroom_point/>} />
 
       </Routes>
     </BrowserRouter>

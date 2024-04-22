@@ -105,7 +105,8 @@ const Register = () => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
+      // localStorage.setItem("token", user.token);
+      localStorage.setItem("username", user.username);
       localStorage.setItem("current_user_id", user.id)
       // Login successfully worked --> navigate to the route /game in the GameRouter
       navigate("/");
