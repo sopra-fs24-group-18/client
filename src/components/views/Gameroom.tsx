@@ -55,6 +55,7 @@ const GameRoom = () => {
       marginLeft:'450px'
     });*/
   };
+  const userId = localStorage.getItem('userid');
   const handleStart = async () => {
     try {
       const userId = localStorage.getItem('userid');
@@ -163,6 +164,23 @@ const GameRoom = () => {
             toolClassName = 'tool item bomb';
             toolContent = 'Blur';
         }
+        return (
+            <div key={id} className={toolClassName}>
+                    {toolContent}
+            </div>
+        );
+    };
+
+    // making array to render tools, ensure the length is 3
+    const renderTools = () => {
+        const displayedTools = tools.slice(0, 3); // display the first three tools from tool list in the slot
+        const emptySlotsCount = Math.max(3 - displayedTools.length, 0); // calculate the empty slot
+
+        return [
+            ...displayedTools.map((tool, index) => displayTool(tool, index)),
+            ...Array(emptySlotsCount).fill(null).map((_, index) => displayTool(null, displayedTools.length + index))
+        ];
+    };
 
   // point display
   const navigate = useNavigate();
@@ -205,14 +223,6 @@ const GameRoom = () => {
       setMessage({ text: "", type: "" });
     }, 5000); // Hide message after 5 seconds
   };
-
-
-
-
-
-
-
-
 
   return (
     <div className="gameRoomContainer">
