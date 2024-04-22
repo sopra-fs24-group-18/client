@@ -105,8 +105,9 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
       if(response.data && response.data.roomCode) {
         const { roomCode } = response.data;
         // store it for using in game room
-        localStorage.setItem('roomCode', roomCode);
-        navigate(`/rooms/${roomCode}/${userId}/enter`);
+        localStorage.setItem("roomCode", roomCode);
+        localStorage.setItem("roundNumber", "1");
+        navigate(`/gameroom`);
         console.log('Room created:', { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode });
       } else {
         alert('Failed to retrieve room code after creation');

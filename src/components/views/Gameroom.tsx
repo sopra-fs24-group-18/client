@@ -9,20 +9,37 @@ import PropTypes from "prop-types";
 
 const GameRoom = () => {
   //const [imageUrl, setImageUrl] = useState<string>('');
-  //mock
   const [imageUrl, setImageUrl] = useState<string>('https://www.thespruce.com/thmb/LCyupmFhZf0tXxj6TpBwWS6ZSfo=/3867x2578/filters:fill(auto,1)/GettyImages-153342142-56a75f045f9b58b7d0e9bee6.jpg');
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
-  const [roundNumber, setRoundNumber] = useState<string>('');
-
+  const roundNumber = Number(localStorage.getItem("roundNumber"));
+  const [min, setMin] = useState<number>(0);
+  const [Max, setMax] = useState<number>(0);
+  const [Blur, setBlur] = useState<boolean>(false);
+  const userId = localStorage.getItem('userid');
   // gain item picture ui
+
+  const handleStart = async () => {
+    try {
+      const roomId: string = localStorage.getItem('roomCode')
+      const result = await api.post('/${roomId}/guessMode/start');
+      console.log('Success:', result.data);
+    } catch (error) {
+      console.error('Error posting value', error);
+    }
+  };
   /**
   useEffect(() => {
     const fetchImageUrl = async () => {
       try {
-        const response = await api.get("/${roomId}/${roundNumber}");
+        const roomId: string = localStorage.getItem('roomCode')
+        const response = await api.get("${roomId}/${roundNumber}/${userId}");
         setImageUrl(response.data.url);
+        setMax(response.data.rightRange);
+        setMin(response.data.leftRange);
+        setBlur(response.data.blur)
+
       } catch (error) {
         console.error('Error fetching image URL', error);
       }
@@ -30,8 +47,7 @@ const GameRoom = () => {
 
     fetchImageUrl();
   }, []);
-    */
-
+*/
   // bar
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSliderValue(Number(event.target.value));
@@ -55,17 +71,7 @@ const GameRoom = () => {
       marginLeft:'450px'
     });*/
   };
-  const handleStart = async () => {
-    try {
-      const userId = localStorage.getItem('userid');
-      const roomId: string = localStorage.getItem('roomCode')
-      const result = await api.post('/${roomId}/guessMode/start');
-      setRoundNumber(result.data.roundNumber)
-      console.log('Success:', result.data);
-    } catch (error) {
-      console.error('Error posting value', error);
-    }
-  };
+
   // sent user choice
   const handleConfirmClick = async () => {
     try {
@@ -163,6 +169,23 @@ const GameRoom = () => {
             toolClassName = 'tool item bomb';
             toolContent = 'Blur';
         }
+        return (
+            <div key={id} className={toolClassName}>
+                    {toolContent}
+            </div>
+        );
+    };
+
+    // making array to render tools, ensure the length is 3
+    const renderTools = () => {
+        const displayedTools = tools.slice(0, 3); // display the first three tools from tool list in the slot
+        const emptySlotsCount = Math.max(3 - displayedTools.length, 0); // calculate the empty slot
+
+        return [
+            ...displayedTools.map((tool, index) => displayTool(tool, index)),
+            ...Array(emptySlotsCount).fill(null).map((_, index) => displayTool(null, displayedTools.length + index))
+        ];
+    };
 
   // point display
   const navigate = useNavigate();
@@ -205,14 +228,6 @@ const GameRoom = () => {
       setMessage({ text: "", type: "" });
     }, 5000); // Hide message after 5 seconds
   };
-
-
-
-
-
-
-
-
 
   return (
     <div className="gameRoomContainer">
