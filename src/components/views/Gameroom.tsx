@@ -7,8 +7,7 @@ import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
-export const GameRoom = () => {
-console.log("yessssss")
+const GameRoom = () => {
   //const [imageUrl, setImageUrl] = useState<string>('');
   //mock
   const [imageUrl, setImageUrl] = useState<string>('https://www.thespruce.com/thmb/LCyupmFhZf0tXxj6TpBwWS6ZSfo=/3867x2578/filters:fill(auto,1)/GettyImages-153342142-56a75f045f9b58b7d0e9bee6.jpg');
@@ -76,34 +75,9 @@ console.log("yessssss")
       console.error('Error posting value', error);
     }
   };
-  return (
-    <div className="gameRoomContainer">
-      <img src={imageUrl} alt="Item display" className="gameRoomImage" />
-      <div className="sliderWrapper">
-        <div style={labelStyle}>{sliderValue}</div>
-        <input
-          type="range"
-          min="0"
-          max={bar_max}
-          value={sliderValue}
-          onChange={handleSliderChange}
-          className="rangeInput"
-          ref={sliderRef}
-        />
-      </div>
-      <div className="buttonsContainer">
-        <Button onClick={handleStart}>S T A R T</Button>
-        <Button onClick={handleConfirmClick}>Confirm</Button>
-      </div>
-    </div>
-  );
-};
-
-// export default gameRoom, ToolDisplay;
 
 
-export const ToolDisplay = () => {
-    const userId = localStorage.getItem('userId');
+  // Tool display
     const [tools, setTools] = useState([]);
 
     console.log("userID:", userId)
@@ -190,37 +164,7 @@ export const ToolDisplay = () => {
             toolContent = 'Blur';
         }
 
-        return (
-            <div key={id} className={toolClassName}>
-                    {toolContent}
-            </div>
-        );
-    };
-
-    // making array to render tools, ensure the length is 3
-    const renderTools = () => {
-        const displayedTools = tools.slice(0, 3); // display the first three tools from tool list in the slot
-        const emptySlotsCount = Math.max(3 - displayedTools.length, 0); // calculate the empty slot
-
-        return [
-            ...displayedTools.map((tool, index) => displayTool(tool, index)),
-            ...Array(emptySlotsCount).fill(null).map((_, index) => displayTool(null, displayedTools.length + index))
-        ];
-    };
-
-    return (
-        <div className="tool display">
-            <label className="tool label">Tools</label>
-            <div className="tool container">
-                {renderTools()}
-            </div>
-        </div>
-    );
-};
-
-
-// point display
-export const PointDisplay = () => {
+  // point display
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(30);
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -262,28 +206,60 @@ export const PointDisplay = () => {
     }, 5000); // Hide message after 5 seconds
   };
 
+
+
+
+
+
+
+
+
   return (
     <div className="gameRoomContainer">
-      <BaseContainer>
-          <div className="gameroom_point form"><br /><br />
-
-            {/* Display remaining time */}
-            <div style={{ position: 'absolute', top: 50, left: 100, textAlign: 'center'}}>
-              Time: <br />
-              {timeLeft}
-            </div>
-
-            {/* Display Points */}
-            <div style={{ position: 'absolute', top: 50, right: 100, textAlign: 'center'}}>
-              Your Point: <br />
-            </div>
+    <BaseContainer>
+      <img src={imageUrl} alt="Item display" className="gameRoomImage" />
+      <div className="sliderWrapper">
+        <div style={labelStyle}>{sliderValue}</div>
+        <input
+          type="range"
+          min="0"
+          max={bar_max}
+          value={sliderValue}
+          onChange={handleSliderChange}
+          className="rangeInput"
+          ref={sliderRef}
+        />
+      </div>
+      <div className="buttonsContainer">
+        <Button onClick={handleStart}>S T A R T</Button>
+        <Button onClick={handleConfirmClick}>Confirm</Button>
+      </div>
+      <div className="tool display">
+          <label className="tool label">Tools</label>
+          <div className="tool container">
+              {renderTools()}
           </div>
+      </div>
+      <div className="gameroom_point form"><br /><br />
 
-          <div className="score-table">
-            <Button >User1:</Button>
-            <Button >User2:</Button>
-          </div>
-      </BaseContainer>
+        {/* Display remaining time */}
+        <div style={{ position: 'absolute', top: 50, left: 100, textAlign: 'center'}}>
+          Time: <br />
+          {timeLeft}
+        </div>
+
+        {/* Display Points */}
+        <div style={{ position: 'absolute', top: 50, right: 100, textAlign: 'center'}}>
+          Your Point: <br />
+        </div>
+      </div>
+
+      <div className="score-table">
+        <Button >User1:</Button>
+        <Button >User2:</Button>
+      </div>
+    </BaseContainer>
     </div>
   );
 };
+export default GameRoom;

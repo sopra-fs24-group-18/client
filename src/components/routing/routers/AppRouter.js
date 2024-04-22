@@ -10,7 +10,7 @@ import Profile from "../../views/Profile";
 import Shop from '../../views/Shop';
 import Gameroom_point from '../../views/Gameroom_point';
 import Roomcreation from '../../views/Roomcreation';
-import { ToolDisplay, GameRoom, PointDisplay } from "../../views/Gameroom";
+import GameRoom from "../../views/Gameroom";
 import Tool from "../../views/Tool"
 
 /**
@@ -23,15 +23,15 @@ import Tool from "../../views/Tool"
  * Documentation about routing in React: https://reactrouter.com/en/main/start/tutorial 
  */
 
-const GameRoomPage = () => {
-  return (
-    <div>
-      <PointDisplay />
-      <GameRoom />
-      <ToolDisplay />
-    </div>
-  );
-};
+//const GameRoomPage = () => {
+//  return (
+//    <div>
+//      <PointDisplay />
+//      <GameRoom />
+//      <ToolDisplay />
+//    </div>
+//  );
+//};
 
 
 const AppRouter = () => {
@@ -53,7 +53,7 @@ const AppRouter = () => {
         <Route path="/users/:userId/shop" element={<Shop/>} />
         <Route path="/roomcreation" element={<Roomcreation/>} />
         <Route path="/users/:userId" element={<Profile />} />
-        <Route path="/gameroom" element={<GameRoomPage />} />
+        <Route path="/gameroom" element={<GameRoom />} />
 
       </Routes>
     </BrowserRouter>
