@@ -100,16 +100,18 @@ const Register = () => {
     try {
       const requestBody = JSON.stringify({ username, password });
       const response = await api.post("/users", requestBody);
-
       // Get the returned user and update a new object.
       const user = new User(response.data);
+      const userId = user.id;
 
       // Store the token into the local storage.
-      // localStorage.setItem("token", user.token);
+      localStorage.setItem("token", user.token);
       localStorage.setItem("username", user.username);
-      localStorage.setItem("current_user_id", user.id)
+      localStorage.setItem("userId", user.id);
+      const testId = localStorage.getItem("current_user_id");
+      console.log({testId});
       // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate("/");
+      navigate(`/users/${userId}`);
     } catch (error) {
       if (error.response && error.response.status === 409) {
         // Username already exists

@@ -6,8 +6,12 @@ import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
 import Mainpage from '../../views/Mainpage';
 import Register from '../../views/Register';
+import Profile from "../../views/Profile";
 import Shop from '../../views/Shop';
 import Gameroom_point from '../../views/Gameroom_point';
+import Roomcreation from '../../views/Roomcreation';
+import { ToolDisplay, GameRoom, PointDisplay } from "../../views/Gameroom";
+import Tool from "../../views/Tool"
 
 /**
  * Main router of your application.
@@ -18,6 +22,18 @@ import Gameroom_point from '../../views/Gameroom_point';
  * /game renders a Router that contains other sub-routes that render in turn other react components
  * Documentation about routing in React: https://reactrouter.com/en/main/start/tutorial 
  */
+
+const GameRoomPage = () => {
+  return (
+    <div>
+      <PointDisplay />
+      <GameRoom />
+      <ToolDisplay />
+    </div>
+  );
+};
+
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -35,7 +51,9 @@ const AppRouter = () => {
 
         <Route path="/register" element={<Register/>} />
         <Route path="/users/:userId/shop" element={<Shop/>} />
-        <Route path="/gameroom_point" element={<Gameroom_point/>} />
+        <Route path="/roomcreation" element={<Roomcreation/>} />
+        <Route path="/users/:userId" element={<Profile />} />
+        <Route path="/gameroom" element={<GameRoomPage />} />
 
       </Routes>
     </BrowserRouter>

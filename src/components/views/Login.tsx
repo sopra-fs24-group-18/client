@@ -6,6 +6,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import Profile from "./Profile";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -49,20 +50,17 @@ const Login = () => {
       // Get the returned user and update a new object.
       const user = new User(response.data);
 
-      // Store the token and userid into the local storage.
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("current_user_id", user.id)
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate("/");
-
-      // Show success message
-      //displayMessage("Login successful!", "success-message");
+      // Store the userid into the local storage.
+      localStorage.setItem("userId", user.id)
+      console.log("id,", user.id)
+      const userId = user.id;
+      // Login successfully worked --> navigate to the profile page in the AppRouter
+      navigate(`/users/${userId}`);
 
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized: Incorrect username or password
-        displayMessage("Login failed because username does not exist or password is wrong.", "error-message");
+        displayMessage("login failed because username does not exist or password is wrong.", "error-message");
       }
       else{
         displayMessage(`Something went wrong during the login: ${handleError(error)}`, "error-message");
@@ -76,6 +74,12 @@ const Login = () => {
       setMessage({ text: "", type: "" });
     }, 5000); // Hide message after 5 seconds
   };
+
+  const doCancel =  () => {
+    const navigate = useNavigate();
+    navigate("/");
+  }
+
 
   return (
     <div className="background-container">
@@ -102,7 +106,7 @@ const Login = () => {
                 Login
               </Button>
             </div>
-            <div className="register button-container">
+            <div className="login button-container">
               <Button
                 width="100%"
                 onClick={() => navigate("/")}
@@ -112,8 +116,7 @@ const Login = () => {
             </div>
             {/* Display message */}
             {message.text && (
-                <div style={{ fontSize: "16px", fontFamily: '"Microsoft YaHei", sans-serif' }}>
-                {/*<div className={`message-container ${message.type}`}>*/}
+                <div className={`message-container ${message.type}`}>
                   {message.text}
                 </div>
             )}

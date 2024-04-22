@@ -1,0 +1,112 @@
+@import "../theme"; // Import theme variables or mixins if needed
+
+.profile-container {
+  display: flex;
+  //justify-content: space-between; // Arrange sections in a flex container with space between
+  margin-top: 5em;
+  padding: 2em; // Add padding for spacing
+  align-items: center;
+
+  .left-section {
+    flex: 1; // Take up equal space
+    background-image: url('../../assets/window_profile.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 600px; // Set a minimum height for consistency
+
+    /* Center content vertically and horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  .success-message {
+    color: green;
+    font-size: 10px;
+    margin-bottom: 1em;
+  }
+
+  .profile-info {
+    margin-top: 5em;
+    align-items: center;
+    p {
+      //flex:1;
+      font-size: 16px;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .left-button-container {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 1em;
+  }
+
+  .form-group {
+    flex-direction: column;
+    margin-top: 0.5em;
+    margin-left: 8em;
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 0.2em;
+      color: white;
+    }
+
+    input{
+      width: 30%;
+      padding: 0.5em;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      margin-bottom: 0.5em;
+      height: 35px;
+      margin-left: 0.5em;
+      background: transparentize(white, 0);
+      color: black;
+    }
+  }
+}
+
+  .right-section {
+    margin-top: 5em;
+    //margin-left: 5em;
+    flex: 1; // Take up remaining space
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .right-button-container {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 1em;
+    }
+
+    .room-input {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 1em;
+        color: black;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.5em;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        margin-bottom: 1em;
+        height: 35px;
+        margin-left: -4px;
+        //border-radius: 0.75em;
+        background: transparentize(white, 0.1);
+        color: black;
+      }
+    }
+  }
+}

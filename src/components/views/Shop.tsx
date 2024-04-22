@@ -18,7 +18,7 @@ const Purchase = () => {
   const [tools, setTools] = useState<Tool[]>([]);
 
   const userId = localStorage.getItem("current_user_id");
-  localStorage.setItem("myScore", "100");
+  // localStorage.setItem("score", 100);
   // fetch current user data
   useEffect(() => {
     async function fetchUser() {
