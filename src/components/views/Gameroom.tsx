@@ -47,7 +47,7 @@ const GameRoom = () => {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem('questionId',response.data.id);
       //blur items
-      const newImageUrl = response.data.blur ? '../../assets/mosaic.png' : response.data.itemImage;
+      const newImageUrl = response.data.blur ? '../../assets/mosaic.jpg' : response.data.itemImage;
       setImageUrl(newImageUrl);
       setSliderRange(response.data.leftRange, response.data.rightRange);
       console.log('check:', newImageUrl, imageUrl, Min, Max)
@@ -251,6 +251,7 @@ const GameRoom = () => {
       <img src={imageUrl} alt="Item display" className="gameRoomImage" />
       <div className="sliderWrapper">
         <div style={labelStyle}>{sliderValue}</div>
+        <div className="minValue">{Min}</div>
         <input
           type="range"
           min={Min}
@@ -260,9 +261,10 @@ const GameRoom = () => {
           className="rangeInput"
           ref={sliderRef}
         />
+        <div className="maxValue">{Max}</div>
       </div>
       <div className="buttonsContainer">
-        <Button onClick={handleConfirmClick}>Confirm</Button>
+      <Button onClick={handleConfirmClick}>Confirm</Button>
       </div>
       <div className="tool display">
           <label className="tool label">Tools</label>

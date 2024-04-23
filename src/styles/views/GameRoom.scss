@@ -11,20 +11,34 @@
 }
 
 .gameRoomImage {
-  max-width: 50%;
+  max-width: 100%;
   height: auto;
 }
 
 .sliderWrapper {
+  position:relative;
   margin: 20px 0;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
 }
 
 .rangeInput {
-  width: 80%;
+  width: 100%;
   max-width: 600px;
 }
+.minValue, .maxValue {
+  position: absolute;
+  bottom: 0; //sliderWrapper bottom
+}
+
+.minValue {
+  left: -30px;
+}
+
+.maxValue {
+  right: -70px;
+}
+
 
 .buttonsContainer {
   position: absolute;
