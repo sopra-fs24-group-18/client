@@ -8,24 +8,23 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
 const GameRoom = () => {
-  const [imageUrl, setImageUrl] = useState<string>('https://www.thespruce.com/thmb/LCyupmFhZf0tXxj6TpBwWS6ZSfo=/3867x2578/filters:fill(auto,1)/GettyImages-153342142-56a75f045f9b58b7d0e9bee6.jpg');
+  const [imageUrl, setImageUrl] = useState<string>('../../assets/loading.png');
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
-  const roundNumber = Number(localStorage.getItem('roundNumber'));
+  const roundNumber = Number(localStorage.getItem("roundNumber"));
   const [Min, setMin] = useState<number>(0);
   const [Max, setMax] = useState<number>(1000);
-  const [Blur, setBlur] = useState<boolean>(false);
-  const userId = localStorage.getItem('userId');
-  const roomId = localStorage.getItem('roomId');
-
+  //const [Blur, setBlur] = useState<boolean>(false);
+  const userId = localStorage.getItem("userId");
+  const roomId = localStorage.getItem("roomId");
   useEffect(() => {
     const initializeGame = async () => {
       try {
         // Post to the getReady endpoint if roundNumber is 1
         if (roundNumber === 1) {
           const response = await api.post(`games/${roomId}/${userId}/getReady`);
-          if (response.status === 200) {
+          if (response.status === 204) {
             console.log('Ready response:', response.data);
             await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
           } else {
@@ -45,12 +44,13 @@ const GameRoom = () => {
 
   const fetchImageUrl = async (roomId, roundNumber) => {
     try {
-      const response = await api.get(`/${roomId}/${roundNumber}`);
+      const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem('questionId',response.data.id);
       //blur items
-      const newImageUrl = response.data.blur ? '../../assets/mosaic.png' : response.data.url;
+      const newImageUrl = response.data.blur ? '../../assets/mosaic.png' : response.data.itemImage;
       setImageUrl(newImageUrl);
       setSliderRange(response.data.leftRange, response.data.rightRange);
+      console.log('check:', newImageUrl, imageUrl, Min, Max)
     } catch (error) {
       console.error('Error fetching image URL:', error);
     }
@@ -92,7 +92,7 @@ const GameRoom = () => {
       const questionId = localStorage.getItem("questionId");
       const requestBody = JSON.stringify({
         questionId, userId, guessedPrice: sliderValue, chosenItemList})
-      const result = await api.post('/answers/guessMode', requestBody);
+      const result = await api.post("/answers/guessMode", requestBody);
       console.log('Success:', result.data);
     } catch (error) {
       console.error('Error posting value', error);
