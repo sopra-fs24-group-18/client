@@ -8,80 +8,96 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
 const GameRoom = () => {
-  //const [imageUrl, setImageUrl] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('https://www.thespruce.com/thmb/LCyupmFhZf0tXxj6TpBwWS6ZSfo=/3867x2578/filters:fill(auto,1)/GettyImages-153342142-56a75f045f9b58b7d0e9bee6.jpg');
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
-  const roundNumber = Number(localStorage.getItem("roundNumber"));
-  const [min, setMin] = useState<number>(0);
-  const [Max, setMax] = useState<number>(0);
+  const roundNumber = Number(localStorage.getItem('roundNumber'));
+  const [Min, setMin] = useState<number>(0);
+  const [Max, setMax] = useState<number>(1000);
   const [Blur, setBlur] = useState<boolean>(false);
-  const userId = localStorage.getItem('userid');
-  // gain item picture ui
+  const userId = localStorage.getItem('userId');
+  const roomId = localStorage.getItem('roomId');
 
-  const handleStart = async () => {
-    try {
-      const roomId: string = localStorage.getItem('roomCode')
-      const result = await api.post('/${roomId}/guessMode/start');
-      console.log('Success:', result.data);
-    } catch (error) {
-      console.error('Error posting value', error);
-    }
-  };
-  /**
   useEffect(() => {
-    const fetchImageUrl = async () => {
+    const initializeGame = async () => {
       try {
-        const roomId: string = localStorage.getItem('roomCode')
-        const response = await api.get("${roomId}/${roundNumber}/${userId}");
-        setImageUrl(response.data.url);
-        setMax(response.data.rightRange);
-        setMin(response.data.leftRange);
-        setBlur(response.data.blur)
-
+        // Post to the getReady endpoint if roundNumber is 1
+        if (roundNumber === 1) {
+          const response = await api.post(`games/${roomId}/${userId}/getReady`);
+          if (response.status === 200) {
+            console.log('Ready response:', response.data);
+            await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
+          } else {
+            alert('Failed to get ready, status: ' + response.status);
+          }
+        }
+        else {
+          await fetchImageUrl(roomId, roundNumber); // Direct call if not the first round
+        }
       } catch (error) {
-        console.error('Error fetching image URL', error);
+        console.error('Error initializing game:', error);
       }
     };
 
-    fetchImageUrl();
+    initializeGame();
   }, []);
-*/
+
+  const fetchImageUrl = async (roomId, roundNumber) => {
+    try {
+      const response = await api.get(`/${roomId}/${roundNumber}`);
+      localStorage.setItem('questionId',response.data.id);
+      //blur items
+      const newImageUrl = response.data.blur ? '../../assets/mosaic.png' : response.data.url;
+      setImageUrl(newImageUrl);
+      setSliderRange(response.data.leftRange, response.data.rightRange);
+    } catch (error) {
+      console.error('Error fetching image URL:', error);
+    }
+  };
+  const setSliderRange = (min: number, max: number) => {
+    setMin(min);
+    setMax(max);
+  };
+
   // bar
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSliderValue(Number(event.target.value));
     updateLabelPosition(event.target);
   };
-  const bar_max = "1000";
-  const bar_min = "0";
+
   // pointed value
+
   const updateLabelPosition = (slider: HTMLInputElement) => {
     const value = Number(slider.value);
-    const max = slider.max ? Number(slider.max) : 500;
-    const min = slider.min ? Number(slider.min) : 0;
+    // Use state values for min and max
+    const max = Max;
+    const min = Min;
     const percentage = ((value - min) / (max - min)) * 100;
-    const newPosition = percentage * (slider.offsetWidth - 16) / 100;  // -16 or -8
-/**
-    setLabelStyle({
-      position: 'absolute',
-      left: `${newPosition}px`,
-      transform: 'translateX(-50%)',
-      marginTop: '-25px',
-      marginLeft:'450px'
-    });*/
+    const newPosition = percentage * (slider.offsetWidth - 16) / 100;//-16 or -8
+    /**
+     setLabelStyle({
+     position: 'absolute',
+     left: `${newPosition}px`,
+     transform: 'translateX(-50%)',
+     marginTop: '-25px',
+     marginLeft:'450px'
+     });*/
   };
 
   // sent user choice
   const handleConfirmClick = async () => {
     try {
-      const result = await api.post('/value-endpoint', { value: sliderValue });
+      const chosenItemList = useState<string>('');
+      const questionId = localStorage.getItem("questionId");
+      const requestBody = JSON.stringify({
+        questionId, userId, guessedPrice: sliderValue, chosenItemList})
+      const result = await api.post('/answers/guessMode', requestBody);
       console.log('Success:', result.data);
     } catch (error) {
       console.error('Error posting value', error);
     }
   };
-
 
   // Tool display
     const [tools, setTools] = useState([]);
@@ -198,7 +214,7 @@ const GameRoom = () => {
     }, 1000);
     if (timeLeft === 0) {
       clearTimeout(timer);
-      navigate("/gameroom");
+      navigate("/shop");
     }
     return () => clearTimeout(timer);
   }, [timeLeft]);
@@ -237,8 +253,8 @@ const GameRoom = () => {
         <div style={labelStyle}>{sliderValue}</div>
         <input
           type="range"
-          min="0"
-          max={bar_max}
+          min={Min}
+          max={Max}
           value={sliderValue}
           onChange={handleSliderChange}
           className="rangeInput"
@@ -246,7 +262,6 @@ const GameRoom = () => {
         />
       </div>
       <div className="buttonsContainer">
-        <Button onClick={handleStart}>S T A R T</Button>
         <Button onClick={handleConfirmClick}>Confirm</Button>
       </div>
       <div className="tool display">
