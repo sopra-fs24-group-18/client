@@ -7,8 +7,9 @@ import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
+
 const GameRoom = () => {
-  const [imageUrl, setImageUrl] = useState<string>('../../assets/loading.png');
+  const [imageUrl, setImageUrl] = useState<string>('/loading.png');
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
@@ -18,6 +19,7 @@ const GameRoom = () => {
   //const [Blur, setBlur] = useState<boolean>(false);
   const userId = localStorage.getItem("userId");
   const roomId = localStorage.getItem("roomId");
+  const [chosenItemList, setChosenItemList] = useState<string>('');
   useEffect(() => {
     const initializeGame = async () => {
       try {
@@ -47,7 +49,7 @@ const GameRoom = () => {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem('questionId',response.data.id);
       //blur items
-      const newImageUrl = response.data.blur ? '../../assets/mosaic.jpg' : response.data.itemImage;
+      const newImageUrl = response.data.blur ? '/mosaic.jpg' : response.data.itemImage;
       setImageUrl(newImageUrl);
       setSliderRange(response.data.leftRange, response.data.rightRange);
       console.log('check:', newImageUrl, imageUrl, Min, Max)
@@ -88,22 +90,26 @@ const GameRoom = () => {
   // sent user choice
   const handleConfirmClick = async () => {
     try {
-      const chosenItemList = useState<string>('');
       const questionId = localStorage.getItem("questionId");
-      const requestBody = JSON.stringify({
-        questionId, userId, guessedPrice: sliderValue, chosenItemList})
-      const result = await api.post("/answers/guessMode", requestBody);
-      console.log('Success:', result.data);
+      const result = await api.post("/answers/guessMode", {
+        questionId,
+        userId,
+        guessedPrice: sliderValue,
+        chosenItemList,
+      });
+      console.log("Success:", result.data);
+      setImageUrl('/loading.png');
     } catch (error) {
-      console.error('Error posting value', error);
+      console.error("Error posting value", error);
     }
+
   };
 
   // Tool display
-    const [tools, setTools] = useState([]);
+  const [tools, setTools] = useState([]);
 
-    console.log("userID:", userId)
-    // fetch user's tool list from backend
+  console.log("userID:", userId);
+  // fetch user's tool list from backend
     // useEffect(() => {
     //     const fetchTools = async () => {
     //         try {
