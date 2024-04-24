@@ -104,7 +104,17 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
       //check response
       if(response.data && response.data.roomCode) {
         const { roomCode } = response.data;
+        //const roomId = response.data.id;
         // store it for using in game room
+        //localStorage.setItem("roomCode", roomCode);
+        localStorage.setItem("roundNumber", "1");
+        //localStorage.setItem("roomId", roomId);
+        const roundNumber = Number(localStorage.getItem("roundNumber"))
+
+        // store it for using in game room
+        const roomData = response.data;
+        localStorage.setItem('roomId', roomData.id);
+        localStorage.setItem('playerNames', roomData.playerNames);
         localStorage.setItem('roomCode', roomCode);
         navigate(`/rooms/${roomCode}/${userId}/enter`);
         console.log('Room created:', { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode });

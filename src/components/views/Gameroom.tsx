@@ -8,75 +8,108 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
 const GameRoom = () => {
-  //const [imageUrl, setImageUrl] = useState<string>('');
-  //mock
-  const [imageUrl, setImageUrl] = useState<string>('https://www.thespruce.com/thmb/LCyupmFhZf0tXxj6TpBwWS6ZSfo=/3867x2578/filters:fill(auto,1)/GettyImages-153342142-56a75f045f9b58b7d0e9bee6.jpg');
+
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
-  const [roundNumber, setRoundNumber] = useState<string>('');
+  const roomId = localStorage.getItem('roomId');
+  const playerNames = localStorage.getItem('playerNames');
 
+  const [imageUrl, setImageUrl] = useState<string>('/loading.png');
+  let roundNumber = Number(localStorage.getItem("roundNumber"));
+  const [Min, setMin] = useState<number>(0);
+  const [Max, setMax] = useState<number>(1000);
+  const userId = localStorage.getItem("userId");
+  const [chosenItemList, setChosenItemList] = useState<string>('');
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   // gain item picture ui
-  /**
-  useEffect(() => {
-    const fetchImageUrl = async () => {
-      try {
-        const response = await api.get("/${roomId}/${roundNumber}");
-        setImageUrl(response.data.url);
-      } catch (error) {
-        console.error('Error fetching image URL', error);
-      }
+    useEffect(() => {
+        const initializeGame = async () => {
+            try {
+                // Post to the getReady endpoint if roundNumber is 1
+                if (roundNumber === 1) {
+                    const response = await api.post(`games/${roomId}/${userId}/getReady`);
+                    if (response.status === 204) {
+                        setIsReady(true);
+                        console.log('Ready response:', response.data);
+                        await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
+                    } else {
+                        alert('Failed to get ready, status: ' + response.status);
+                    }
+                }
+                else {
+                    await fetchImageUrl(roomId, roundNumber); // Direct call if not the first round
+                }
+            } catch (error) {
+                console.error('Error initializing game:', error);
+            }
+        };
+
+        initializeGame();
+    }, []);
+
+    const fetchImageUrl = async (roomId, roundNumber) => {
+        try {
+            const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
+            localStorage.setItem('questionId',response.data.id);
+            //blur items
+            const newImageUrl = response.data.blur ? '/mosaic.jpg' : response.data.itemImage;
+            setImageUrl(newImageUrl);
+            setSliderRange(response.data.leftRange, response.data.rightRange);
+            console.log('check:', newImageUrl, imageUrl, Min, Max)
+        } catch (error) {
+            console.error('Error fetching image URL:', error);
+        }
+    };
+    const setSliderRange = (min: number, max: number) => {
+        setMin(min);
+        setMax(max);
     };
 
-    fetchImageUrl();
-  }, []);
-    */
+    // bar
+    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setSliderValue(Number(event.target.value));
+        updateLabelPosition(event.target);
+    };
 
-  // bar
-  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setSliderValue(Number(event.target.value));
-    updateLabelPosition(event.target);
-  };
-  const bar_max = "1000";
-  const bar_min = "0";
-  // pointed value
-  const updateLabelPosition = (slider: HTMLInputElement) => {
-    const value = Number(slider.value);
-    const max = slider.max ? Number(slider.max) : 500;
-    const min = slider.min ? Number(slider.min) : 0;
-    const percentage = ((value - min) / (max - min)) * 100;
-    const newPosition = percentage * (slider.offsetWidth - 16) / 100;  // -16 or -8
-/**
-    setLabelStyle({
-      position: 'absolute',
-      left: `${newPosition}px`,
-      transform: 'translateX(-50%)',
-      marginTop: '-25px',
-      marginLeft:'450px'
-    });*/
-  };
-  const userId = localStorage.getItem('userid');
-  const handleStart = async () => {
-    try {
-      const userId = localStorage.getItem('userid');
-      const roomId: string = localStorage.getItem('roomCode')
-      const result = await api.post('/${roomId}/guessMode/start');
-      setRoundNumber(result.data.roundNumber)
-      console.log('Success:', result.data);
-    } catch (error) {
-      console.error('Error posting value', error);
-    }
-  };
-  // sent user choice
-  const handleConfirmClick = async () => {
-    try {
-      const result = await api.post('/value-endpoint', { value: sliderValue });
-      console.log('Success:', result.data);
-    } catch (error) {
-      console.error('Error posting value', error);
-    }
-  };
+    // pointed value
 
+    const updateLabelPosition = (slider: HTMLInputElement) => {
+        const value = Number(slider.value);
+        // Use state values for min and max
+        const max = Max;
+        const min = Min;
+        const percentage = ((value - min) / (max - min)) * 100;
+        const newPosition = percentage * (slider.offsetWidth - 16) / 100;//-16 or -8
+        /**
+         setLabelStyle({
+         position: 'absolute',
+         left: `${newPosition}px`,
+         transform: 'translateX(-50%)',
+         marginTop: '-25px',
+         marginLeft:'450px'
+         });*/
+    };
+
+    // sent user choice
+    const handleConfirmClick = async () => {
+        try {
+            const questionId = localStorage.getItem("questionId");
+            const result = await api.post("/answers/guessMode", {
+                questionId,
+                userId,
+                guessedPrice: sliderValue,
+                chosenItemList,
+            });
+            console.log("Success:", result.data);
+            setImageUrl('/loading.png');
+            setIsConfirmed(true);
+        } catch (error) {
+            console.error("Error posting value", error);
+        }
+
+    };
 
   // Tool display
     const [tools, setTools] = useState([]);
@@ -113,36 +146,6 @@ const GameRoom = () => {
         fetchUserTools();
     }, []);
 
-
-    const applyToolEffects = () => {
-        // if (tools.length > 0) {
-        //     // check if user has BLUR tool
-        //     const hasBlurTool = tools.some(tool => tool.toolType === 'BLUR');
-        //     // check if user has HINT tool
-        //     const hasHintTool = tools.some(tool => tool.toolType === 'HINT');
-        //
-        //     // apply blur filter into image for BLUR tool
-        //     if (hasBlurTool) {
-        //         const otherPlayersImages = document.querySelectorAll('.other-player-image');
-        //         otherPlayersImages.forEach((image) => {
-        //             image.style.filter = 'blur(5px)';
-        //         });
-        //     }
-        //
-        //     // change the upper limit of the price slider for HINT tool
-        //     if (hasHintTool) {
-        //         const priceSlider = document.querySelector('.price-slider');
-        //         if (priceSlider) {
-        //             const maxPrice = parseInt(priceSlider.max, 10);
-        //             priceSlider.max = Math.floor(maxPrice / 2);
-        //         }
-        //     }
-        // }
-    };
-
-    useEffect(() => {
-        applyToolEffects();
-    }, [tools]);
 
     // display Tools in the game screen
     const displayTool = (tool, index) => {
@@ -187,16 +190,91 @@ const GameRoom = () => {
   const [timeLeft, setTimeLeft] = useState(30);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-    if (timeLeft === 0) {
-      clearTimeout(timer);
-      navigate("/gameroom");
-    }
-    return () => clearTimeout(timer);
-  }, [timeLeft]);
+    const [player, setPlayer] = useState("");
+    // fetch current user data
+    useEffect(() => {
+        async function fetchUser() {
+            try {
+                const response_user = await api.get(`/users/${userId}`);
+                setPlayer(response_user.data);
+                console.log("User data fetched successfully:", response_user.data);
+            } catch (error) {
+                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+            }
+        }
+        fetchUser();
+    }, [userId]);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setTimeLeft(timeLeft - 1);
+  //   }, 1000);
+  //   if (timeLeft === 0) {
+  //     clearTimeout(timer);
+  //     navigate("/gameroom");
+  //   }
+  //   return () => clearTimeout(timer);
+  // }, [timeLeft]);
+    useEffect(() => {
+        if (isReady) {  // when post ready, begin to countdown
+            const timer = setTimeout(() => {
+                setTimeLeft(timeLeft - 1);
+            }, 1000);
+
+            if (timeLeft === 0) {
+                clearTimeout(timer);
+                if (!isConfirmed) {
+                    handleConfirmClick()
+                        .then(() => {
+                            // after auto-handleConfirmClick
+                            if (roundNumber === 3) {
+                                navigate('/rank');
+                            } else {
+                                roundNumber += 1;
+                                localStorage.setItem("roundNumber", String(roundNumber));
+                                navigate('/shop');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Failed to auto-confirm:", error);
+                            // handle error
+                        });
+                } else {
+                    // if already clicked confirm
+                    if (roundNumber === 3) {
+                        navigate('/rank');
+                    } else {
+                        roundNumber += 1;
+                        localStorage.setItem("roundNumber", String(roundNumber));
+                        navigate('/shop');
+                    }
+                }
+            }
+
+            return () => clearTimeout(timer);
+        }
+    }, [timeLeft, isConfirmed, roundNumber, isReady]); // dependency
+
+
+  //rank
+    const [rankData, setRankData] = useState([]);
+    useEffect(() => {
+        const fetchPoints = async () => {
+            try {
+                const response_rank = await api.get(`/rooms/${roomId}/rank`);
+                setRankData(response_rank.data);
+            } catch (error) {
+                console.error('Error fetching points', error);
+            }
+        };
+        fetchPoints();
+    }, []);
+    const sortedRankData = rankData.sort((a, b) => b.score - a.score);
+    const pointList = sortedRankData.map((item, index) => (
+        <div key={index}>
+            {item.username}: points: {item.score}
+        </div>
+    ));
 
   const doGameroom_point = async (toolType) => {
     try {
@@ -231,23 +309,29 @@ const GameRoom = () => {
             {/*image part*/}
             <div className="image">
                 <img src={imageUrl} alt="Item display" className="gameRoomImage"/>
+
                 <div className="text">
                     Slide to choose the price <br/>
                 </div>
+
                 <div className="text">{sliderValue}</div>
+
                 <div className="sliderWrapper">
+                    <div className="minValue">{Min}</div>
                     <input
                         type="range"
-                        min="0"
-                        max={bar_max}
+                        min={Min}
+                        max={Max}
                         value={sliderValue}
                         onChange={handleSliderChange}
                         className="rangeInput"
                         ref={sliderRef}
                     />
+                    <div className="maxValue">{Max}</div>
                 </div>
+
                 <div className="buttonsContainer">
-                    <Button width="150%" onClick={handleStart}>START</Button>
+                    {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
                     <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
                 </div>
             </div>
@@ -274,19 +358,26 @@ const GameRoom = () => {
                 {/* Display Points */}
                 <div className="label" style={{right: 100}}>
                     Your Point: <br/>
+                    {player.score}
                 </div>
 
                 {/*round display*/}
-                <div className="label" style={{center:0, color:"white"}}>
+                <div className="label" style={{center: 0, color: "white"}}>
                     Round: <br/>
                 </div>
 
                 <div className="gameRoom-point form"><br/><br/>
                     <div className="score-table">
-                        <Button width="180%">User1:</Button>
-                        <Button width="180%">User2:</Button>
+                        <Button width="180%">{pointList}</Button>
+                        {/*<Button width="180%">User2:</Button>*/}
                     </div>
                 </div>
+
+                {/*<div className="score-table">*/}
+                {/*    <Button>*/}
+                {/*        {pointList}*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
             </div>
 
 
