@@ -1,125 +1,163 @@
 @import "../theme";
-
-.gameRoomContainer {
-  text-align: center;
-  padding: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center; // center horizontally
-  justify-content: center; // center vertically
-}
-
-.gameRoomImage {
-  max-width: 50%;
-  height: auto;
-}
-
-.sliderWrapper {
-  margin: 20px 0;
-  width: 80%;
-  max-width: 600px;
-}
-
-.rangeInput {
-  width: 80%;
-  max-width: 600px;
-}
-
-.buttonsContainer {
-  position: absolute;
-  right: 10px;
-  top: 70%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: -10px; // between button
-}
-
-.tool{
-  &.display {
+.gameRoom{
+  .gameRoomContainer {
     position: absolute;
-    bottom: 20%;
-    left: 50%;
-    transform: translateX(-50%);
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center; /* Align items vertically centered */
-    justify-content: flex-start; /* Align items to the left */
-  }
-
-  &.label {
-    font-size: 24px;
-    font-weight: bold;
-    //margin-bottom: 20px;
-    margin-right:1em;
-  }
-
-  &.container {
-    display: flex;
-    align-items: center; /* Align items vertically centered */
-    justify-content: flex-start; /* Align items to the left */
-  }
-
-  &.item{
-    width: 80px;
-    height: 80px;
-    margin-right: 1em; /* Add margin between tool items */
-    border: none;
-    border-radius: 10px;
-    //background-color: rgba(255, 255, 0, 0);
-  }
-
-  &.hint{
-    background-image: url('../../assets/hint.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  &.bomb{
-    background-image: url('../../assets/bomb.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  &.default {
-    background-color: rgb(69, 69, 103);
-  }
-}
-
-
-.score-table {
-  position: absolute;
-  left: 10px;
-  top: 70%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: -10px; // between button
-}
-
-.gameroom_point {
-  &.form {
+    padding: 20px;
+    //position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 40%;
-    max-width: 30em;
-    height: 20em;
-    font-size: 20px;
-    font-weight: 300;
-    padding-left: 37px;
-    padding-right: 37px;
-    border-radius: 0.75em;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    align-items: center; // center horizontally
+    justify-content: center; // center vertically
   }
-  &.field {
+  .image{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center; // center horizontally
+    justify-content: center; // center vertically
+
+    .gameRoomImage {
+      margin-top: 5em;
+      margin-bottom: 3em;
+      max-width: 40%;
+      height: auto;
+      background-color: rgba(61, 160, 239, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .sliderWrapper {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      background-color: rgba(238, 238, 241, 0.8);
+      //border: 2px solid rgb(69, 69, 103);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .rangeInput{
+      width: 100%;
+      max-width: 600px;
+      background-color: rgb(69, 69, 103); /* 设置滑块的背景颜色 */
+      cursor: pointer; /* 鼠标样式为指针 */
+    }
+
+    .buttonsContainer {
+      position: absolute;
+      margin-right: 8em;
+      top: 70%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: -10px; // between button
+    }
+    .text{
+      margin-bottom: 0.5em;
+      font-size: 16px;
+      color: rgb(36, 36, 150);
+    }
   }
 
+  .tool{
+    &.display {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center; /* Align items vertically centered */
+      justify-content: flex-start; /* Align items to the left */
+    }
+
+    &.label {
+      font-size: 24px;
+      font-weight: bold;
+      //margin-bottom: 20px;
+      margin-right:1em;
+    }
+
+    &.container {
+      display: flex;
+      align-items: center; /* Align items vertically centered */
+      justify-content: flex-start; /* Align items to the left */
+    }
+
+    &.item{
+      width: 80px;
+      height: 80px;
+      margin-right: 1em; /* Add margin between tool items */
+      border: none;
+      border-radius: 10px;
+      //background-color: rgba(255, 255, 0, 0);
+    }
+
+    &.hint{
+      background-image: url('../../assets/hint.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.bomb{
+      background-image: url('../../assets/bomb.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.default {
+      background-color: rgb(69, 69, 103);
+    }
+  }
+
+  .score{
+    .score-table {
+      position: absolute;
+      left: 4em;
+      top: 70%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: -10px; // between button
+    }
+    .label{
+      position: absolute;
+      top: 50px;
+      text-align: center;
+      color: rgb(36, 36, 150);
+      font-size: 20px;
+    }
+
+    .gameRoom-point {
+      &.container{
+        background-image: url('../../assets/Name_Table 2.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        //background-position: center;
+       // min-height: 600px; // Set a minimum height for consistency
+      }
+      &.form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 40%;
+        max-width: 30em;
+        height: 20em;
+        font-size: 20px;
+        font-weight: 300;
+        padding-left: 37px;
+        padding-right: 37px;
+        border-radius: 0.75em;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      &.field {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  }
 }

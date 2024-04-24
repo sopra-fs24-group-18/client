@@ -6,6 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Profile.scss";
 import {Button} from "components/ui/Button";
+import axios from 'axios';
 
 const Profile = () => {
     const { userId } = useParams(); //hook id from URL
@@ -13,36 +14,47 @@ const Profile = () => {
     const [editing, setEditing] = useState(false);
     const [newUsername, setNewUsername] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [roomId, setRoomId] = useState("");
+    const [roomCode, setRoomCode] = useState("");
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false)
-    const currentIdString = localStorage.getItem("id");
-    const currentId = parseInt(currentIdString);
+    // const currentIdString = localStorage.getItem("userId");
+    // const currentId = parseInt(currentIdString);
     const navigate = useNavigate();
-
-    console.log(userId)
+    const token = localStorage.getItem('token');
 
     const fetchUserData = async () => {
         try {
-            //const response = await api.get(`/users/${id}`);
             const response = await api.get(`/users/${userId}`);
+            // console.log("response data", response.data)
             setUserData(response.data);
             // Check if userData is not null or undefined
-            console.log(response.data); // Log the fetched user data
+            // console.log("userData", userData);
+            // console.log("token", token);
+            // Store the token into the local storage.
+            //localStorage.setItem("token", userData.token);
+            localStorage.setItem("userId", userId);
         } catch (error) {
             console.error("Error fetching user data:", error);
         }
     };
 
+
     const saveUserData = async () => {
         try {
             const requestBody = {
-                id: userData.id,
+                id: userId,
                 username: newUsername,
                 password: newPassword,
+                token: token,
             };
 
-            await api.put(`/users/${userData.id}`, requestBody);
+            console.log("request body", requestBody)
+            console.log("userId:", userId);
+
+            await api.put(`/users/${userId}`, requestBody);
+
+            setNewUsername('');
+            setNewPassword('');
 
             setShowSuccessMessage(true);
             setTimeout(() => {
@@ -56,6 +68,7 @@ const Profile = () => {
         }
     };
 
+
     useEffect(() => {
         fetchUserData(); // Fetch user data on component mount
     }, [userId]); // Re-fetch data when ID changes
@@ -66,6 +79,7 @@ const Profile = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("userId");
         navigate("/login");
     };
 
@@ -84,14 +98,15 @@ const Profile = () => {
     const handleJoinRoom = async () => {
 
         // Placeholder for handling join room button click with specific roomId
-        console.log(`Joining room with ID: ${roomId}`);
+        console.log(`Joining room with ID: ${roomCode}`);
+        console.log(`Joining room with userID: ${userId}`);
         // check if the roomID exist in the backend or not
         try {
-            const response = await api.get(`/rooms/${roomId}`);
+            const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
 
             // check if the room id exist in the backend
-            if (response.data.exists) {
-                navigate(`/game-room/${roomId}`);
+            if (response.data) {
+                navigate(`/rooms/${roomCode}/${userId}/enter`);
             } else {
                 setErrorMessage('This room does not exist. Please check the room ID.');
             }
@@ -135,14 +150,17 @@ const Profile = () => {
                                 onChange={(e) => setNewPassword(e.target.value)}
                             />
 
-                            <div className="button-container">
-                                <Button width="30%" onClick={() => {
-                                    saveUserData(); // save user data
-                                    setEditing(false); // set editing state as false
-                                }}>
-                                    Save
-                                </Button>
-                            </div>
+                        <div className="form-group saveButton">
+                            <Button
+                                disabled={!newUsername || !newPassword}
+                                width="100%"
+                                onClick={() => {
+                                saveUserData(); // save user data
+                                setEditing(false); // set editing state as false
+                            }}>
+                                Save
+                            </Button>
+                        </div>
 
                         </div>
 
@@ -181,8 +199,8 @@ const Profile = () => {
                     <label>Enter Room ID:</label>
                     <input
                         type="text"
-                        value={roomId}
-                        onChange={(e) => setRoomId(e.target.value)}
+                        value={roomCode}
+                        onChange={(e) => setRoomCode(e.target.value)}
                     />
                 </div>
                 <Button width="100%" onClick={handleJoinRoom}>Join Room</Button>
