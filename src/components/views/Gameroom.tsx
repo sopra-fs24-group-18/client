@@ -13,13 +13,15 @@ const GameRoom = () => {
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
-  const roundNumber = Number(localStorage.getItem("roundNumber"));
+  let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [Min, setMin] = useState<number>(0);
   const [Max, setMax] = useState<number>(1000);
   //const [Blur, setBlur] = useState<boolean>(false);
   const userId = localStorage.getItem("userId");
   const roomId = localStorage.getItem("roomId");
   const [chosenItemList, setChosenItemList] = useState<string>('');
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   useEffect(() => {
     const initializeGame = async () => {
       try {
@@ -27,6 +29,7 @@ const GameRoom = () => {
         if (roundNumber === 1) {
           const response = await api.post(`games/${roomId}/${userId}/getReady`);
           if (response.status === 204) {
+            setIsReady(true);
             console.log('Ready response:', response.data);
             await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
           } else {
@@ -99,6 +102,7 @@ const GameRoom = () => {
       });
       console.log("Success:", result.data);
       setImageUrl('/loading.png');
+      setIsConfirmed(true);
     } catch (error) {
       console.error("Error posting value", error);
     }
@@ -215,15 +219,45 @@ const GameRoom = () => {
   const [message, setMessage] = useState({ text: "", type: "" });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-    if (timeLeft === 0) {
-      clearTimeout(timer);
-      navigate("/shop");
+    if (isReady) {  // when post ready, begin to countdown
+      const timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+
+      if (timeLeft === 0) {
+        clearTimeout(timer);
+        if (!isConfirmed) {
+          handleConfirmClick()
+            .then(() => {
+              // after auto-handleConfirmClick
+              if (roundNumber === 3) {
+                navigate('/ranking');
+              } else {
+                roundNumber += 1;
+                localStorage.setItem("roundNumber", String(roundNumber));
+                navigate('/shop');
+              }
+            })
+            .catch((error) => {
+              console.error("Failed to auto-confirm:", error);
+              // handle error
+            });
+        } else {
+          // if already clicked confirm
+          if (roundNumber === 3) {
+            navigate('/ranking');
+          } else {
+            roundNumber += 1;
+            localStorage.setItem("roundNumber", String(roundNumber));
+            navigate('/shop');
+          }
+        }
+      }
+
+      return () => clearTimeout(timer);
     }
-    return () => clearTimeout(timer);
-  }, [timeLeft]);
+  }, [timeLeft, isConfirmed, roundNumber, isReady]); // dependency
+
 
   const doGameroom_point = async (toolType) => {
     try {
