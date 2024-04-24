@@ -54,6 +54,7 @@ const AppRouter = () => {
         <Route path="/roomcreation" element={<Roomcreation/>} />
         <Route path="/users/:userId" element={<Profile />} />
         <Route path="/gameroom" element={<GameRoom />} />
+        <Route path="/rooms/:roomCode/:userId/enter" element={<GameRoom />} />
 
       </Routes>
     </BrowserRouter>

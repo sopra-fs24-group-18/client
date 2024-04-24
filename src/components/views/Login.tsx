@@ -52,7 +52,9 @@ const Login = () => {
 
       // Store the userid into the local storage.
       localStorage.setItem("userId", user.id)
+      localStorage.setItem("token", user.token)
       console.log("id,", user.id)
+      console.log("token", user.token)
       const userId = user.id;
       // Login successfully worked --> navigate to the profile page in the AppRouter
       navigate(`/users/${userId}`);

@@ -225,50 +225,73 @@ const GameRoom = () => {
   };
 
   return (
-    <div className="gameRoomContainer">
-    <BaseContainer>
-      <img src={imageUrl} alt="Item display" className="gameRoomImage" />
-      <div className="sliderWrapper">
-        <div style={labelStyle}>{sliderValue}</div>
-        <input
-          type="range"
-          min="0"
-          max={bar_max}
-          value={sliderValue}
-          onChange={handleSliderChange}
-          className="rangeInput"
-          ref={sliderRef}
-        />
-      </div>
-      <div className="buttonsContainer">
-        <Button onClick={handleStart}>S T A R T</Button>
-        <Button onClick={handleConfirmClick}>Confirm</Button>
-      </div>
-      <div className="tool display">
-          <label className="tool label">Tools</label>
-          <div className="tool container">
-              {renderTools()}
-          </div>
-      </div>
-      <div className="gameroom_point form"><br /><br />
+    <div className="gameRoom">
+        <div className="gameRoomContainer">
 
-        {/* Display remaining time */}
-        <div style={{ position: 'absolute', top: 50, left: 100, textAlign: 'center'}}>
-          Time: <br />
-          {timeLeft}
+            {/*image part*/}
+            <div className="image">
+                <img src={imageUrl} alt="Item display" className="gameRoomImage"/>
+                <div className="text">
+                    Slide to choose the price <br/>
+                </div>
+                <div className="text">{sliderValue}</div>
+                <div className="sliderWrapper">
+                    <input
+                        type="range"
+                        min="0"
+                        max={bar_max}
+                        value={sliderValue}
+                        onChange={handleSliderChange}
+                        className="rangeInput"
+                        ref={sliderRef}
+                    />
+                </div>
+                <div className="buttonsContainer">
+                    <Button width="150%" onClick={handleStart}>START</Button>
+                    <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
+                </div>
+            </div>
+
+            {/*tool part*/}
+            <div className="tool">
+                <div className="tool display">
+                    <label className="tool label">Tools</label>
+                    <div className="tool container">
+                        {renderTools()}
+                    </div>
+                </div>
+            </div>
+
+            {/*points part*/}
+            <div className="score">
+
+                {/* Display remaining time */}
+                <div className="label" style={{left: 100}}>
+                    Time: <br/>
+                    {timeLeft}
+                </div>
+
+                {/* Display Points */}
+                <div className="label" style={{right: 100}}>
+                    Your Point: <br/>
+                </div>
+
+                {/*round display*/}
+                <div className="label" style={{center:0, color:"white"}}>
+                    Round: <br/>
+                </div>
+
+                <div className="gameRoom-point form"><br/><br/>
+                    <div className="score-table">
+                        <Button width="180%">User1:</Button>
+                        <Button width="180%">User2:</Button>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
-        {/* Display Points */}
-        <div style={{ position: 'absolute', top: 50, right: 100, textAlign: 'center'}}>
-          Your Point: <br />
-        </div>
-      </div>
-
-      <div className="score-table">
-        <Button >User1:</Button>
-        <Button >User2:</Button>
-      </div>
-    </BaseContainer>
     </div>
   );
 };
