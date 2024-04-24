@@ -22,7 +22,10 @@ const GameRoom = () => {
   const userId = localStorage.getItem("userId");
   const [chosenItemList, setChosenItemList] = useState<string>('');
   const [isConfirmed, setIsConfirmed] = useState(false);
+  //const isReady = localStorage.getItem("isReady");
   const [isReady, setIsReady] = useState(false);
+  const isReady_1 = localStorage.getItem(("isReady_1"))
+
   // gain item picture ui
     useEffect(() => {
         const initializeGame = async () => {
@@ -32,6 +35,7 @@ const GameRoom = () => {
                     const response = await api.post(`games/${roomId}/${userId}/getReady`);
                     if (response.status === 204) {
                         setIsReady(true);
+                        localStorage.setItem("isReady", isReady);
                         console.log('Ready response:', response.data);
                         await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
                     } else {
@@ -205,18 +209,9 @@ const GameRoom = () => {
         fetchUser();
     }, [userId]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setTimeLeft(timeLeft - 1);
-  //   }, 1000);
-  //   if (timeLeft === 0) {
-  //     clearTimeout(timer);
-  //     navigate("/gameroom");
-  //   }
-  //   return () => clearTimeout(timer);
-  // }, [timeLeft]);
+
     useEffect(() => {
-        if (isReady) {  // when post ready, begin to countdown
+        if (isReady || isReady_1 === "True") {  // when post ready, begin to countdown
             const timer = setTimeout(() => {
                 setTimeLeft(timeLeft - 1);
             }, 1000);
@@ -231,6 +226,7 @@ const GameRoom = () => {
                                 navigate('/rank');
                             } else {
                                 roundNumber += 1;
+                                localStorage.setItem("isReady_1","True")
                                 localStorage.setItem("roundNumber", String(roundNumber));
                                 navigate('/shop');
                             }
@@ -245,6 +241,7 @@ const GameRoom = () => {
                         navigate('/rank');
                     } else {
                         roundNumber += 1;
+                        localStorage.setItem("isReady_1","True")
                         localStorage.setItem("roundNumber", String(roundNumber));
                         navigate('/shop');
                     }
@@ -253,7 +250,7 @@ const GameRoom = () => {
 
             return () => clearTimeout(timer);
         }
-    }, [timeLeft, isConfirmed, roundNumber, isReady]); // dependency
+    }, [timeLeft, isConfirmed, roundNumber, isReady, isReady_1]); // dependency
 
 
   //rank
