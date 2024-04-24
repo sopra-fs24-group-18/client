@@ -1,7 +1,7 @@
 @import "../theme";
 .gameRoom{
   .gameRoomContainer {
-    position: absolute;
+    //position: absolute;
     text-align: center;
     padding: 20px;
     //position: relative;
@@ -19,7 +19,7 @@
     .gameRoomImage {
       margin-top: 5em;
       margin-bottom: 3em;
-      max-width: 40%;
+      max-width: 80%;
       height: auto;
       background-color: rgba(61, 160, 239, 0.8);
       padding: 10px;
@@ -39,9 +39,23 @@
     .rangeInput{
       width: 100%;
       max-width: 600px;
-      background-color: rgb(69, 69, 103); /* 设置滑块的背景颜色 */
-      cursor: pointer; /* 鼠标样式为指针 */
+      background-color: rgb(69, 69, 103);
+      cursor: pointer;
+
+      .minValue, .maxValue {
+        position: absolute;
+        bottom: 0; //sliderWrapper bottom
+      }
+
+      .minValue {
+        left: -30px;
+      }
+
+      .maxValue {
+        right: -70px;
+      }
     }
+
 
     .buttonsContainer {
       position: absolute;
