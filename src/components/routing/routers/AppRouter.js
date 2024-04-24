@@ -8,11 +8,9 @@ import Mainpage from '../../views/Mainpage';
 import Register from '../../views/Register';
 import Profile from "../../views/Profile";
 import Shop from '../../views/Shop';
-import Gameroom_point from '../../views/Gameroom_point';
 import Roomcreation from '../../views/Roomcreation';
 import GameRoom from "../../views/Gameroom";
 import Rank from "../../views/Rank"
-import Tool from "../../views/Tool"
 
 /**
  * Main router of your application.
@@ -51,10 +49,9 @@ const AppRouter = () => {
         </Route>
 
         <Route path="/register" element={<Register/>} />
-        <Route path="/users/:userId/shop" element={<Shop/>} />
+        <Route path="/shop" element={<Shop/>} />
         <Route path="/roomcreation" element={<Roomcreation/>} />
         <Route path="/users/:userId" element={<Profile />} />
-        <Route path="/gameroom" element={<GameRoom />} />
         <Route path="/rooms/:roomCode/:userId/enter" element={<GameRoom />} />
         <Route path="/rank" element={<Rank />} />
 

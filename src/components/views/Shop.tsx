@@ -13,10 +13,9 @@ const Purchase = () => {
     const navigate = useNavigate();
     const [timeLeft, setTimeLeft] = useState(30);
     const [message, setMessage] = useState({ text: "", type: "" });
-
     const [player, setPlayer] = useState("");
-
     const userId = localStorage.getItem("userId");
+    const roomCode = localStorage.getItem("roomCode")
     // fetch current user data
     useEffect(() => {
         async function fetchUser() {
@@ -38,7 +37,7 @@ const Purchase = () => {
         }, 1000);
         if (timeLeft === 0) {
             clearTimeout(timer);
-            navigate("/shop");
+            navigate(`/rooms/${roomCode}/${userId}/enter`);
         }
         return () => clearTimeout(timer);
     }, [timeLeft]);
