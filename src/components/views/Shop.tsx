@@ -19,8 +19,22 @@ const Purchase = () => {
   const [isHintDisabled, setIsHintDisabled] = useState(false);
   const [isBlurDisabled, setIsBlurDisabled] = useState(false);
 
+  //useEffect(() => {
+  //  const timer = setInterval(async () => {
+  //    try {
+  //      const response = await api.get(`/users/${userId}`);
+  //      setPlayer(response.data);
+  //      console.log("User data fetched successfully:", response.data);
+  //    } catch (error) {
+  //      console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+  //    }
+  //  }, 100);
+  //
+  //  return () => clearInterval(timer);
+  //}, [userId]);
+
   useEffect(() => {
-    const timer = setInterval(async () => {
+    async function fetchUser() {
       try {
         const response = await api.get(`/users/${userId}`);
         setPlayer(response.data);
@@ -28,10 +42,9 @@ const Purchase = () => {
       } catch (error) {
         console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
       }
-    }, 100);
-    
-    return () => clearInterval(timer);
-  }, [userId]);
+    }
+    fetchUser();
+  }, [userId]);  
 
 
   // timer
@@ -57,6 +70,8 @@ const Purchase = () => {
         const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody_2);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
         setIsHintDisabled(true);
+        const response_buy = await api.get(`/users/${userId}`);
+        setPlayer(response_buy.data);        
       }else if (toolType === response.data[1].type){
         const tool_2 = new Tool(response.data[1]);
         const toolId_2 = tool_2.id;
@@ -64,6 +79,8 @@ const Purchase = () => {
         const response_3 = await api.post(`/tools/${toolId_2}/${userId}`, requestBody_3);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
         setIsBlurDisabled(true);
+        const response_buy = await api.get(`/users/${userId}`);
+        setPlayer(response_buy.data);        
       }else{
         displayMessage("Cannot find this tool.", "error-message");
       }
