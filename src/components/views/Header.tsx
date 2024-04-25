@@ -14,7 +14,7 @@ import "../../styles/views/Header.scss";
 const Header = props => (
 //   <div className="header container" style={{height: props.height}}>
   <div className="header container" style={{height: "auto"}}>
-     <h1 className="header title">SoPra FS24 Group 18 </h1>
+    <h1 className="header title">SoPra FS24 Group 18 </h1>
   </div>
 );
 
