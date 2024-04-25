@@ -217,7 +217,7 @@ const GameRoom = () => {
       } catch (error) {
         console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
       }
-      }
+    }
     fetchUser();
   }, [userId]);  
 
@@ -278,13 +278,13 @@ const GameRoom = () => {
   //  return () => clearInterval(timer_rank);
   //}, []);
   const [rankData, setRankData] = useState([]);
-    useEffect(() => {
-      const fetchPoints = async () => {
-        try {
-          const response_rank = await api.get(`/rooms/${roomId}/rank`);
-          setRankData(response_rank.data);
-        } catch (error) {
-        console.error('Error fetching points', error);
+  useEffect(() => {
+    const fetchPoints = async () => {
+      try {
+        const response_rank = await api.get(`/rooms/${roomId}/rank`);
+        setRankData(response_rank.data);
+      } catch (error) {
+      console.error("Error fetching points", error);
       }
     };
     fetchPoints();
