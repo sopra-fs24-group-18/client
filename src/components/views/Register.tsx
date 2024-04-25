@@ -85,7 +85,7 @@ const Register = () => {
       localStorage.setItem("token", user.token);
       localStorage.setItem("username", user.username);
       localStorage.setItem("userId", user.id);
-      const testId = localStorage.getItem("current_user_id");
+      const testId = localStorage.getItem("userId");
       console.log({testId});
       // Login successfully worked --> navigate to the route /game in the GameRouter
       navigate(`/users/${userId}`);

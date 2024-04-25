@@ -49,9 +49,22 @@ const Rank = () => {
   ));
 
   console.log("pointList:", pointList)
+  console.log(localStorage);
 
   let content = <Spinner />;
-
+  const handleExit = () => {
+    localStorage.removeItem("isReady");
+    localStorage.removeItem("isReady_1");
+    localStorage.removeItem("myScore");
+    localStorage.removeItem("playerNames");
+    localStorage.removeItem("questionId");
+    localStorage.removeItem("rank");
+    localStorage.removeItem("roomCode");
+    localStorage.removeItem("roomId");
+    localStorage.removeItem("roundNumber");
+    localStorage.removeItem("timeLeft");
+    navigate(`/users/${userId}`);
+  };
   if (pointList) {
     content = (
       <div className="rank">
@@ -60,7 +73,7 @@ const Rank = () => {
         </ul>
         <Button
           style={{ marginTop: "5em", width: "100%" }}
-          onClick={() => navigate(`/users/${userId}`)}
+          onClick={handleExit}
         >
           Exit
         </Button>

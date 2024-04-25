@@ -71,7 +71,7 @@ const Profile = () => {
   const handleEditClick = () => {
     setEditing(false);
   };
-
+  console.log(localStorage);
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
