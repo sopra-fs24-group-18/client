@@ -46,7 +46,7 @@ const GameRoom = () => {
     };
 
     initializeGame();
-  }, [isReady, roomId, roundNumber]);
+  }, []);
 
   const fetchImageUrl = async (roomId, roundNumber) => {
     try {
