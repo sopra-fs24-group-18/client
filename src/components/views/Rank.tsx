@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef} from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/Rank.scss";
@@ -7,9 +7,9 @@ import BaseContainer from "components/ui/BaseContainer";
 import {Spinner} from "../ui/Spinner";
 
 const Rank = () => {
-  const roomId = localStorage.getItem('roomId')
+  const roomId = localStorage.getItem("roomId")
   // const playerNames = localStorage.getItem('playerNames')
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem("userId");
   // point display
   const navigate = useNavigate();
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -36,7 +36,7 @@ const Rank = () => {
         const response_rank = await api.get(`/rooms/${roomId}/rank`);
         setRankData(response_rank.data);
       } catch (error) {
-        console.error('Error fetching points', error);
+        console.error("Error fetching points", error);
       }
     };
     fetchPoints();
@@ -54,30 +54,31 @@ const Rank = () => {
 
   if (pointList) {
     content = (
-        <div className="rank">
-          <ul className="user-list" >
-            {pointList}
-          </ul>
-          <Button
-              style={{ marginTop: '5em', width: '100%' }}
-              onClick={() => navigate(`/users/${userId}`)}
-          >
-            Exit
-          </Button>
+      <div className="rank">
+        <ul className="user-list" >
           {pointList}
-        </div>
+        </ul>
+        <Button
+          style={{ marginTop: "5em", width: "100%" }}
+          onClick={() => navigate(`/users/${userId}`)}
+        >
+          Exit
+        </Button>
+        {pointList}
+      </div>
     );
   }
 
   return (
-      <BaseContainer className="rank container">
-        {/*<h1>Rank</h1>*/}
-        <p className="rank paragraph">
-          Rank in this Game:
-        </p>
-        {content}
-      </BaseContainer>
+    <BaseContainer className="rank container">
+      {/*<h1>Rank</h1>*/}
+      <p className="rank paragraph">
+        Rank in this Game:
+      </p>
+      {content}
+    </BaseContainer>
   );
   ;
 };
+
 export default Rank;
