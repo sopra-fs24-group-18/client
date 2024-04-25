@@ -191,11 +191,7 @@ const GameRoom = () => {
 
   // point display
   const navigate = useNavigate();
-  //const [timeLeft, setTimeLeft] = useState(30);
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const storedTimeLeft = localStorage.getItem('timeLeft');
-    return storedTimeLeft ? parseInt(storedTimeLeft, 30) : 30;
-  });
+  const [timeLeft, setTimeLeft] = useState(20);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
