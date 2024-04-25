@@ -194,20 +194,20 @@ const GameRoom = () => {
   const [timeLeft, setTimeLeft] = useState(30);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-    const [player, setPlayer] = useState("");
-    // fetch current user data
-    useEffect(() => {
-      const timer = setInterval(async () => {
-        try {
-          const response = await api.get(`/users/${userId}`);
-          setPlayer(response.data);
-          console.log("User data fetched successfully:", response.data);
-        } catch (error) {
-          console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-        }
-      }, 100);
-      return () => clearInterval(timer);
-    }, [userId]);
+  const [player, setPlayer] = useState("");
+  // fetch current user data
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      try {
+        const response = await api.get(`/users/${userId}`);
+        setPlayer(response.data);
+        console.log("User data fetched successfully:", response.data);
+      } catch (error) {
+        console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, [userId]);
 
 
     useEffect(() => {
@@ -256,21 +256,21 @@ const GameRoom = () => {
   //rank
     const [rankData, setRankData] = useState([]);
     useEffect(() => {
-        const fetchPoints = async () => {
-            try {
-                const response_rank = await api.get(`/rooms/${roomId}/rank`);
-                setRankData(response_rank.data);
-            } catch (error) {
-                console.error('Error fetching points', error);
-            }
-        };
-        fetchPoints();
+      const timer_rank = setInterval(async () => {
+        try {
+          const response_rank = await api.get(`/rooms/${roomId}/rank`);
+          setRankData(response_rank.data);
+        } catch (error) {
+          console.error('Error fetching points', error);
+        }
+        }, 100);
+        return () => clearInterval(timer_rank);
     }, []);
     const sortedRankData = rankData.sort((a, b) => b.score - a.score);
     const pointList = sortedRankData.map((item, index) => (
-        <div key={index}>
-            {item.username}: points: {item.score}
-        </div>
+      <div key={index}>
+        {item.username}: points: {item.score}
+      </div>
     ));
 
   const doGameroom_point = async (toolType) => {
