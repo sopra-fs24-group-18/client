@@ -1,58 +1,26 @@
 @import "../theme";
 
-
-.gameRoomContainer {
-  text-align: center;
-  padding: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center; // center horizontally
-  justify-content: center; // center vertically
-}
-
-
-.buttonsContainer {
-  position: absolute;
-  right: 10px;
-  top: 70%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: -10px; // between button
-}
-
-
-
-.score-table {
-  position: absolute;
-  left: 10px;
-  top: 70%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: -10px; // between button
-}
-
-.gameroom_point {
-  &.form {
+.rank {
+  &.container {
+    background-image: url('../../assets/Window.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 5em;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 40%;
-    max-width: 30em;
-    height: 20em;
-    font-size: 20px;
-    font-weight: 300;
-    padding-left: 37px;
-    padding-right: 37px;
-    border-radius: 0.75em;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    align-items: center;
+    @include center;
   }
-  &.field {
+  &.user-list {
+    margin-top: 1em;
+    list-style: none;
+    //padding-left: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    margin-bottom: 20em;
   }
-
+  & p,h2 {
+    margin: 0.5em 0;
+  }
 }
