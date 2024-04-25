@@ -219,7 +219,7 @@ const GameRoom = () => {
       }
     }
     fetchUser();
-  }, [userId]);  
+  }, [isReady, userId]);  
 
   useEffect(() => {
     if (isReady || isReady_1 === "True") {  // when post ready, begin to countdown
@@ -288,7 +288,7 @@ const GameRoom = () => {
       }
     };
     fetchPoints();
-  }, []);  
+  }, [isReady]);  
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
     <div key={index}>
