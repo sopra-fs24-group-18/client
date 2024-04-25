@@ -45,8 +45,15 @@ const GameRoom = () => {
       }
     };
 
-    initializeGame();
-  }, [api]);
+    // initializeGame();
+    if(!isReady){
+      const interval = setInterval(() => {
+        initializeGame();
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+    
+  }, []);
 
   const fetchImageUrl = async (roomId, roundNumber) => {
     try {
