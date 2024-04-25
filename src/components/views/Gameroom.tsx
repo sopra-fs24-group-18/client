@@ -14,7 +14,7 @@ const GameRoom = () => {
   const [Min, setMin] = useState<number>(0);
   const [Max, setMax] = useState<number>(1000);
   const userId = localStorage.getItem("userId");
-  const [chosenItemList, setChosenItemList] = useState<string>("");
+  // const [chosenItemList, setChosenItemList] = useState<string>("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const isReady_1 = localStorage.getItem(("isReady_1"))
@@ -99,7 +99,7 @@ const GameRoom = () => {
         questionId,
         userId,
         guessedPrice: sliderValue,
-        chosenItemList,
+        // chosenItemList,
       });
       console.log("Success:", result.data);
       setImageUrl("/loading.png");
