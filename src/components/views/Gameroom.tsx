@@ -1,30 +1,23 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef} from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/GameRoom.scss";
 import {useNavigate} from "react-router-dom";
-import User from "models/User";
-import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 
 const GameRoom = () => {
 
-  const [sliderValue, setSliderValue] = useState<number>(0);
-  const sliderRef = useRef<HTMLInputElement>(null);
-  const [labelStyle, setLabelStyle] = useState<React.CSSProperties>({});
-  const roomId = localStorage.getItem('roomId');
-  const playerNames = localStorage.getItem('playerNames');
-
-  const [imageUrl, setImageUrl] = useState<string>('/loading.png');
-  let roundNumber = Number(localStorage.getItem("roundNumber"));
-  const [Min, setMin] = useState<number>(0);
-  const [Max, setMax] = useState<number>(1000);
-  const userId = localStorage.getItem("userId");
-  const [chosenItemList, setChosenItemList] = useState<string>('');
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  //const isReady = localStorage.getItem("isReady");
-  const [isReady, setIsReady] = useState(false);
-  const isReady_1 = localStorage.getItem(("isReady_1"))
+    const [sliderValue, setSliderValue] = useState<number>(0);
+    const sliderRef = useRef<HTMLInputElement>(null);
+    const roomId = localStorage.getItem("roomId");
+    const [imageUrl, setImageUrl] = useState<string>("/loading.png");
+    let roundNumber = Number(localStorage.getItem("roundNumber"));
+    const [Min, setMin] = useState<number>(0);
+    const [Max, setMax] = useState<number>(1000);
+    const userId = localStorage.getItem("userId");
+    const [chosenItemList, setChosenItemList] = useState<string>("");
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [isReady, setIsReady] = useState(false);
+    const isReady_1 = localStorage.getItem(("isReady_1"))
 
   // gain item picture ui
     useEffect(() => {
@@ -36,17 +29,17 @@ const GameRoom = () => {
                     if (response.status === 204) {
                         setIsReady(true);
                         localStorage.setItem("isReady", isReady);
-                        console.log('Ready response:', response.data);
+                        console.log("Ready response:", response.data);
                         await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
                     } else {
-                        alert('Failed to get ready, status: ' + response.status);
+                        alert("Failed to get ready, status: " + response.status);
                     }
                 }
                 else {
                     await fetchImageUrl(roomId, roundNumber); // Direct call if not the first round
                 }
             } catch (error) {
-                console.error('Error initializing game:', error);
+                console.error("Error initializing game:", error);
             }
         };
 
@@ -56,14 +49,14 @@ const GameRoom = () => {
     const fetchImageUrl = async (roomId, roundNumber) => {
         try {
             const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
-            localStorage.setItem('questionId',response.data.id);
+            localStorage.setItem("questionId",response.data.id);
             //blur items
-            const newImageUrl = response.data.blur ? '/mosaic.jpg' : response.data.itemImage;
+            const newImageUrl = response.data.blur ? "/mosaic.jpg" : response.data.itemImage;
             setImageUrl(newImageUrl);
             setSliderRange(response.data.leftRange, response.data.rightRange);
-            console.log('check:', newImageUrl, imageUrl, Min, Max)
+            console.log("check:", newImageUrl, imageUrl, Min, Max)
         } catch (error) {
-            console.error('Error fetching image URL:', error);
+            console.error("Error fetching image URL:", error);
         }
     };
     const setSliderRange = (min: number, max: number) => {
@@ -88,11 +81,11 @@ const GameRoom = () => {
         const newPosition = percentage * (slider.offsetWidth - 16) / 100;//-16 or -8
         /**
          setLabelStyle({
-         position: 'absolute',
+         position: "absolute",
          left: `${newPosition}px`,
-         transform: 'translateX(-50%)',
-         marginTop: '-25px',
-         marginLeft:'450px'
+         transform: "translateX(-50%)",
+         marginTop: "-25px",
+         marginLeft:"450px"
          });*/
     };
 
@@ -107,7 +100,7 @@ const GameRoom = () => {
                 chosenItemList,
             });
             console.log("Success:", result.data);
-            setImageUrl('/loading.png');
+            setImageUrl("/loading.png");
             setIsConfirmed(true);
         } catch (error) {
             console.error("Error posting value", error);
@@ -115,18 +108,17 @@ const GameRoom = () => {
 
     };
 
-  // Tool display
+    // Tool display
     const [tools, setTools] = useState([]);
 
-    console.log("userID:", userId)
-    // fetch user's tool list from backend
+    // fetch user"s tool list from backend
     // useEffect(() => {
     //     const fetchTools = async () => {
     //         try {
     //             const response = await api.get(`/tools/{userId}`);
     //             setTools(response.data);
     //         } catch (error) {
-    //             console.error('Error fetching tools:', error);
+    //             console.error("Error fetching tools:", error);
     //         }
     //     };
     //
@@ -138,12 +130,12 @@ const GameRoom = () => {
         const fetchUserTools = async () => {
             try {
                 const userToolsFromBackend = [
-                    { id: 1, toolType: 'BLUR' },
-                    { id: 2, toolType: 'HINT' }
+                    { id: 1, toolType: "BLUR" },
+                    { id: 2, toolType: "HINT" }
                 ];
                 setTools(userToolsFromBackend);
             } catch (error) {
-                console.error('Error fetching user tools:', error);
+                console.error("Error fetching user tools:", error);
             }
         };
 
@@ -161,16 +153,17 @@ const GameRoom = () => {
 
         const { id, toolType } = tool;
 
-        let toolClassName = 'tool item default';
-        let toolContent = '';
+        let toolClassName = "tool item default";
+        let toolContent = "";
 
-        if (toolType === 'HINT') {
-            toolClassName = 'tool item hint';
-            toolContent = 'Hint';
-        } else if (toolType === 'BLUR') {
-            toolClassName = 'tool item bomb';
-            toolContent = 'Blur';
+        if (toolType === "HINT") {
+            toolClassName = "tool item hint";
+            toolContent = "Hint";
+        } else if (toolType === "BLUR") {
+            toolClassName = "tool item bomb";
+            toolContent = "Blur";
         }
+
         return (
             <div key={id} className={toolClassName}>
                     {toolContent}
@@ -189,14 +182,14 @@ const GameRoom = () => {
         ];
     };
 
-  // point display
-  const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(20);
-  const [message, setMessage] = useState({ text: "", type: "" });
+    // point display
+    const navigate = useNavigate();
+    const [timeLeft, setTimeLeft] = useState(20);
+    const [message, setMessage] = useState({ text: "", type: "" });
 
-  const [player, setPlayer] = useState("");
-  // fetch current user data
-  useEffect(() => {
+    const [player, setPlayer] = useState("");
+    // fetch current user data
+    useEffect(() => {
     const timer = setInterval(async () => {
       try {
         const response = await api.get(`/users/${userId}`);
@@ -206,8 +199,9 @@ const GameRoom = () => {
         console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
       }
     }, 100);
+
     return () => clearInterval(timer);
-  }, [userId]);
+    }, [userId]);
 
     useEffect(() => {
         if (isReady || isReady_1 === "True") {  // when post ready, begin to countdown
@@ -222,12 +216,12 @@ const GameRoom = () => {
                         .then(() => {
                             // after auto-handleConfirmClick
                             if (roundNumber === 3) {
-                                navigate('/rank');
+                                navigate("/rank");
                             } else {
                                 roundNumber += 1;
                                 localStorage.setItem("isReady_1","True")
                                 localStorage.setItem("roundNumber", String(roundNumber));
-                                navigate('/shop');
+                                navigate("/shop");
                             }
                         })
                         .catch((error) => {
@@ -237,12 +231,12 @@ const GameRoom = () => {
                 } else {
                     // if already clicked confirm
                     if (roundNumber === 3) {
-                        navigate('/rank');
+                        navigate("/rank");
                     } else {
                         roundNumber += 1;
                         localStorage.setItem("isReady_1","True")
                         localStorage.setItem("roundNumber", String(roundNumber));
-                        navigate('/shop');
+                        navigate("/shop");
                     }
                 }
             }
@@ -251,8 +245,7 @@ const GameRoom = () => {
         }
     }, [timeLeft, isConfirmed, roundNumber, isReady, isReady_1]); // dependency
 
-
-  //rank
+    //rank
     const [rankData, setRankData] = useState([]);
     useEffect(() => {
       const timer_rank = setInterval(async () => {
@@ -260,9 +253,10 @@ const GameRoom = () => {
           const response_rank = await api.get(`/rooms/${roomId}/rank`);
           setRankData(response_rank.data);
         } catch (error) {
-          console.error('Error fetching points', error);
+          console.error("Error fetching points", error);
         }
         }, 100);
+
         return () => clearInterval(timer_rank);
     }, []);
     const sortedRankData = rankData.sort((a, b) => b.score - a.score);
@@ -272,115 +266,84 @@ const GameRoom = () => {
       </div>
     ));
 
-  const doGameroom_point = async (toolType) => {
-    try {
+    return (
+        <div className="gameRoom">
+            <div className="gameRoomContainer">
 
-  // purchase successfully worked --> navigate to the gameRoom
-      navigate("/gameRoom");
+                {/*image part*/}
+                <div className="image">
+                    <img src={imageUrl} alt="Item display" className="gameRoomImage"/>
 
-      // Show success message
-      // displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        displayMessage("You don't have enough points.", "error-message");
-      }
-      else{
-        displayMessage(`Something went wrong during the purchase: ${handleError(error)}`, "error-message");
-      }
-    }
-  };
-
-  const displayMessage = (messageText, messageType) => {
-    setMessage({ text: messageText, type: messageType });
-    setTimeout(() => {
-      setMessage({ text: "", type: "" });
-    }, 5000); // Hide message after 5 seconds
-  };
-
-  return (
-    <div className="gameRoom">
-        <div className="gameRoomContainer">
-
-            {/*image part*/}
-            <div className="image">
-                <img src={imageUrl} alt="Item display" className="gameRoomImage"/>
-
-                <div className="text">
-                    Slide to choose the price <br/>
-                </div>
-
-                <div className="text">{sliderValue}</div>
-
-                <div className="sliderWrapper">
-                    <div className="minValue">{Min}</div>
-                    <input
-                        type="range"
-                        min={Min}
-                        max={Max}
-                        value={sliderValue}
-                        onChange={handleSliderChange}
-                        className="rangeInput"
-                        ref={sliderRef}
-                    />
-                    <div className="maxValue">{Max}</div>
-                </div>
-
-                <div className="buttonsContainer">
-                    {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
-                    <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
-                </div>
-            </div>
-
-            {/*tool part*/}
-            <div className="tool">
-                <div className="tool display">
-                    <label className="tool label">Tools</label>
-                    <div className="tool container">
-                        {renderTools()}
+                    <div className="text">
+                        Slide to choose the price <br/>
                     </div>
-                </div>
-            </div>
 
-            {/*points part*/}
-            <div className="score">
+                    <div className="text">{sliderValue}</div>
 
-                {/* Display remaining time */}
-                <div className="label" style={{left: 100}}>
-                    Time: <br/>
-                    {timeLeft}
-                </div>
+                    <div className="sliderWrapper">
+                        <div className="minValue">{Min}</div>
+                        <input
+                            type="range"
+                            min={Min}
+                            max={Max}
+                            value={sliderValue}
+                            onChange={handleSliderChange}
+                            className="rangeInput"
+                            ref={sliderRef}
+                        />
+                        <div className="maxValue">{Max}</div>
+                    </div>
 
-                {/* Display Points */}
-                <div className="label" style={{right: 100}}>
-                    Your Point: <br/>
-                    {player.score}
-                </div>
-
-                {/*round display*/}
-                <div className="label" style={{center: 0, color: "white"}}>
-                    Round:
-                    {roundNumber}
-                </div>
-
-                <div className="gameRoom-point form"><br/><br/>
-                    <div className="score-table">
-                        <Button width="180%">{pointList}</Button>
-                        {/*<Button width="180%">User2:</Button>*/}
+                    <div className="buttonsContainer">
+                        {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
+                        <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
                     </div>
                 </div>
 
-                {/*<div className="score-table">*/}
-                {/*    <Button>*/}
-                {/*        {pointList}*/}
-                {/*    </Button>*/}
-                {/*</div>*/}
-            </div>
+                {/*tool part*/}
+                <div className="tool">
+                    <div className="tool display">
+                        <label className="tool label">Tools</label>
+                        <div className="tool container">
+                            {renderTools()}
+                        </div>
+                    </div>
+                </div>
 
+                {/*points part*/}
+                <div className="score">
+
+                    {/* Display remaining time */}
+                    <div className="label" style={{left: 100}}>
+                        Time: <br/>
+                        {timeLeft}
+                    </div>
+
+                    {/* Display Points */}
+                    <div className="label" style={{right: 100}}>
+                        Your Point: <br/>
+                        {player.score}
+                    </div>
+
+                    {/*round display*/}
+                    <div className="label" style={{center: 0, color: "white"}}>
+                        Round:
+                        {roundNumber}
+                    </div>
+
+                    <div className="gameRoom-point form"><br/><br/>
+                        <div className="score-table">
+                            <Button width="180%">{pointList}</Button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
 
         </div>
-
-    </div>
-  );
+        );
 };
+
 export default GameRoom;
