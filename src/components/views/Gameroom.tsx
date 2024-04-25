@@ -46,7 +46,7 @@ const GameRoom = () => {
     };
 
     initializeGame();
-  }, []);
+  }, [api]);
 
   const fetchImageUrl = async (roomId, roundNumber) => {
     try {
