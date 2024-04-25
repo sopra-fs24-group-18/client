@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
-import User from "models/User";
+//import User from "models/User";
 import {useNavigate} from "react-router-dom";
 import "styles/views/Roomcreation.scss";
-import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-
 
 /*
 It is possible to add multiple components inside a single file,
@@ -40,7 +38,7 @@ interface DropdownProps {
 
 const DropdownMenu: React.FC<DropdownProps> = ({ title, options, onSelect }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
@@ -51,7 +49,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ title, options, onSelect }) => 
   return (
     <div className="dropdown">
       <div className="dropdown-title">{title}</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <button
           className="button-dropdown"
           onClick={() => setIsVisible(!isVisible)}
@@ -78,10 +76,10 @@ const DropdownMenu: React.FC<DropdownProps> = ({ title, options, onSelect }) => 
 interface RoomCreationProps {}
 
 const RoomCreation: React.FC<RoomCreationProps> = () => {
-  const [gameMode, setGameMode] = useState('');
-  const [playerAmount, setPlayerAmount] = useState('');
+  const [gameMode, setGameMode] = useState("");
+  const [playerAmount, setPlayerAmount] = useState("");
   const navigate = useNavigate();
-  const [name, setRoomName] = useState('');
+  const [name, setRoomName] = useState("");
 
 
   const handleSubmit = async () => {
@@ -89,12 +87,13 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
       const ownerId = localStorage.getItem("userId");
       const userId = localStorage.getItem("userId");
       if (!ownerId) {
-        alert('Owner ID is not available. Please log in again.');
+        alert("Owner ID is not available. Please log in again.");
+
         return;
       }
-      console.log('test:', { name, ownerId, playerAmount: Number(playerAmount), gameMode });
+      console.log("test:", { name, ownerId, playerAmount: Number(playerAmount), gameMode });
       // request to create room
-      const response = await api.post('/rooms', {
+      const response = await api.post("/rooms", {
         name,
         ownerId,
         playerAmount: Number(playerAmount),
@@ -113,54 +112,53 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
         // store it for using in game room
         const roomData = response.data;
-        localStorage.setItem('roomId', roomData.id);
-        localStorage.setItem('playerNames', roomData.playerNames);
-        localStorage.setItem('roomCode', roomCode);
+        localStorage.setItem("roomId", roomData.id);
+        localStorage.setItem("playerNames", roomData.playerNames);
+        localStorage.setItem("roomCode", roomCode);
         navigate(`/rooms/${roomCode}/${userId}/enter`);
-        console.log('Room created:', { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode });
+        console.log("Room created:", { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode, roundNumber });
       } else {
-        alert('Failed to retrieve room code after creation');
+        alert("Failed to retrieve room code after creation");
       }
     } catch (error) {
       console.error(`Failed to create room: ${error}`);
       alert(`Failed to create room: ${error}`);
     }
   };
-
-
+  const userId = localStorage.getItem("userId");
   const handleCancel = () => {
-    navigate(`/users/:userId`);
+    navigate(`/users/${userId}`);
   };
 
   return (
     <div className="background-container">
       <div className="creation container">
-          <div className="creation form">
+        <div className="creation form">
 
-        <DropdownMenu
-          title="Player Number"
-          options={['1', '2', '3']}
-          onSelect={setPlayerAmount}
-        />
+          <DropdownMenu
+            title="Player Number"
+            options={["1", "2", "3"]}
+            onSelect={setPlayerAmount}
+          />
 
-        <DropdownMenu
-          title="Game Mode"
-          options={["GUESSING", "BUDGET"]}
-          onSelect={setGameMode}
-        />
-            <FormField
-              label="Room Name"
-              value={name}
-              onChange={(un: string) => setRoomName(un)}
-            />
+          <DropdownMenu
+            title="Game Mode"
+            options={["GUESSING", "BUDGET"]}
+            onSelect={setGameMode}
+          />
+          <FormField
+            label="Room Name"
+            value={name}
+            onChange={(un: string) => setRoomName(un)}
+          />
 
-        <div className="button-group">
-          <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerAmount|| !name}>
-          </button>
-          <button className="button-cancel" onClick={handleCancel}>
-          </button>
+          <div className="button-group">
+            <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerAmount|| !name}>
+            </button>
+            <button className="button-cancel" onClick={handleCancel}>
+            </button>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
