@@ -104,10 +104,10 @@ const GameRoom = () => {
       console.log("Success:", result.data);
       setImageUrl("/loading.png");
       setIsConfirmed(true);
-      setMessage("Confirmation successful!");
+      setMessage_1("Confirmation successful!");
     } catch (error) {
       console.error("Error posting value", error);
-      setMessage("Failed to confirm!");
+      setMessage_1("Failed to confirm!");
     }
 
   };
@@ -302,7 +302,7 @@ const GameRoom = () => {
             {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
             <Button width="150%" >Room: {roomCode} </Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
-            {message && <div>{message}</div>}
+            {message && <div>{message_1}</div>}
           </div>
         </div>
 
