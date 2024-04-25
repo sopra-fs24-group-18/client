@@ -4,11 +4,11 @@ import {GameGuard} from "../routeProtectors/GameGuard";
 import GameRouter from "./GameRouter";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
-import Mainpage from '../../views/Mainpage';
-import Register from '../../views/Register';
+import Mainpage from "../../views/Mainpage";
+import Register from "../../views/Register";
 import Profile from "../../views/Profile";
-import Shop from '../../views/Shop';
-import Roomcreation from '../../views/Roomcreation';
+import Shop from "../../views/Shop";
+import Roomcreation from "../../views/Roomcreation";
 import GameRoom from "../../views/Gameroom";
 import Rank from "../../views/Rank"
 

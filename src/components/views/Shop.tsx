@@ -36,14 +36,15 @@ const Purchase = () => {
 
   // timer
   useEffect(() => {
-      const timer = setTimeout(() => {
-          setTimeLeft(timeLeft - 1);
-      }, 1000);
-      if (timeLeft === 0) {
-          clearTimeout(timer);
-          navigate(`/rooms/${roomCode}/${userId}/enter`);
-      }
-      return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    if (timeLeft === 0) {
+      clearTimeout(timer);
+      navigate(`/rooms/${roomCode}/${userId}/enter`);
+    }
+    
+    return () => clearTimeout(timer);
   }, [timeLeft]);
 
   const doPurchase = async (toolType) => {
