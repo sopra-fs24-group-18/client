@@ -101,6 +101,7 @@ const Profile = () => {
       const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
       const roomData = response.data;
       localStorage.setItem("roomId", roomData.id);
+      localStorage.setItem("roomCode", roomData.roomCode);
       localStorage.setItem("playerNames", roomData.playerNames);
       localStorage.setItem("roundNumber", "1");
       // check if the room id exist in the backend
