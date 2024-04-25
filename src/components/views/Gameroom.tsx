@@ -19,6 +19,7 @@ const GameRoom = () => {
   const [isReady, setIsReady] = useState(false);
   const isReady_1 = localStorage.getItem(("isReady_1"))
   const roomCode = localStorage.getItem("roomCode");
+  const [message_1, setMessage_1] = useState("");
 
   // gain item picture ui
   useEffect(() => {
@@ -103,8 +104,10 @@ const GameRoom = () => {
       console.log("Success:", result.data);
       setImageUrl("/loading.png");
       setIsConfirmed(true);
+      setMessage("Confirmation successful!");
     } catch (error) {
       console.error("Error posting value", error);
+      setMessage("Failed to confirm!");
     }
 
   };
@@ -299,6 +302,7 @@ const GameRoom = () => {
             {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
             <Button width="150%" >Room: {roomCode} </Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
+            {message && <div>{message}</div>}
           </div>
         </div>
 
