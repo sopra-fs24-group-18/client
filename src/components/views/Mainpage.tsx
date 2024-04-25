@@ -1,16 +1,16 @@
-import React from 'react';
-import 'styles/views/Mainpage.scss';
+import React from "react";
+import "styles/views/Mainpage.scss";
 import { useNavigate} from "react-router-dom";
-
 
 const Mainpage= () => {
   const navigate = useNavigate();
   const navigateToLogin = () => {
-    navigate(`login`);
+    navigate("/login");
   };
   const navigateToRegister = ()=> {
-    navigate(`register`);
+    navigate("/register");
   };
+
   return (
     <div className="main-page">
       <h1 className="title">The Price<br />Is Right</h1>

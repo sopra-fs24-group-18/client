@@ -11,36 +11,58 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
     const navigate = useNavigate();
-    const [timeLeft, setTimeLeft] = useState(30);
+    //const [timeLeft, setTimeLeft] = useState(10);
+    const [timeLeft, setTimeLeft] = useState(() => {
+      const storedTimeLeft = localStorage.getItem('timeLeft');
+      return storedTimeLeft ? parseInt(storedTimeLeft, 10) : 10;
+    });
     const [message, setMessage] = useState({ text: "", type: "" });
     const [player, setPlayer] = useState("");
     const userId = localStorage.getItem("userId");
     const roomCode = localStorage.getItem("roomCode")
-    // fetch current user data
+    const [isHintDisabled, setIsHintDisabled] = useState(false);
+    const [isBlurDisabled, setIsBlurDisabled] = useState(false);
+
     useEffect(() => {
-        async function fetchUser() {
-            try {
-                const response = await api.get(`/users/${userId}`);
-                setPlayer(response.data);
-                console.log("User data fetched successfully:", response.data);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-            }
+      const timer = setInterval(async () => {
+        try {
+          const response = await api.get(`/users/${userId}`);
+          setPlayer(response.data);
+          console.log("User data fetched successfully:", response.data);
+        } catch (error) {
+          console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
         }
-        fetchUser();
+      }, 100);
+      return () => clearInterval(timer);
     }, [userId]);
 
+
     // timer
+    //useEffect(() => {
+    //    const timer = setTimeout(() => {
+    //        setTimeLeft(timeLeft - 1);
+    //    }, 1000);
+    //    if (timeLeft === 0) {
+    //        clearTimeout(timer);
+    //        navigate(`/rooms/${roomCode}/${userId}/enter`);
+    //    }
+    //    return () => clearTimeout(timer);
+    //}, [timeLeft]);
+
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setTimeLeft(timeLeft - 1);
-        }, 1000);
-        if (timeLeft === 0) {
-            clearTimeout(timer);
+      const timer = setInterval(() => {
+        setTimeLeft(prevTimeLeft => {
+          const newTimeLeft = prevTimeLeft - 1;
+          if (newTimeLeft === 0) {
+            clearInterval(timer);
             navigate(`/rooms/${roomCode}/${userId}/enter`);
-        }
-        return () => clearTimeout(timer);
-    }, [timeLeft]);
+          }
+          localStorage.setItem('timeLeft', newTimeLeft.toString());
+          return newTimeLeft;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }, []);
 
     const doPurchase = async (toolType) => {
         try {
@@ -48,22 +70,20 @@ const Purchase = () => {
             if (toolType === response.data[0].type){
                 const tool = new Tool(response.data[0]);
                 const toolId = tool.id;
-                const requestBody = JSON.stringify({ toolId, userId });
-                const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody);
+                const requestBody_2 = JSON.stringify({ toolId, userId });
+                const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody_2);
+                displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
+                setIsHintDisabled(true);
             }else if (toolType === response.data[1].type){
-                const tool = new Tool(response.data[1]);
-                const toolId = tool.id;
-                const requestBody = JSON.stringify({ toolId, userId });
-                const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody);
+                const tool_2 = new Tool(response.data[1]);
+                const toolId_2 = tool_2.id;
+                const requestBody_3 = JSON.stringify({ toolId_2, userId });
+                const response_3 = await api.post(`/tools/${toolId_2}/${userId}`, requestBody_3);
+                displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
+                setIsBlurDisabled(true);
             }else{
                 displayMessage("Cannot find this tool.", "error-message");
             }
-            //const requestBody = JSON.stringify({ toolId, userId });
-            //const response = await api.post(`/tools/${toolId}/${userId}`, requestBody);
-
-            // Show success message
-            //displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 displayMessage("You don't have enough points.", "error-message");
@@ -81,6 +101,7 @@ const Purchase = () => {
         }, 5000); // Hide message after 5 seconds
     };
 
+
     return (
         <div className="background-container">
             <BaseContainer>
@@ -93,7 +114,7 @@ const Purchase = () => {
                             {timeLeft}
                         </div>
 
-                        {/* Display Points */}
+                    {/* Display Points */}
                         <div style={{ position: 'absolute', top: 50, right: 100, textAlign: 'center'}}>
                             Your Point: <br />
                             {player.score}
@@ -101,12 +122,13 @@ const Purchase = () => {
 
                         {/* Get Hints */}
                         <div style={{ textAlign: 'left'}}>
-                            Hints: 20 Points
+                            Hints: 30 Points
                         </div>
                         <div className="register button-container" style={{display: "flex",justifyContent: 'space-between', margin: 0, padding: 0}} >
                             <button className="shop hint"></button>
                             <button className="shop buy-button"
-                                    onClick={() => doPurchase("HINT")}
+                                disabled={isHintDisabled}
+                                onClick={() => doPurchase("HINT")}
                             >
                                 Buy
                             </button>
@@ -117,12 +139,13 @@ const Purchase = () => {
 
                         {/* Disturb Others */}
                         <div style={{ textAlign: 'left'}}>
-                            Blur: 20 Points
+                            Blur: 30 Points
                         </div>
                         <div className="register button-container" style={{display: "flex",justifyContent: 'space-between', margin: 0, padding: 0}} >
                             <button className="shop bomb"></button>
                             <button className="shop buy-button"
-                                    onClick={() => doPurchase("BLUR")}
+                                disabled={isBlurDisabled}
+                                onClick={() => doPurchase("BLUR")}
                             >
                                 Buy
                             </button>

@@ -6,8 +6,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import Profile from "./Profile";
-
+//import Profile from "./Profile";
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -16,16 +15,16 @@ specific components that belong to the main one in the same file.
  */
 const FormField = (props) => {
   return (
-      <div className="login field">
-        <label className="login label">{props.label}</label>
-        <input
-            className="login input"
-            placeholder="enter here.."
-            value={props.value}
-            onChange={(e) => props.onChange(e.target.value)}
-            type={props.type} // Set the input type dynamically
-        />
-      </div>
+    <div className="login field">
+      <label className="login label">{props.label}</label>
+      <input
+        className="login input"
+        placeholder="enter here.."
+        value={props.value}
+        onChange={(e) => props.onChange(e.target.value)}
+        type={props.type} // Set the input type dynamically
+      />
+    </div>
   );
 };
 
@@ -46,10 +45,8 @@ const Login = () => {
     try {
       const requestBody = JSON.stringify({ username, password }); // name --> password
       const response = await api.post("/login", requestBody);
-
       // Get the returned user and update a new object.
       const user = new User(response.data);
-
       // Store the userid into the local storage.
       localStorage.setItem("userId", user.id)
       localStorage.setItem("token", user.token)
@@ -58,7 +55,6 @@ const Login = () => {
       const userId = user.id;
       // Login successfully worked --> navigate to the profile page in the AppRouter
       navigate(`/users/${userId}`);
-
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized: Incorrect username or password
@@ -77,33 +73,27 @@ const Login = () => {
     }, 5000); // Hide message after 5 seconds
   };
 
-  const doCancel =  () => {
-    const navigate = useNavigate();
-    navigate("/");
-  }
-
-
   return (
     <div className="background-container">
       <BaseContainer>
         <div className="login container">
           <div className="login form"><br /><br />
             <FormField
-                label="Username"
-                value={username}
-                onChange={(un: string) => setUsername(un)}
+              label="Username"
+              value={username}
+              onChange={(un: string) => setUsername(un)}
             />
             <FormField
-                label="Password"
-                value={password}
-                onChange={(n) => setPassword(n)}
-                type="password" // Set input type to "password"
+              label="Password"
+              value={password}
+              onChange={(n) => setPassword(n)}
+              type="password" // Set input type to "password"
             />
             <div className="login button-container">
               <Button
-                  disabled={!username || !password}
-                  width="100%"
-                  onClick={() => doLogin()}
+                disabled={!username || !password}
+                width="100%"
+                onClick={() => doLogin()}
               >
                 Login
               </Button>
@@ -118,9 +108,9 @@ const Login = () => {
             </div>
             {/* Display message */}
             {message.text && (
-                <div className={`message-container ${message.type}`}>
-                  {message.text}
-                </div>
+              <div className={`message-container ${message.type}`}>
+                {message.text}
+              </div>
             )}
           </div>
         </div>
