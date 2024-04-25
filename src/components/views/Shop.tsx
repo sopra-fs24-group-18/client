@@ -53,7 +53,7 @@ const Purchase = () => {
         }, 1000);
         if (timeLeft === 0) {
             clearTimeout(timer);
-            //navigate(`/rooms/${roomCode}/${userId}/enter`);
+            navigate(`/rooms/${roomCode}/${userId}/enter`);
         }
         return () => clearTimeout(timer);
     }, [timeLeft]);

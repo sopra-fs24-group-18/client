@@ -360,7 +360,8 @@ const GameRoom = () => {
 
                 {/*round display*/}
                 <div className="label" style={{center: 0, color: "white"}}>
-                    Round: <br/>
+                    Round:
+                    {roundNumber}
                 </div>
 
                 <div className="gameRoom-point form"><br/><br/>
