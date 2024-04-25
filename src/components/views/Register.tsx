@@ -7,35 +7,12 @@ import { ShowButton } from "components/ui/ShowButton";
 import "styles/views/Register.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-
-
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
- /*
-const FormField = (props) => {
-  return (
-    <div className="register field">
-      <label className="register label">{props.label}</label>
-      <input
-        className="register input"
-        placeholder="enter here.."
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-
-FormField.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
-*/
 const FormField = ({
   label,
   type = "text",
@@ -51,10 +28,11 @@ const FormField = ({
     onChange(event.target.value);
   };
   const maskedValue = maskPassword ? value.replace("*") : value;
+
   return (
     <div className="register field">
       <label className="register label">{label}</label>
-      <div className="input-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
+      <div className="input-wrapper" style={{ display: "flex", alignItems: "center" }}>
         <input
           className="register input"
           placeholder="enter here.."
@@ -63,10 +41,10 @@ const FormField = ({
           onChange={handleInputChange}
           autoComplete="off"
         />
-          {type === "password" && maskPassword && (
-            <ShowButton className="show-password" onClick={toggleShowPassword}>
-            </ShowButton>
-          )}
+        {type === "password" && maskPassword && (
+          <ShowButton className="show-password" onClick={toggleShowPassword}>
+          </ShowButton>
+        )}
       </div>
     </div>
   );
@@ -78,7 +56,6 @@ FormField.propTypes = {
   onChange: PropTypes.func,
   maskPassword: PropTypes.bool,
 };
-
 
 const Register = () => {
   const navigate = useNavigate();
@@ -131,59 +108,59 @@ const Register = () => {
   };
 
   return (
-  <div className="background-container">
-    <BaseContainer>
-      <div className="register container">
-        <div className="register form"><br /><br />
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un: string) => setUsername(un)}
-          />
-          <FormField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(p) => setPassword(p)}
-            maskPassword
-          />
-          <FormField
-            label="Repeat Password"
-            type="password"
-            value={repeatPassword}
-            onChange={(rp) => setRepeatPassword(rp)}
-            maskPassword
-          />
+    <div className="background-container">
+      <BaseContainer>
+        <div className="register container">
+          <div className="register form"><br /><br />
+            <FormField
+              label="Username"
+              value={username}
+              onChange={(un: string) => setUsername(un)}
+            />
+            <FormField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(p) => setPassword(p)}
+              maskPassword
+            />
+            <FormField
+              label="Repeat Password"
+              type="password"
+              value={repeatPassword}
+              onChange={(rp) => setRepeatPassword(rp)}
+              maskPassword
+            />
 
-          <div className="register button-container" style={{display: "flex",justifyContent: 'space-between'}} >
-          {/*<div className="register button-container">*/}
-            <Button
-              disabled={!username || !password || !repeatPassword}
-              width="100%"
-              onClick={handleClick}
-            >
+            <div className="register button-container" style={{display: "flex",justifyContent: "space-between"}} >
+              {/*<div className="register button-container">*/}
+              <Button
+                disabled={!username || !password || !repeatPassword}
+                width="100%"
+                onClick={handleClick}
+              >
               Enroll
-            </Button>
-          {/*</div>*/}
-          {/*<div className="register button-container">*/}
-            <Button
-              width="100%"
-              onClick={() => navigate("/")}
-            >
+              </Button>
+              {/*</div>*/}
+              {/*<div className="register button-container">*/}
+              <Button
+                width="100%"
+                onClick={() => navigate("/")}
+              >
               Exit
-            </Button>
-          </div>
-          {/* Display message */}
-          {message.text && (
-            <div style={{ fontSize: "16px", fontFamily: '"Microsoft YaHei", sans-serif' }}>
-            {/*<div className={`message-container ${message.type}`}>*/}
-            {message.text}
+              </Button>
             </div>
-          )}
+            {/* Display message */}
+            {message.text && (
+              <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+                {/*<div className={`message-container ${message.type}`}>*/}
+                {message.text}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </BaseContainer>
-  </div>
+      </BaseContainer>
+    </div>
   );
 };
 
