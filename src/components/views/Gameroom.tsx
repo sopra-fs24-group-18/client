@@ -191,7 +191,11 @@ const GameRoom = () => {
 
   // point display
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(30);
+  //const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const storedTimeLeft = localStorage.getItem('timeLeft');
+    return storedTimeLeft ? parseInt(storedTimeLeft, 30) : 30;
+  });
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
@@ -208,7 +212,6 @@ const GameRoom = () => {
     }, 100);
     return () => clearInterval(timer);
   }, [userId]);
-
 
     useEffect(() => {
         if (isReady || isReady_1 === "True") {  // when post ready, begin to countdown

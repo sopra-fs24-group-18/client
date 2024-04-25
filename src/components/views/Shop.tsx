@@ -11,26 +11,17 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
     const navigate = useNavigate();
-    const [timeLeft, setTimeLeft] = useState(10);
+    //const [timeLeft, setTimeLeft] = useState(10);
+    const [timeLeft, setTimeLeft] = useState(() => {
+      const storedTimeLeft = localStorage.getItem('timeLeft');
+      return storedTimeLeft ? parseInt(storedTimeLeft, 10) : 10;
+    });
     const [message, setMessage] = useState({ text: "", type: "" });
     const [player, setPlayer] = useState("");
     const userId = localStorage.getItem("userId");
     const roomCode = localStorage.getItem("roomCode")
     const [isHintDisabled, setIsHintDisabled] = useState(false);
     const [isBlurDisabled, setIsBlurDisabled] = useState(false);
-    // fetch current user data
-    //useEffect(() => {
-    //    async function fetchUser() {
-    //        try {
-    //            const response = await api.get(`/users/${userId}`);
-    //            setPlayer(response.data);
-    //            console.log("User data fetched successfully:", response.data);
-    //        } catch (error) {
-    //            console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-    //        }
-    //    }
-    //    fetchUser();
-    //}, [userId]);
 
     useEffect(() => {
       const timer = setInterval(async () => {
@@ -47,16 +38,31 @@ const Purchase = () => {
 
 
     // timer
+    //useEffect(() => {
+    //    const timer = setTimeout(() => {
+    //        setTimeLeft(timeLeft - 1);
+    //    }, 1000);
+    //    if (timeLeft === 0) {
+    //        clearTimeout(timer);
+    //        navigate(`/rooms/${roomCode}/${userId}/enter`);
+    //    }
+    //    return () => clearTimeout(timer);
+    //}, [timeLeft]);
+
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setTimeLeft(timeLeft - 1);
-        }, 1000);
-        if (timeLeft === 0) {
-            clearTimeout(timer);
+      const timer = setInterval(() => {
+        setTimeLeft(prevTimeLeft => {
+          const newTimeLeft = prevTimeLeft - 1;
+          if (newTimeLeft === 0) {
+            clearInterval(timer);
             navigate(`/rooms/${roomCode}/${userId}/enter`);
-        }
-        return () => clearTimeout(timer);
-    }, [timeLeft]);
+          }
+          localStorage.setItem('timeLeft', newTimeLeft.toString());
+          return newTimeLeft;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }, []);
 
     const doPurchase = async (toolType) => {
         try {
@@ -95,6 +101,7 @@ const Purchase = () => {
         }, 5000); // Hide message after 5 seconds
     };
 
+
     return (
         <div className="background-container">
             <BaseContainer>
@@ -107,7 +114,7 @@ const Purchase = () => {
                             {timeLeft}
                         </div>
 
-                        {/* Display Points */}
+                    {/* Display Points */}
                         <div style={{ position: 'absolute', top: 50, right: 100, textAlign: 'center'}}>
                             Your Point: <br />
                             {player.score}
