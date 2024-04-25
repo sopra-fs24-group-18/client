@@ -77,7 +77,6 @@ const Rank = () => {
         >
           Exit
         </Button>
-        {pointList}
       </div>
     );
   }
