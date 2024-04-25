@@ -46,7 +46,6 @@ const Purchase = () => {
       return () => clearTimeout(timer);
   }, [timeLeft]);
 
-
   const doPurchase = async (toolType) => {
     try {
       const response = await api.get("/tools");
