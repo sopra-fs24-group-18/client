@@ -197,16 +197,16 @@ const GameRoom = () => {
     const [player, setPlayer] = useState("");
     // fetch current user data
     useEffect(() => {
-        async function fetchUser() {
-            try {
-                const response_user = await api.get(`/users/${userId}`);
-                setPlayer(response_user.data);
-                console.log("User data fetched successfully:", response_user.data);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-            }
+      const timer = setInterval(async () => {
+        try {
+          const response = await api.get(`/users/${userId}`);
+          setPlayer(response.data);
+          console.log("User data fetched successfully:", response.data);
+        } catch (error) {
+          console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
         }
-        fetchUser();
+      }, 100);
+      return () => clearInterval(timer);
     }, [userId]);
 
 

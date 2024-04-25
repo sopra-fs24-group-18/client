@@ -11,24 +11,40 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
     const navigate = useNavigate();
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(10);
     const [message, setMessage] = useState({ text: "", type: "" });
     const [player, setPlayer] = useState("");
     const userId = localStorage.getItem("userId");
     const roomCode = localStorage.getItem("roomCode")
+    const [isHintDisabled, setIsHintDisabled] = useState(false);
+    const [isBlurDisabled, setIsBlurDisabled] = useState(false);
     // fetch current user data
+    //useEffect(() => {
+    //    async function fetchUser() {
+    //        try {
+    //            const response = await api.get(`/users/${userId}`);
+    //            setPlayer(response.data);
+    //            console.log("User data fetched successfully:", response.data);
+    //        } catch (error) {
+    //            console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+    //        }
+    //    }
+    //    fetchUser();
+    //}, [userId]);
+
     useEffect(() => {
-        async function fetchUser() {
-            try {
-                const response = await api.get(`/users/${userId}`);
-                setPlayer(response.data);
-                console.log("User data fetched successfully:", response.data);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-            }
+      const timer = setInterval(async () => {
+        try {
+          const response = await api.get(`/users/${userId}`);
+          setPlayer(response.data);
+          console.log("User data fetched successfully:", response.data);
+        } catch (error) {
+          console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
         }
-        fetchUser();
+      }, 100);
+      return () => clearInterval(timer);
     }, [userId]);
+
 
     // timer
     useEffect(() => {
@@ -37,7 +53,7 @@ const Purchase = () => {
         }, 1000);
         if (timeLeft === 0) {
             clearTimeout(timer);
-            navigate(`/rooms/${roomCode}/${userId}/enter`);
+            //navigate(`/rooms/${roomCode}/${userId}/enter`);
         }
         return () => clearTimeout(timer);
     }, [timeLeft]);
@@ -48,22 +64,20 @@ const Purchase = () => {
             if (toolType === response.data[0].type){
                 const tool = new Tool(response.data[0]);
                 const toolId = tool.id;
-                const requestBody = JSON.stringify({ toolId, userId });
-                const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody);
+                const requestBody_2 = JSON.stringify({ toolId, userId });
+                const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody_2);
+                displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
+                setIsHintDisabled(true);
             }else if (toolType === response.data[1].type){
-                const tool = new Tool(response.data[1]);
-                const toolId = tool.id;
-                const requestBody = JSON.stringify({ toolId, userId });
-                const response_2 = await api.post(`/tools/${toolId}/${userId}`, requestBody);
+                const tool_2 = new Tool(response.data[1]);
+                const toolId_2 = tool_2.id;
+                const requestBody_3 = JSON.stringify({ toolId_2, userId });
+                const response_3 = await api.post(`/tools/${toolId_2}/${userId}`, requestBody_3);
+                displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
+                setIsBlurDisabled(true);
             }else{
                 displayMessage("Cannot find this tool.", "error-message");
             }
-            //const requestBody = JSON.stringify({ toolId, userId });
-            //const response = await api.post(`/tools/${toolId}/${userId}`, requestBody);
-
-            // Show success message
-            //displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 displayMessage("You don't have enough points.", "error-message");
@@ -101,12 +115,13 @@ const Purchase = () => {
 
                         {/* Get Hints */}
                         <div style={{ textAlign: 'left'}}>
-                            Hints: 20 Points
+                            Hints: 30 Points
                         </div>
                         <div className="register button-container" style={{display: "flex",justifyContent: 'space-between', margin: 0, padding: 0}} >
                             <button className="shop hint"></button>
                             <button className="shop buy-button"
-                                    onClick={() => doPurchase("HINT")}
+                                disabled={isHintDisabled}
+                                onClick={() => doPurchase("HINT")}
                             >
                                 Buy
                             </button>
@@ -117,12 +132,13 @@ const Purchase = () => {
 
                         {/* Disturb Others */}
                         <div style={{ textAlign: 'left'}}>
-                            Blur: 20 Points
+                            Blur: 30 Points
                         </div>
                         <div className="register button-container" style={{display: "flex",justifyContent: 'space-between', margin: 0, padding: 0}} >
                             <button className="shop bomb"></button>
                             <button className="shop buy-button"
-                                    onClick={() => doPurchase("BLUR")}
+                                disabled={isBlurDisabled}
+                                onClick={() => doPurchase("BLUR")}
                             >
                                 Buy
                             </button>
