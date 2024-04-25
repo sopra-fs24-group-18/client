@@ -91,7 +91,6 @@ const Rank = () => {
       {content}
     </BaseContainer>
   );
-  ;
 };
 
 export default Rank;
