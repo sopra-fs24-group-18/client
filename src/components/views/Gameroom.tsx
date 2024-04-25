@@ -50,6 +50,7 @@ const GameRoom = () => {
       const interval = setInterval(() => {
         initializeGame();
       }, 1000);
+      
       return () => clearInterval(interval);
     }
     
