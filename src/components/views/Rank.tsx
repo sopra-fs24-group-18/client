@@ -3,23 +3,16 @@ import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/Rank.scss";
 import {useNavigate} from "react-router-dom";
-import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
+import {Spinner} from "../ui/Spinner";
 
 const Rank = () => {
   const roomId = localStorage.getItem('roomId')
-  const playerNames = localStorage.getItem('playerNames')
-
-
+  // const playerNames = localStorage.getItem('playerNames')
   const userId = localStorage.getItem('userId');
-
-
-
   // point display
   const navigate = useNavigate();
   const [message, setMessage] = useState({ text: "", type: "" });
-
   const [player, setPlayer] = useState("");
   // fetch current user data
   useEffect(() => {
@@ -51,32 +44,40 @@ const Rank = () => {
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
     <div key={index}>
-      {item.username}: points: {item.score}
+      username:{item.username} | points: {item.score}
     </div>
   ));
 
-  const displayMessage = (messageText, messageType) => {
-    setMessage({ text: messageText, type: messageType });
-    setTimeout(() => {
-      setMessage({ text: "", type: "" });
-    }, 5000); // Hide message after 5 seconds
-  };
+  console.log("pointList:", pointList)
+
+  let content = <Spinner />;
+
+  if (pointList) {
+    content = (
+        <div className="rank">
+          <ul className="user-list" >
+            {pointList}
+          </ul>
+          <Button
+              style={{ marginTop: '5em', width: '100%' }}
+              onClick={() => navigate(`/users/${userId}`)}
+          >
+            Exit
+          </Button>
+          {pointList}
+        </div>
+    );
+  }
 
   return (
-    <div className="gameRoomContainer">
-
-      <div className="buttonsContainer">
-        <Button>Exit</Button>
-      </div>
-
-      <div className="score-table">
-        <Button>
-        {pointList}
-        </Button>
-      </div>
-
-
-    </div>
+      <BaseContainer className="rank container">
+        {/*<h1>Rank</h1>*/}
+        <p className="rank paragraph">
+          Rank in this Game:
+        </p>
+        {content}
+      </BaseContainer>
   );
+  ;
 };
 export default Rank;
