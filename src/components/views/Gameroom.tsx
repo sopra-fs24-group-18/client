@@ -47,7 +47,7 @@ const GameRoom = () => {
 
     // initializeGame();
     initializeGame();
-    if(!isReady){
+    if(!isReady && isReady_1 !== "True"){
       const interval = setInterval(() => {
         initializeGame();
       }, 1000);
