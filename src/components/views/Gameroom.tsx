@@ -25,36 +25,38 @@ const GameRoom = () => {
   useEffect(() => {
     const initializeGame = async () => {
       try {
-        // Post to the getReady endpoint if roundNumber is 1
-        if (roundNumber === 1) {
+        // if not round and already ready
+        if (roundNumber !== 1 || isReady || isReady_1 === "True") {
+          await fetchImageUrl(roomId, roundNumber);
+        } else {
+          // if round1 and not ready
           const response = await api.post(`games/${roomId}/${userId}/getReady`);
           if (response.status === 204) {
             setIsReady(true);
             localStorage.setItem("isReady", isReady);
             console.log("Ready response:", response.data);
-            await fetchImageUrl(roomId, roundNumber); // Fetch the image URL after a successful post
+            await fetchImageUrl(roomId, roundNumber); // 成功后获取图片 URL
           } else {
             alert("Failed to get ready, status: " + response.status);
           }
-        }
-        else {
-          await fetchImageUrl(roomId, roundNumber); // Direct call if not the first round
         }
       } catch (error) {
         console.error("Error initializing game:", error);
       }
     };
 
-    // initializeGame();
     initializeGame();
-    if(!isReady && isReady_1 !== "True"){
+
+    // if not ready
+    if (!isReady && isReady_1 !== "True") {
       const interval = setInterval(() => {
         initializeGame();
       }, 1000);
-      
+
+      // 组件卸载时清除定时器
       return () => clearInterval(interval);
     }
-    
+
   }, [isReady, isReady_1]);
 
   const fetchImageUrl = async (roomId, roundNumber) => {
