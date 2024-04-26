@@ -24,40 +24,35 @@ const GameRoom = () => {
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
-      try {
-        // if not round and already ready
-        if (roundNumber !== 1 || isReady || isReady_1 === "True") {
-          await fetchImageUrl(roomId, roundNumber);
-        } else {
-          // if round1 and not ready
+      if (roundNumber === 1) {
+        try {
           const response = await api.post(`games/${roomId}/${userId}/getReady`);
-          if (response.status === 204) {
+          console.log("Initial response:", response.data);
+
+          if (response.data === "wait") {
+            // continue polling
+          } else if (response.data === "ready") {
             setIsReady(true);
-            localStorage.setItem("isReady", isReady);
+            clearInterval(interval);
             console.log("Ready response:", response.data);
-            await fetchImageUrl(roomId, roundNumber); // 成功后获取图片 URL
+            await fetchImageUrl(roomId, roundNumber);
           } else {
             alert("Failed to get ready, status: " + response.status);
+            clearInterval(interval);
           }
+        } catch (error) {
+          console.error("Error while getting ready:", error);
+          clearInterval(interval);
         }
-      } catch (error) {
-        console.error("Error initializing game:", error);
       }
     };
 
-    initializeGame();
+    const interval = setInterval(() => {
+      initializeGame();
+    }, 1000);
 
-    // if not ready
-    if (!isReady && isReady_1 !== "True") {
-      const interval = setInterval(() => {
-        initializeGame();
-      }, 1000);
-
-      // 组件卸载时清除定时器
-      return () => clearInterval(interval);
-    }
-
-  }, [isReady, isReady_1]);
+    return () => clearInterval(interval); // clear interval
+  }, [roomId, userId, roundNumber]);
 
   const fetchImageUrl = async (roomId, roundNumber) => {
     try {
