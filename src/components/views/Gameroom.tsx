@@ -9,7 +9,7 @@ const GameRoom = () => {
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const roomId = localStorage.getItem("roomId");
-  const [imageUrl, setImageUrl] = useState<string>("/loading.png");
+  const [imageUrl, setImageUrl] = useState<string>(`${process.env.PUBLIC_URL}/loading.png`);
   let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [Min, setMin] = useState<number>(0);
   const [Max, setMax] = useState<number>(1000);
@@ -62,7 +62,7 @@ const GameRoom = () => {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem("questionId",response.data.id);
       //blur items
-      const newImageUrl = response.data.blur ? "/mosaic.jpg" : response.data.itemImage;
+      const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
       setImageUrl(newImageUrl);
       setSliderRange(response.data.leftRange, response.data.rightRange);
       console.log("check:", newImageUrl, imageUrl, Min, Max)
@@ -111,7 +111,7 @@ const GameRoom = () => {
         // chosenItemList,
       });
       console.log("Success:", result.data);
-      setImageUrl("/loading.png");
+      setImageUrl(`${process.env.PUBLIC_URL}/loading.png`);
       setIsConfirmed(true);
       setMessage_1("Confirmation successful!");
     } catch (error) {
