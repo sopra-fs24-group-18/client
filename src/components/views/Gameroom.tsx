@@ -55,7 +55,7 @@ const GameRoom = () => {
       return () => clearInterval(interval);
     }
     
-  }, []);
+  }, [isReady, isReady_1]);
 
   const fetchImageUrl = async (roomId, roundNumber) => {
     try {
