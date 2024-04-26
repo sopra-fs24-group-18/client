@@ -52,19 +52,26 @@ const Rank = () => {
   console.log(localStorage);
 
   let content = <Spinner />;
-  const handleExit = () => {
-    localStorage.removeItem("isReady");
-    localStorage.removeItem("isReady_1");
-    localStorage.removeItem("myScore");
-    localStorage.removeItem("playerNames");
-    localStorage.removeItem("questionId");
-    localStorage.removeItem("rank");
-    localStorage.removeItem("roomCode");
-    localStorage.removeItem("roomId");
-    localStorage.removeItem("roundNumber");
-    localStorage.removeItem("timeLeft");
-    navigate(`/users/${userId}`);
+
+  const leaveRoom = async () => {
+    try {
+      const requestBody = {roomId, userId};
+      await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+      localStorage.removeItem("isReady");
+      localStorage.removeItem("isReady_1");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("playerNames");
+      localStorage.removeItem("questionId");
+      localStorage.removeItem("rank");
+      localStorage.removeItem("roomCode");
+      localStorage.removeItem("roomId");
+      localStorage.removeItem("roundNumber");
+      localStorage.removeItem("timeLeft");
+      navigate(`/users/${userId}`);
+    } catch (error) {console.error("Error deleting server data:", error);
+    }
   };
+  
   if (pointList) {
     content = (
       <div className="rank">
@@ -73,7 +80,9 @@ const Rank = () => {
         </ul>
         <Button
           style={{ marginTop: "5em", width: "100%" }}
-          onClick={handleExit}
+          onClick={() => {
+            leaveRoom();
+          }}
         >
           Exit
         </Button>
