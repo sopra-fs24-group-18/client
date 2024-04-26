@@ -67,19 +67,25 @@ const GameRoom = () => {
     };
   }, [roomId, userId, roundNumber]);
 
-  const fetchImageUrl = async (roomId, roundNumber) => {
+  const fetchImageUrl = async (roomId, roundNumber, retryCount = 0) => {
     try {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
-      localStorage.setItem("questionId",response.data.id);
-      //blur items
+      localStorage.setItem("questionId", response.data.id);
       const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
       setImageUrl(newImageUrl);
       setSliderRange(response.data.leftRange, response.data.rightRange);
-      console.log("check:", newImageUrl, imageUrl, Min, Max)
+      console.log("check:", newImageUrl, imageUrl, Min, Max);
     } catch (error) {
       console.error("Error fetching image URL:", error);
+      if (error.response && error.response.status === 404 && retryCount < 2) {
+        console.log(`Retry fetching image URL due to 404 error, retry count: ${retryCount + 1}`);
+        setTimeout(() => fetchImageUrl(roomId, roundNumber, retryCount + 1), 1000); // Retry after 1 second
+      } else if (retryCount >= 2) {
+        console.error("Max retry limit reached, not retrying further.");
+      }
     }
   };
+
   const setSliderRange = (min: number, max: number) => {
     setMin(min);
     setMax(max);
