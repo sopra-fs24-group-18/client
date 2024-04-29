@@ -77,6 +77,16 @@ const Profile = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
     localStorage.removeItem("creation_date");
+    localStorage.removeItem("isReady");
+    localStorage.removeItem("isReady_1");
+    localStorage.removeItem("myScore");
+    localStorage.removeItem("playerNames");
+    localStorage.removeItem("questionId");
+    localStorage.removeItem("rank");
+    localStorage.removeItem("roomCode");
+    localStorage.removeItem("roomId");
+    localStorage.removeItem("roundNumber");
+    localStorage.removeItem("timeLeft");
     navigate("/login");
   };
 

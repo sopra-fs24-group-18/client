@@ -120,6 +120,9 @@ const GameRoom = () => {
   const handleConfirmClick = async () => {
     try {
       const questionId = localStorage.getItem("questionId");
+      setImageUrl(`${process.env.PUBLIC_URL}/loading.png`);
+      setIsConfirmed(true);
+      setMessage_1("Confirmation successful!");
       const result = await api.post("/answers/guessMode", {
         questionId,
         userId,
@@ -127,9 +130,6 @@ const GameRoom = () => {
         // chosenItemList,
       });
       console.log("Success:", result.data);
-      setImageUrl(`${process.env.PUBLIC_URL}/loading.png`);
-      setIsConfirmed(true);
-      setMessage_1("Confirmation successful!");
     } catch (error) {
       console.error("Error posting value", error);
       setMessage_1("Failed to confirm!");
