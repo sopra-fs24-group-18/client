@@ -127,7 +127,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
   };
   const userId = localStorage.getItem("userId");
   const handleCancel = () => {
-    navigate(`/users/${userId}`);
+    navigate(`/lobby/${userId}`);
   };
 
   return (

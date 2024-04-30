@@ -1,0 +1,173 @@
+@import "../theme"; // Import theme variables or mixins if needed
+
+.lobby {
+  &.field {
+    //display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &.input {
+    height: 35px;
+    padding-left: 15px;
+    margin-left: -4px;
+    border: none;
+    border-radius: 0.75em;
+    //background: transparentize(white, 0.85);
+    color: black;
+  }
+
+  &.label {
+    color: $textColor;
+    //margin-bottom: 10px;
+    text-transform: lowercase;
+    font-weight: 300;
+  }
+}
+
+.lobby-container {
+  display: flex;
+  //justify-content: space-between; // Arrange sections in a flex container with space between
+  margin-top: 0em;
+  padding: 2em; // Add padding for spacing
+  align-items: center;
+  flex-direction: column;
+
+  .header {
+    &.container {
+      @include center;
+    }
+
+    &.title {
+      font-weight: bold;
+      color: white;
+      text-align: center;
+    }
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 450px;
+    padding: 1.3rem;
+    min-height: 250px;
+    position: absolute;
+    top: 20%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    z-index: 2;
+  }
+
+  .modal .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal input {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+
+  .modal p {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0.4rem 0 0.2rem;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.4rem;
+    font-weight: 700;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .btn-open {
+    position: absolute;
+    bottom: 150px;
+  }
+
+  .btn-close {
+    transform: translate(10px, -20px);
+    padding: 0.5rem 0.7rem;
+    background: #eee;
+    border-radius: 50%;
+  }
+
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .right-section {
+    //margin-left: 5em;
+    flex: 1; // Take up remaining space
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .right-button-container {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 1em;
+    }
+
+    Button {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+.profile-button {
+  &:hover {
+    transform: translateY(-2px);
+  }
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-image: url('../../assets/setting_but.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 80px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+}

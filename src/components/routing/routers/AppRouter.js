@@ -7,6 +7,7 @@ import Login from "../../views/Login";
 import Mainpage from "../../views/Mainpage";
 import Register from "../../views/Register";
 import Profile from "../../views/Profile";
+import Lobby from "../../views/Lobby";
 import Shop from "../../views/Shop";
 import Roomcreation from "../../views/Roomcreation";
 import GameRoom from "../../views/Gameroom";
@@ -52,6 +53,7 @@ const AppRouter = () => {
         <Route path="/register" element={<Register/>} />
         <Route path="/shop" element={<Shop/>} />
         <Route path="/roomcreation" element={<Roomcreation/>} />
+        <Route path="/lobby/:userId" element={<Lobby />} />
         <Route path="/users/:userId" element={<Profile />} />
         <Route path="/rooms/:roomCode/:userId/enter" element={<GameRoom />} />
         <Route path="/rank" element={<Rank />} />

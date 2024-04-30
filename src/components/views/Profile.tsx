@@ -22,6 +22,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
+  console.log("shi", userId);
   const fetchUserData = async () => {
     try {
       const response = await api.get(`/users/${userId}`);
@@ -80,42 +81,6 @@ const Profile = () => {
     navigate("/login");
   };
 
-  const handleSingleRoom = () => {
-    // Placeholder for handling single room button click
-    //navigate( "/singleGame")
-    console.log("Joining single room...");
-  };
-
-  const handleCreateRoom = () => {
-    // Placeholder for handling create room button click
-    navigate("/roomcreation")
-    console.log("Creating a new room...");
-  };
-
-  const handleJoinRoom = async () => {
-    // Placeholder for handling join room button click with specific roomId
-    console.log(`Joining room with ID: ${roomCode}`);
-    console.log(`Joining room with userID: ${userId}`);
-    // check if the roomID exist in the backend or not
-    try {
-      const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
-      const roomData = response.data;
-      localStorage.setItem("roomId", roomData.id);
-      localStorage.setItem("roomCode", roomData.roomCode);
-      localStorage.setItem("playerNames", roomData.playerNames);
-      localStorage.setItem("roundNumber", "1");
-      // check if the room id exist in the backend
-      if (response.data) {
-        navigate(`/rooms/${roomCode}/${userId}/enter`);
-      } else {
-        setErrorMessage("This room does not exist. Please check the room ID.");
-      }
-    } catch (error) {
-      console.error("Error joining room:", error);
-      setErrorMessage("Failed to join room. Please try again.");
-    }
-  };
-
   return (
     <BaseContainer className="profile-container">
       <div className="left-section">
@@ -147,19 +112,6 @@ const Profile = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
-
-              <div className="form-group saveButton">
-                <Button
-                  disabled={!newUsername || !newPassword}
-                  width="100%"
-                  onClick={() => {
-                    saveUserData(); // save user data
-                    setEditing(false); // set editing state as false
-                  }}>
-                    Save
-                </Button>
-              </div>
-
             </div>
             {showSuccessMessage && (
               <p className="success-message">Changes saved successfully!</p>
@@ -171,6 +123,17 @@ const Profile = () => {
           userData && (
             <div className="left-button-container">
               <div>
+                {editing && <Button
+                  disabled={!newUsername || !newPassword}
+                  width="100%"
+                  onClick={() => {
+                    saveUserData(); // save user data
+                    setEditing(false); // set editing state as false
+                  }}>
+                  Save
+                </Button>}
+              </div>
+              <div>
                 {/* enable editing button or not */}
                 {!editing && (
                   <Button width="100%" onClick={() => setEditing(true)}>
@@ -178,29 +141,14 @@ const Profile = () => {
                   </Button>
                 )}
               </div>
-              <Button width="100%" onClick={handleLogout}>Logout</Button>
+              <div>
+              <Button width="100%" onClick={() => navigate(`/lobby/${userId}`)}>Back</Button>
+              {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
+            </div>
             </div>
           )
         }
 
-      </div>
-
-      <div className="right-section">
-        <div className="right-button-container">
-          <Button width="100%" onClick={handleSingleRoom}>Single Game</Button>
-          <Button width="100%" onClick={handleCreateRoom}>Create Room</Button>
-        </div>
-
-        <div className="room-input">
-          <label>Enter Room ID:</label>
-          <input
-            type="text"
-            value={roomCode}
-            onChange={(e) => setRoomCode(e.target.value)}
-          />
-        </div>
-        <Button width="100%" onClick={handleJoinRoom}>Join Room</Button>
-        {errorMessage && <p className="success-message">{errorMessage}</p>}
       </div>
     </BaseContainer>
   );

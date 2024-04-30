@@ -54,7 +54,7 @@ const Login = () => {
       console.log("token", user.token)
       const userId = user.id;
       // Login successfully worked --> navigate to the profile page in the AppRouter
-      navigate(`/users/${userId}`);
+      navigate(`/lobby/${userId}`);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Unauthorized: Incorrect password

@@ -88,7 +88,7 @@ const Register = () => {
       const testId = localStorage.getItem("userId");
       console.log({testId});
       // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate(`/users/${userId}`);
+      navigate(`/lobby/${userId}`);
     } catch (error) {
       if (error.response && error.response.status === 409) {
         // Username already exists
