@@ -79,6 +79,10 @@ const Lobby = () => {
     }
   };
 
+  const profileManagement = () => {
+    navigate(`/users/${userId}`)
+  };
+
 
   const closeModal = function () {
     setModalHidden(true);
@@ -135,7 +139,7 @@ const Lobby = () => {
           <Button width="100%" onClick={openModal}>Join Room</Button>
         </div>
       </div>
-      <button className="profile-button" onClick={() => navigate(`/users/${userId}`)}></button>
+      <button className="profile-button" onClick={profileManagement}></button>
 
     </BaseContainer>
 

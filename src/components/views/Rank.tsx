@@ -67,7 +67,7 @@ const Rank = () => {
       localStorage.removeItem("roomId");
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
-      navigate(`/users/${userId}`);
+      navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }
   };

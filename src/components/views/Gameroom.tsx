@@ -20,6 +20,8 @@ const GameRoom = () => {
   const isReady_1 = localStorage.getItem(("isReady_1"))
   const roomCode = localStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
+  const [userAnswer, setUserAnswer] = useState<number>(0);
+
 
   // gain item picture ui
   useEffect(() => {
@@ -95,6 +97,7 @@ const GameRoom = () => {
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSliderValue(Number(event.target.value));
     updateLabelPosition(event.target);
+    setUserAnswer(Number(event.target.value));
   };
 
   // pointed value
@@ -118,23 +121,23 @@ const GameRoom = () => {
 
   // sent user choice
   const handleConfirmClick = async () => {
-    try {
-      const questionId = localStorage.getItem("questionId");
-      const result = await api.post("/answers/guessMode", {
-        questionId,
-        userId,
-        guessedPrice: sliderValue,
-        // chosenItemList,
-      });
-      console.log("Success:", result.data);
-      setImageUrl(`${process.env.PUBLIC_URL}/loading.png`);
-      setIsConfirmed(true);
-      setMessage_1("Confirmation successful!");
-    } catch (error) {
-      console.error("Error posting value", error);
-      setMessage_1("Failed to confirm!");
-    }
-
+    // try {
+    //   const questionId = localStorage.getItem("questionId");
+    //   const result = await api.post("/answers/guessMode", {
+    //     questionId,
+    //     userId,
+    //     guessedPrice: sliderValue,
+    //     // chosenItemList,
+    //   });
+    //   console.log("Success:", result.data);
+    //   setImageUrl(`${process.env.PUBLIC_URL}/loading.png`);
+    //   setIsConfirmed(true);
+    //   setMessage_1("Confirmation successful!");
+    // } catch (error) {
+    //   console.error("Error posting value", error);
+    //   setMessage_1("Failed to confirm!");
+    // }
+    navigate(`/waiting-answer/${userAnswer}`)
   };
 
   // Tool display

@@ -81,6 +81,10 @@ const Profile = () => {
     navigate("/login");
   };
 
+  const back = () => {
+    navigate(`/lobby/${userId}`);
+  };
+
   return (
     <BaseContainer className="profile-container">
       <div className="left-section">
@@ -142,7 +146,7 @@ const Profile = () => {
                 )}
               </div>
               <div>
-              <Button width="100%" onClick={() => navigate(`/lobby/${userId}`)}>Back</Button>
+              <Button width="100%" onClick={back}>Back</Button>
               {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
             </div>
             </div>
