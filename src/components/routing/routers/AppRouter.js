@@ -11,6 +11,7 @@ import Shop from "../../views/Shop";
 import Roomcreation from "../../views/Roomcreation";
 import GameRoom from "../../views/Gameroom";
 import Rank from "../../views/Rank"
+import GameRoomBudget from "../../views/GameroomBudget";
 
 /**
  * Main router of your application.
@@ -53,7 +54,8 @@ const AppRouter = () => {
         <Route path="/shop" element={<Shop/>} />
         <Route path="/roomcreation" element={<Roomcreation/>} />
         <Route path="/users/:userId" element={<Profile />} />
-        <Route path="/rooms/:roomCode/:userId/enter" element={<GameRoom />} />
+        <Route path="/rooms/:roomCode/:userId/guessing" element={<GameRoom />} />
+        <Route path="/rooms/:roomCode/:userId/budget" element={<GameRoomBudget />} />
         <Route path="/rank" element={<Rank />} />
 
       </Routes>

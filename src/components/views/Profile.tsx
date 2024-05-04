@@ -21,6 +21,7 @@ const Profile = () => {
   // const currentId = parseInt(currentIdString);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [gameMode, setGameMode] = useState("");
 
   const fetchUserData = async () => {
     try {
@@ -87,6 +88,7 @@ const Profile = () => {
     localStorage.removeItem("roomId");
     localStorage.removeItem("roundNumber");
     localStorage.removeItem("timeLeft");
+    localStorage.removeItem("gameMode");
     navigate("/login");
   };
 
@@ -114,9 +116,12 @@ const Profile = () => {
       localStorage.setItem("roomCode", roomData.roomCode);
       localStorage.setItem("playerNames", roomData.playerNames);
       localStorage.setItem("roundNumber", "1");
+      localStorage.setItem("gameMode", gameMode);
       // check if the room id exist in the backend
       if (response.data) {
-        navigate(`/rooms/${roomCode}/${userId}/enter`);
+        if (response.data.gameMode === "BUDGET"){
+          navigate(`/rooms/${roomCode}/${userId}/guessing`);}
+        else {navigate(`/rooms/${roomCode}/${userId}/budget`);}
       } else {
         setErrorMessage("This room does not exist. Please check the room ID.");
       }

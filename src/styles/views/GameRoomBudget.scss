@@ -1,0 +1,166 @@
+@import "../theme";
+
+.gameRoom{
+  .gameRoomContainer {
+    //position: absolute;
+    text-align: center;
+    padding: 20px;
+    //position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center; // center horizontally
+    justify-content: center; // center vertically
+  }
+
+    .image {
+      position: relative;
+      top: 100px;
+      flex-direction: column;
+      align-items: center; // center horizontally
+      justify-content: center; // center vertically
+
+      .imageGrid {
+        display: grid;
+        //grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        //grid-auto-rows: minmax(100px, auto);
+        grid-template-columns: repeat(3, 1fr); /* 3 pictures */
+        grid-template-rows: repeat(2, 1fr); /* 2 row */
+        gap: 5px;
+      }
+
+      img { // Apply styles directly to all <img> tags under .imageGrid
+        max-width: 70%;
+        height: 70%;
+        background-color: rgba(61, 160, 239, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 3em; // only bottom margin to space out images vertically
+      }
+      .selected {
+        border: 2px solid blue;
+        background-color: lightblue;
+      }
+
+
+      .buttonsContainer {
+           position: absolute;
+           margin-right: -140px;
+           top: 120%;
+           transform: translateY(-50%);
+           display: flex;
+           flex-direction: column;
+           gap: -10px; // between button
+         }
+
+      .text {
+        margin-bottom: 0.5em;
+        font-size: 16px;
+        color: rgb(36, 36, 150);
+      }
+    }
+
+
+  .tool{
+    &.display {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center; /* Align items vertically centered */
+      justify-content: flex-start; /* Align items to the left */
+    }
+
+    &.label {
+      font-size: 24px;
+      font-weight: bold;
+      //margin-bottom: 20px;
+      margin-right:1em;
+    }
+
+    &.container {
+      display: flex;
+      align-items: center; /* Align items vertically centered */
+      justify-content: flex-start; /* Align items to the left */
+    }
+
+    &.item{
+      width: 80px;
+      height: 80px;
+      margin-right: 1em; /* Add margin between tool items */
+      border: none;
+      border-radius: 10px;
+      //background-color: rgba(255, 255, 0, 0);
+    }
+
+    &.hint{
+      background-image: url('../../assets/hint.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.bomb{
+      background-image: url('../../assets/bomb.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.default {
+      background-color: rgb(69, 69, 103);
+    }
+  }
+
+  .score{
+    .score-table {
+      position: absolute;
+      left: 4em;
+      top: 70%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: -10px; // between button
+    }
+    .label{
+      position: absolute;
+      top: 50px;
+      text-align: center;
+      color: rgb(36, 36, 150);
+      font-size: 20px;
+    }
+
+    .gameRoom-point {
+      &.container{
+        background-image: url('../../assets/Name_Table 2.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        //background-position: center;
+        // min-height: 600px; // Set a minimum height for consistency
+      }
+      &.form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 40%;
+        max-width: 30em;
+        height: 20em;
+        font-size: 20px;
+        font-weight: 300;
+        padding-left: 37px;
+        padding-right: 37px;
+        border-radius: 0.75em;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      &.field {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+
