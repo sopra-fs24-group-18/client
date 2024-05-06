@@ -126,47 +126,34 @@ const GameRoomBudget = () => {
   // Tool display
   const [tools, setTools] = useState([]);
 
-  // fetch user"s tool list from backend
-  // useEffect(() => {
-  //     const fetchTools = async () => {
-  //         try {
-  //             const response = await api.get(`/tools/{userId}`);
-  //             setTools(response.data);
-  //         } catch (error) {
-  //             console.error("Error fetching tools:", error);
-  //         }
-  //     };
-  //
-  //     fetchTools();
-  // }, [userId]);
-
-  // simulate fetch user's tool list from backend
+  //fetch user"s tool list from backend
   useEffect(() => {
-    const fetchUserTools = async () => {
+    const fetchTools = async () => {
       try {
-        const userToolsFromBackend = [
-          { id: 1, toolType: "BLUR" },
-          { id: 2, toolType: "HINT" }
-        ];
-        setTools(userToolsFromBackend);
+        const response = await api.get(`/tools/${userId}`);
+        console.log("tools list", response.data); ["",""]
+        // Check if response data is not empty
+        if (response.data.length > 0) {
+          setTools(response.data);
+        }
       } catch (error) {
-        console.error("Error fetching user tools:", error);
+        console.error("Error fetching tools:", error);
       }
     };
 
-    fetchUserTools();
-  }, []);
-
+    fetchTools();
+  }, [userId]);
 
   // display Tools in the game screen
-  const displayTool = (tool, index) => {
+  const displayTool = (tool) => {
     if (!tool) {
       return (
-        <div key={`default-${index}`} className="tool item default"></div>
+          <div className="tool item default"></div>
       );
     }
 
-    const { id, toolType } = tool;
+    const toolType  = tool;
+    //console.log("display tool:", tool)
 
     let toolClassName = "tool item default";
     let toolContent = "";
@@ -180,9 +167,9 @@ const GameRoomBudget = () => {
     }
 
     return (
-      <div key={id} className={toolClassName}>
-        {toolContent}
-      </div>
+        <div className={toolClassName}>
+          {toolContent}
+        </div>
     );
   };
 
@@ -192,10 +179,11 @@ const GameRoomBudget = () => {
     const emptySlotsCount = Math.max(3 - displayedTools.length, 0); // calculate the empty slot
 
     return [
-      ...displayedTools.map((tool, index) => displayTool(tool, index)),
-      ...Array(emptySlotsCount).fill(null).map((_, index) => displayTool(null, displayedTools.length + index))
+      ...displayedTools.map((tool) => displayTool(tool)),
+      ...Array(emptySlotsCount).fill(null).map((_) => displayTool(null))
     ];
   };
+
 
   // point display
   const navigate = useNavigate();

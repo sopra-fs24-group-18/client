@@ -9,7 +9,7 @@ import {Button} from "components/ui/Button";
 //import axios from 'axios';
 
 const Profile = () => {
-  const { userId } = useParams(); //hook id from URL
+  const userId= localStorage.getItem("userId");
   const [userData, setUserData] = useState(null);
   const [editing, setEditing] = useState(false);
   const [newUsername, setNewUsername] = useState("");
