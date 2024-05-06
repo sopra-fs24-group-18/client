@@ -18,6 +18,7 @@ const GameRoomBudget = () => {
   const [selectedItemIds, setSelectedItemIds] = useState([]);
   const [itemImages, setItemImages] = useState([]);
   const [itemIds, setItemIds] = useState([]);
+  const [userAnswer, setUserAnswer] = useState("");
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
@@ -99,11 +100,13 @@ const GameRoomBudget = () => {
         return [...prev, id]; // add to selected list
       }
     });
+    setUserAnswer(selectedItemIds.join(","));
   };
 
   // sent user choice
   const handleConfirmClick = async () => {
-    try {
+    navigate(`/waiting-answer/${userAnswer}`);
+    /*try {
       const questionId = localStorage.getItem("questionId");
       setIsConfirmed(true);
       const result = await api.post("/answers/budgetMode", {
@@ -116,7 +119,8 @@ const GameRoomBudget = () => {
     } catch (error) {
       console.error("Error posting value", error);
       setMessage_1("Failed to confirm!");
-    }
+    }*/
+
   };
 
   // Tool display
@@ -246,7 +250,7 @@ const GameRoomBudget = () => {
                 roundNumber += 1;
                 localStorage.setItem("isReady_1","True")
                 localStorage.setItem("roundNumber", String(roundNumber));
-                navigate("/shop");
+                navigate(`/waiting-answer/${userAnswer}`);
               }
             })
             .catch((error) => {

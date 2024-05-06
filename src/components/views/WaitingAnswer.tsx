@@ -12,6 +12,8 @@ const WaitingAnswer = () => {
   let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [showAlert, setShowAlert] = useState(false);
   const [countdown, setCountdown] = useState(10); // set count down timer to 5s
+  const gameMode = localStorage.getItem("gameMode");
+
 
   useEffect(() => {
     const fetchScore = async () => {

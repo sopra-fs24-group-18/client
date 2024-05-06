@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 //import User from "models/User";
-import { useNavigate, useParams } from "react-router-dom";
+import { Route, useNavigate, useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Lobby.scss";
 import {Button} from "components/ui/Button";
 import PropTypes from "prop-types";
+import GameRoom from "./Gameroom";
+import GameRoomBudget from "./GameroomBudget";
 
 const FormField = (props) => {
   return (
@@ -38,6 +40,7 @@ const Lobby = () => {
   // const currentId = parseInt(currentIdString);
   const [modalHidden, setModalHidden] = useState(true);
   const [overlayHidden, setOverlayHidden] = useState(true);
+  const [gameMode, setGameMode] = useState("");
 
 
   const navigate = useNavigate();
@@ -63,13 +66,18 @@ const Lobby = () => {
     try {
       const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
       const roomData = response.data;
+      setGameMode(response.data.gameMode)
       localStorage.setItem("roomId", roomData.id);
       localStorage.setItem("roomCode", roomData.roomCode);
       localStorage.setItem("playerNames", roomData.playerNames);
       localStorage.setItem("roundNumber", "1");
+      localStorage.setItem("gameMode",gameMode);
       // check if the room id exist in the backend
       if (response.data) {
-        navigate(`/rooms/${roomCode}/${userId}/enter`);
+        if (gameMode === "GUESSING"){
+          navigate(`/rooms/${roomCode}/${userId}/guessing`);}
+        else{navigate(`/rooms/${roomCode}/${userId}/budget`);}
+
       } else {
         setErrorMessage("This room does not exist. Please check the room ID.");
       }

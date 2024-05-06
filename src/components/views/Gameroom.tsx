@@ -137,7 +137,7 @@ const GameRoom = () => {
     //   console.error("Error posting value", error);
     //   setMessage_1("Failed to confirm!");
     // }
-    navigate(`/waiting-answer/${userAnswer}`)
+    navigate(`/waiting-answer/${userAnswer}`);
   };
 
   // Tool display
@@ -267,7 +267,7 @@ const GameRoom = () => {
                 roundNumber += 1;
                 localStorage.setItem("isReady_1","True")
                 localStorage.setItem("roundNumber", String(roundNumber));
-                navigate("/shop");
+                navigate(`/waiting-answer/${userAnswer}`);
               }
             })
             .catch((error) => {
