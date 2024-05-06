@@ -69,9 +69,6 @@ const GameRoom = () => {
 
   const fetchImageUrl = async (roomId, roundNumber, retryCount = 0) => {
     try {
-      const response_2 = await api.get(`/tools/${userId}`);
-      console.log("tools list", response_2.data);
-
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem("questionId", response.data.id);
       const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
@@ -160,23 +157,6 @@ const GameRoom = () => {
 
       fetchTools();
   }, [userId]);
-
-  // simulate fetch user's tool list from backend
-  // useEffect(() => {
-  //   const fetchUserTools = async () => {
-  //     try {
-  //       const userToolsFromBackend = [
-  //         { id: 1, toolType: "BLUR" },
-  //         { id: 2, toolType: "HINT" }
-  //       ];
-  //       setTools(userToolsFromBackend);
-  //     } catch (error) {
-  //       console.error("Error fetching user tools:", error);
-  //     }
-  //   };
-  //
-  //   fetchUserTools();
-  // }, []);
 
 
   // display Tools in the game screen
