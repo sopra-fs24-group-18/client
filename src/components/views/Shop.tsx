@@ -56,6 +56,7 @@ const Purchase = () => {
     if (timeLeft === 0) {
       clearTimeout(timer);
       if (gameMode === "BUDGET"){navigate(`/rooms/${roomCode}/${userId}/budget`);}
+      else{navigate(`/rooms/${roomCode}/${userId}/guessing`);}
 
     }
     
