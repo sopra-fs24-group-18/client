@@ -124,7 +124,7 @@ const Purchase = () => {
             <div style={{ textAlign: "left"}}>
                 Hints: 30 Points
             </div>
-            <div className="register button-container" style={{display: "flex",justifyContent: "space-between", margin: 0, padding: 0}} >
+            <div className="shop button-container" style={{display: "flex",justifyContent: "space-between", margin: 0, padding: 0}} >
               <button className="shop hint"></button>
               <button className="shop buy-button"
                 disabled={isHintDisabled}

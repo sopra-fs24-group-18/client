@@ -16,55 +16,16 @@ const GameRoom = () => {
   const userId = localStorage.getItem("userId");
   // const [chosenItemList, setChosenItemList] = useState<string>("");
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const isReady_1 = localStorage.getItem(("isReady_1"))
   const roomCode = localStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
 
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
-      if (roundNumber === 1) {
-        try {
-          const response = await api.post(`games/${roomId}/${userId}/getReady`);
-          console.log("Response for round 1:", response.data);
-
-          if (response.data === "wait") {
-            // continue polling if not ready
-          } else if (response.data === "ready") {
-            setIsReady(true);
-            clearInterval(interval);
-            console.log("Game is ready:", response.data);
-            await fetchImageUrl(roomId, roundNumber);
-          } else {
-            alert("Failed to get ready, status: " + response.status);
-            clearInterval(interval);
-          }
-        } catch (error) {
-          console.error("Error during getReady call:", error);
-          clearInterval(interval);
-        }
-      } else {
-        // directly fetch image
-        setIsReady(true);
-        await fetchImageUrl(roomId, roundNumber);
-      }
+      await fetchImageUrl(roomId, roundNumber);
     };
 
-    const interval = roundNumber === 1 ? setInterval(() => {
-      initializeGame();
-    }, 1000) : null;
-
-    if (roundNumber !== 1) {
-      // if it's not the first round, initialize game immediately without waiting
-      initializeGame();
-    }
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
+    initializeGame();
   }, [roomId, userId, roundNumber]);
 
   const fetchImageUrl = async (roomId, roundNumber, retryCount = 0) => {
@@ -244,49 +205,45 @@ const GameRoom = () => {
       }
     }
     fetchUser();
-  }, [isReady, userId]);  
+  }, [userId]);
 
   useEffect(() => {
-    if (isReady || isReady_1 === "True") {  // when post ready, begin to countdown
-      const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
+    const timer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
 
-      if (timeLeft === 0) {
-        clearTimeout(timer);
-        if (!isConfirmed) {
-          handleConfirmClick()
-            .then(() => {
-              // after auto-handleConfirmClick
-              if (roundNumber === 3) {
-                navigate("/rank");
-              } else {
-                roundNumber += 1;
-                localStorage.setItem("isReady_1","True")
-                localStorage.setItem("roundNumber", String(roundNumber));
-                navigate("/shop");
-              }
-            })
-            .catch((error) => {
-              console.error("Failed to auto-confirm:", error);
-              // handle error
-            });
+    if (timeLeft === 0) {
+      clearTimeout(timer);
+      if (!isConfirmed) {
+        handleConfirmClick()
+          .then(() => {
+            // after auto-handleConfirmClick
+            if (roundNumber === 3) {
+              navigate("/rank");
+            } else {
+              roundNumber += 1;
+              localStorage.setItem("roundNumber", String(roundNumber));
+              navigate("/shop");
+            }
+          })
+          .catch((error) => {
+            console.error("Failed to auto-confirm:", error);
+            // handle error
+          });
+      } else {
+        // if already clicked confirm
+        if (roundNumber === 3) {
+          navigate("/rank");
         } else {
-          // if already clicked confirm
-          if (roundNumber === 3) {
-            navigate("/rank");
-          } else {
-            roundNumber += 1;
-            localStorage.setItem("isReady_1","True")
-            localStorage.setItem("roundNumber", String(roundNumber));
-            navigate("/shop");
-          }
+          roundNumber += 1;
+          localStorage.setItem("roundNumber", String(roundNumber));
+          navigate("/shop");
         }
       }
-
-      return () => clearTimeout(timer);
     }
-  }, [timeLeft, isConfirmed, roundNumber, isReady, isReady_1]); // dependency
+
+    return () => clearTimeout(timer);
+  }, [timeLeft, isConfirmed, roundNumber]); // dependency
 
   //rank
   //const [rankData, setRankData] = useState([]);
@@ -313,13 +270,18 @@ const GameRoom = () => {
       }
     };
     fetchPoints();
-  }, [isReady]);  
+  }, []);
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
-  const pointList = sortedRankData.map((item, index) => (
-    <div key={index}>
-      {item.username}: points: {item.score}
-    </div>
-  ));
+  const pointList = [];
+  for (let i = 0; i < sortedRankData.length; i++) {
+    const item = sortedRankData[i];
+    pointList.push(
+      <div className="score-table" key={i}>
+        &nbsp;&nbsp;&nbsp;&nbsp;{item.username}: points: {item.score}
+      </div>
+    );
+  }
+
 
   return (
     <div className="gameRoom">
@@ -355,6 +317,11 @@ const GameRoom = () => {
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
             {message && <div>{message_1}</div>}
           </div>
+
+
+          {pointList}
+
+
         </div>
 
         {/*tool part*/}
@@ -367,35 +334,24 @@ const GameRoom = () => {
           </div>
         </div>
 
-        {/*points part*/}
-        <div className="score">
 
-          {/* Display remaining time */}
-          <div className="label" style={{left: 100}}>
-                        Time: <br/>
-            {timeLeft}
-          </div>
-
-          {/* Display Points */}
-          <div className="label" style={{right: 100}}>
-                        Your Point: <br/>
-            {player.score}
-          </div>
-
-          {/*round display*/}
-          <div className="label" style={{center: 0, color: "white"}}>
-                        Round:
-            {roundNumber}
-          </div>
-
-          <div className="gameRoom-point form"><br/><br/>
-            <div className="score-table">
-              <Button width="180%">{pointList}</Button>
-            </div>
-          </div>
-
+        {/* Display remaining time */}
+        <div className="label" style={{left: 100}}>
+                      Time: <br/>
+          {timeLeft}
         </div>
 
+        {/* Display Points */}
+        <div className="label" style={{right: 100}}>
+                      Your Point: <br/>
+          {player.score}
+        </div>
+
+        {/*round display*/}
+        <div className="label" style={{center: 0, color: "white"}}>
+                       Round:
+           {roundNumber}
+        </div>
 
       </div>
 

@@ -11,6 +11,7 @@ import Shop from "../../views/Shop";
 import Roomcreation from "../../views/Roomcreation";
 import GameRoom from "../../views/Gameroom";
 import Rank from "../../views/Rank"
+import Prepare from "../../views/Prepare"
 
 /**
  * Main router of your application.
@@ -55,6 +56,7 @@ const AppRouter = () => {
         <Route path="/users/:userId" element={<Profile />} />
         <Route path="/rooms/:roomCode/:userId/enter" element={<GameRoom />} />
         <Route path="/rank" element={<Rank />} />
+        <Route path="/prepare" element={<Prepare />} />
 
       </Routes>
     </BrowserRouter>

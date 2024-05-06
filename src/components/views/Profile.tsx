@@ -116,7 +116,7 @@ const Profile = () => {
       localStorage.setItem("roundNumber", "1");
       // check if the room id exist in the backend
       if (response.data) {
-        navigate(`/rooms/${roomCode}/${userId}/enter`);
+        navigate(`/prepare`);
       } else {
         setErrorMessage("This room does not exist. Please check the room ID.");
       }

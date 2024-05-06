@@ -1,0 +1,30 @@
+@import "../theme";
+
+.loading {
+  color: #97ABFF;
+  text-align: center;
+  font-size: 2.5em;
+  position: absolute;
+  top: 50px;
+  left: 25%;
+}
+.buttonsContainer {
+  position: absolute;
+  margin-right: 45%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: -10px; // between button
+}
+.text{
+  font-size: 16px;
+  color: rgb(36, 36, 150);
+}
+.label{
+  position: absolute;
+  top: 50px;
+  text-align: center;
+  color: rgb(36, 36, 150);
+  font-size: 20px;
+}
