@@ -9,7 +9,7 @@ import {Button} from "components/ui/Button";
 //import axios from 'axios';
 
 const Profile = () => {
-  const { userId } = useParams(); //hook id from URL
+  const userId= localStorage.getItem("userId");
   const [userData, setUserData] = useState(null);
   const [editing, setEditing] = useState(false);
   const [newUsername, setNewUsername] = useState("");
@@ -134,8 +134,7 @@ const Profile = () => {
             <p>ID: {userData.id}</p>
             <p>Online Status: {userData.status}</p>
             <p>Username: {userData.username}</p>
-            {/* Display password as asterisks or provide a mechanism to edit it */}
-            <p>Password: **********</p>
+            {/*<p>Password: **********</p>*/}
           </div>
         ) : (
           <p>Loading...</p>
