@@ -16,6 +16,7 @@ const Purchase = () => {
   const [player, setPlayer] = useState("");
   const userId = localStorage.getItem("userId");
   const roomCode = localStorage.getItem("roomCode")
+  const gameMode = localStorage.getItem("gameMode")
   const [isHintDisabled, setIsHintDisabled] = useState(false);
   const [isBlurDisabled, setIsBlurDisabled] = useState(false);
 
@@ -54,7 +55,9 @@ const Purchase = () => {
     }, 1000);
     if (timeLeft === 0) {
       clearTimeout(timer);
-      navigate(`/rooms/${roomCode}/${userId}/enter`);
+      if (gameMode === "BUDGET"){navigate(`/rooms/${roomCode}/${userId}/budget`);}
+      else{navigate(`/rooms/${roomCode}/${userId}/guessing`);}
+
     }
     
     return () => clearTimeout(timer);
