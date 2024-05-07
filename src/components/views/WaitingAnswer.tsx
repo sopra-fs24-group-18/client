@@ -19,16 +19,25 @@ const WaitingAnswer = () => {
     const fetchScore = async () => {
       try {
         const questionId = localStorage.getItem("questionId");
-        const response = await api.post(`/answers/guessMode`, {
-          questionId,
-          userId,
-          guessedPrice: Number(userAnswer)
-        });
+        let response = null;
+        if (gameMode === "GUESSING") {
+          response = await api.post(`/answers/guessMode`, {
+            questionId,
+            userId,
+            guessedPrice: Number(userAnswer)
+          });
+        }
+        else{
+          response = await api.post("/answers/budgetMode", {
+            questionId,
+            userId,
+            chosenItemList: userAnswer
+          });
+        }
         console.log("Success:", response.data);
         setScore(response.data.point);
         setRealPrice(response.data.realPrice);
         setShowAlert(true);
-
         const timer = setInterval(() => {
           setCountdown((prevCountdown) => prevCountdown - 1);
         }, 1000);
@@ -62,7 +71,9 @@ const WaitingAnswer = () => {
       {showAlert && (
         <div id="wrap">
           <div className="txt" style={{ fontSize: "30px", color: "#4860A8"}}>+ {score} points</div>
-          <div className="ans" style={{ fontSize: "12px", marginTop: "50px", textAlign: "center"}}>The real price is: {realPrice}</div>
+          <div className="ans" style={{ fontSize: "12px", marginTop: "50px", textAlign: "center"}}>
+            {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {realPrice}
+          </div>
           <div className="tip" style={{ fontSize: "12px", fontFamily: "\"Microsoft YaHei\", sans-serif"}}>Next round starts after <span id="time">{countdown}</span>s</div>
         </div>
       )}

@@ -57,7 +57,7 @@ const AppRouter = () => {
         <Route path="/roomcreation" element={<Roomcreation/>} />
         <Route path="/lobby/:userId" element={<Lobby />} />
         <Route path="/users/:userId" element={<Profile />} />
-        <Route path="/waiting-answer/:userAnswer" element={<WaitingAnswer />} />
+        <Route path="/waiting-answer/:userAnswer?" element={<WaitingAnswer />} />
         <Route path="/rooms/:roomCode/:userId/guessing" element={<GameRoom />} />
         <Route path="/rooms/:roomCode/:userId/budget" element={<GameRoomBudget />} />
         <Route path="/rank" element={<Rank />} />
