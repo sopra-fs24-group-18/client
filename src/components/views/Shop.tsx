@@ -15,6 +15,7 @@ const Purchase = () => {
   const [message, setMessage] = useState({ text: "", type: "" });
   const [player, setPlayer] = useState("");
   const userId = localStorage.getItem("userId");
+  const roomId = localStorage.getItem("roomId");
   const roomCode = localStorage.getItem("roomCode")
   const gameMode = localStorage.getItem("gameMode")
   const [isHintDisabled, setIsHintDisabled] = useState(false);
@@ -104,6 +105,26 @@ const Purchase = () => {
     }, 5000); // Hide message after 5 seconds
   };
 
+const leaveRoom = async () => {
+  try {
+    const requestBody = {roomId, userId};
+    await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+    localStorage.removeItem("isReady");
+    localStorage.removeItem("isReady_1");
+    localStorage.removeItem("myScore");
+    localStorage.removeItem("playerNames");
+    localStorage.removeItem("questionId");
+    localStorage.removeItem("rank");
+    localStorage.removeItem("roomCode");
+    localStorage.removeItem("roomId");
+    localStorage.removeItem("roundNumber");
+    localStorage.removeItem("timeLeft");
+    localStorage.removeItem("gameMode");
+    navigate(`/lobby/${userId}`);
+  } catch (error) {console.error("Error deleting server data:", error);
+  }
+};
+
 
   return (
     <div className="background-container">
@@ -127,7 +148,7 @@ const Purchase = () => {
             <div style={{ textAlign: "left"}}>
                 Hints: 30 Points
             </div>
-            <div className="register button-container" style={{display: "flex",justifyContent: "space-between", margin: 0, padding: 0}} >
+            <div className="shop button-container" style={{display: "flex",justifyContent: "space-between", margin: 0, padding: 0}} >
               <button className="shop hint"></button>
               <button className="shop buy-button"
                 disabled={isHintDisabled}
@@ -157,14 +178,20 @@ const Purchase = () => {
                             You can use this tool to disturb other player.
             </div><br />
 
-            {/*<div className="shop button-container">
+            <div className="shop button-container">
               <Button
                 width="100%"
-                onClick={() => navigate("/gameRoom")}
+                onClick={() => navigate("/prepare")}
               >
                 Skip
               </Button>
-            </div>*/}
+              <Button
+                width="100%"
+                onClick={() => {leaveRoom();}}
+              >
+                Exit
+              </Button>
+            </div>
             {/* Display message */}
             {message.text && (
               <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>

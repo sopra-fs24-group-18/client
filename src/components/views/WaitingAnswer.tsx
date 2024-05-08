@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import { api } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import "styles/views/WaitingAnswer.scss";
+import { Button } from "components/ui/Button";
 
 const WaitingAnswer = () => {
   const { userAnswer } = useParams<{ userAnswer: string }>();
   const [score, setScore] = useState(null);
   const [realPrice, setRealPrice] = useState<number>(0);
   const userId = localStorage.getItem("userId");
+  const roomId = localStorage.getItem("roomId");
   const navigate = useNavigate();
   let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [showAlert, setShowAlert] = useState(false);
-  const [countdown, setCountdown] = useState(10); // set count down timer to 5s
+  const [countdown, setCountdown] = useState(5); // set count down timer to 5s
+  const [isReady_answer, setIsReady_answer] = useState(false);
   const gameMode = localStorage.getItem("gameMode");
 
 
@@ -24,34 +27,82 @@ const WaitingAnswer = () => {
           userId,
           guessedPrice: Number(userAnswer)
         });
-        console.log("Success:", response.data);
-        setScore(response.data.point);
-        setRealPrice(response.data.realPrice);
-        setShowAlert(true);
+        console.log(response.data);
+        if (response.data) {
+          //clearInterval(interval);
+          console.log("All players have answered:", response.data);
+          setIsReady_answer(true);
 
-        const timer = setInterval(() => {
-          setCountdown((prevCountdown) => prevCountdown - 1);
-        }, 1000);
+          console.log("Success:", response.data);
+          setScore(response.data.point);
+          setRealPrice(response.data.realPrice);
+          setShowAlert(true);
 
-        setTimeout(() => {
-          clearInterval(timer);
-          setShowAlert(false); // close the pop-up window
-          if (roundNumber === 3) {
-            navigate("/rank");
-          } else {
-            roundNumber += 1;
-            localStorage.setItem("roundNumber", String(roundNumber));
-            navigate("/shop");
-          }
-        }, 10000); // close the pop-up window after 5s
-
-        return () => clearInterval(timer);
+        } else {
+          // continue polling if not ready
+        }
       } catch (error) {
         console.error('Error receiving answers:', error);
       }
     };
     fetchScore();
+
+    //const interval = setInterval(() => {
+    //  fetchScore();
+    //}, 1000);
+
+    //return () => {
+    //  if (interval) {
+    //    clearInterval(interval);
+    //  }
+    //};
+
   }, []);
+
+
+  useEffect(() => {
+    if (isReady_answer === true) {  // when post ready, begin to countdown
+      console.log("isReady for answer timer");
+      const timer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+
+      setTimeout(() => {
+        clearInterval(timer);
+        setShowAlert(false); // close the pop-up window
+        if (roundNumber === 3) {
+          navigate("/rank");
+        } else {
+          roundNumber += 1;
+          localStorage.setItem("roundNumber", String(roundNumber));
+          navigate("/shop");
+        }
+      }, 5000); // close the pop-up window after 5s
+
+      return () => clearInterval(timer);
+    }
+  }, [isReady_answer]);
+
+  const leaveRoom = async () => {
+    try {
+      const requestBody = {roomId, userId};
+      await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+      localStorage.removeItem("isReady");
+      localStorage.removeItem("isReady_1");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("playerNames");
+      localStorage.removeItem("questionId");
+      localStorage.removeItem("rank");
+      localStorage.removeItem("roomCode");
+      localStorage.removeItem("roomId");
+      localStorage.removeItem("roundNumber");
+      localStorage.removeItem("timeLeft");
+      localStorage.removeItem("gameMode");
+      navigate(`/lobby/${userId}`);
+    } catch (error) {console.error("Error deleting server data:", error);
+    }
+  };
+
 
   return (
     <div>
@@ -66,7 +117,19 @@ const WaitingAnswer = () => {
           <div className="tip" style={{ fontSize: "12px", fontFamily: "\"Microsoft YaHei\", sans-serif"}}>Next round starts after <span id="time">{countdown}</span>s</div>
         </div>
       )}
+
+      {/*<div className="exit_button-container">
+        <Button
+          width="100%"
+          onClick={() => {leaveRoom();}}
+        >
+          Exit
+        </Button>
+      </div>*/}
+
+
     </div>
+
   );
 };
 

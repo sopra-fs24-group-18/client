@@ -66,17 +66,18 @@ const Lobby = () => {
     try {
       const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
       const roomData = response.data;
-      setGameMode(response.data.gameMode)
+      setGameMode(response.data.gameMode);
+      console.log("gameMode: ", response.data.gameMode);
       localStorage.setItem("roomId", roomData.id);
       localStorage.setItem("roomCode", roomData.roomCode);
       localStorage.setItem("playerNames", roomData.playerNames);
       localStorage.setItem("roundNumber", "1");
-      localStorage.setItem("gameMode",gameMode);
+      localStorage.setItem("gameMode",response.data.gameMode);
       // check if the room id exist in the backend
       if (response.data) {
-        if (gameMode === "GUESSING"){
-          navigate(`/rooms/${roomCode}/${userId}/guessing`);}
-        else{navigate(`/rooms/${roomCode}/${userId}/budget`);}
+        if (response.data.gameMode === "BUDGET"){
+          navigate(`/rooms/${roomCode}/${userId}/budget`);}
+        else{navigate(`/prepare`);}
 
       } else {
         setErrorMessage("This room does not exist. Please check the room ID.");
@@ -104,6 +105,14 @@ const Lobby = () => {
     setOverlayHidden(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("creation_date");
+    navigate("/login");
+  };
+
   return (
     <BaseContainer className="lobby-container">
       <div className="header container" style={{height: "auto"}}>
@@ -112,6 +121,7 @@ const Lobby = () => {
 
       <div className="right-section">
         <div className="right-button-container">
+          <Button width="100%" onClick={profileManagement}>Profile</Button>
           <Button width="100%" onClick={handleCreateRoom}>Create Room</Button>
 
           <section className={`modal ${modalHidden ? 'hidden' : ''}`}>
@@ -145,9 +155,9 @@ const Lobby = () => {
 
           <div className={`overlay ${overlayHidden ? 'hidden' : ''}`}></div>
           <Button width="100%" onClick={openModal}>Join Room</Button>
+          <Button width="100%" onClick={handleLogout}>Logout</Button>
         </div>
       </div>
-      <button className="profile-button" onClick={profileManagement}></button>
 
     </BaseContainer>
 

@@ -58,7 +58,7 @@ const Prepare = () => {
 
       if (timeLeft === 0) {
         clearTimeout(timer);
-        navigate("/rooms/:roomCode/:userId/enter");
+        navigate("/rooms/${roomCode}/${userId}/guessing");
       }
 
       return () => clearTimeout(timer);

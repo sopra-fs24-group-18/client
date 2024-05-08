@@ -14,6 +14,7 @@ import GameRoom from "../../views/Gameroom";
 import Rank from "../../views/Rank"
 import WaitingAnswer from "../../views/WaitingAnswer";
 import GameRoomBudget from "../../views/GameroomBudget";
+import Prepare from "../../views/Prepare";
 
 /**
  * Main router of your application.
@@ -61,6 +62,7 @@ const AppRouter = () => {
         <Route path="/rooms/:roomCode/:userId/guessing" element={<GameRoom />} />
         <Route path="/rooms/:roomCode/:userId/budget" element={<GameRoomBudget />} />
         <Route path="/rank" element={<Rank />} />
+        <Route path="/prepare" element={<Prepare />} />
 
       </Routes>
     </BrowserRouter>
