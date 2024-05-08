@@ -96,13 +96,13 @@ const GameRoomBudget = () => {
     setSelectedItemIds((prev) => {
       let updatedSelection;
       if (prev.includes(id)) {
-        updatedSelection = prev.filter((item) => item !== id); // 如果已选择则移除
+        updatedSelection = prev.filter((item) => item !== id);
       } else {
-        updatedSelection = [...prev, id]; // 否则添加
+        updatedSelection = [...prev, id];
       }
-      setUserAnswer(updatedSelection.join(",")); // 更新用户答案
+      setUserAnswer(updatedSelection.join(","));
 
-      return updatedSelection; // 返回新选择列表
+      return updatedSelection;
     });
   };
 
