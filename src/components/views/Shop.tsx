@@ -20,6 +20,8 @@ const Purchase = () => {
   const gameMode = localStorage.getItem("gameMode")
   const [isHintDisabled, setIsHintDisabled] = useState(false);
   const [isBlurDisabled, setIsBlurDisabled] = useState(false);
+  const [showAlert_shop, setShowAlert_shop] = useState(true);
+  const [showAlert_loading, setShowAlert_loading] = useState(false);
 
   //useEffect(() => {
   //  const timer = setInterval(async () => {
@@ -105,30 +107,35 @@ const Purchase = () => {
     }, 5000); // Hide message after 5 seconds
   };
 
-const leaveRoom = async () => {
-  try {
-    const requestBody = {roomId, userId};
-    await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-    localStorage.removeItem("isReady");
-    localStorage.removeItem("isReady_1");
-    localStorage.removeItem("myScore");
-    localStorage.removeItem("playerNames");
-    localStorage.removeItem("questionId");
-    localStorage.removeItem("rank");
-    localStorage.removeItem("roomCode");
-    localStorage.removeItem("roomId");
-    localStorage.removeItem("roundNumber");
-    localStorage.removeItem("timeLeft");
-    localStorage.removeItem("gameMode");
-    navigate(`/lobby/${userId}`);
-  } catch (error) {console.error("Error deleting server data:", error);
-  }
-};
+  const leaveRoom = async () => {
+    try {
+      const requestBody = {roomId, userId};
+      await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+      localStorage.removeItem("isReady");
+      localStorage.removeItem("isReady_1");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("playerNames");
+      localStorage.removeItem("questionId");
+      localStorage.removeItem("rank");
+      localStorage.removeItem("roomCode");
+      localStorage.removeItem("roomId");
+      localStorage.removeItem("roundNumber");
+      localStorage.removeItem("timeLeft");
+      localStorage.removeItem("gameMode");
+      navigate(`/lobby/${userId}`);
+    } catch (error) {console.error("Error deleting server data:", error);
+    }
+  };
+
+  const skipShop = async () => {
+    setShowAlert_shop(false);
+    setShowAlert_loading(true);
+  };
 
 
   return (
     <div className="background-container">
-      <BaseContainer>
+      {showAlert_shop && (<BaseContainer>
         <div className="shop container">
           <div className="shop form"><br /><br />
 
@@ -181,15 +188,9 @@ const leaveRoom = async () => {
             <div className="shop button-container">
               <Button
                 width="100%"
-                onClick={() => navigate("/prepare")}
+                onClick={() => {skipShop();}}
               >
                 Skip
-              </Button>
-              <Button
-                width="100%"
-                onClick={() => {leaveRoom();}}
-              >
-                Exit
               </Button>
             </div>
             {/* Display message */}
@@ -201,7 +202,19 @@ const leaveRoom = async () => {
             )}
           </div>
         </div>
-      </BaseContainer>
+      </BaseContainer>)}
+
+      {showAlert_loading && (<div className="shop_loading" >
+        <br/><br/><br/><br/>Preparing for the next round ......<br/>
+      </div>)}
+
+      <div className="exit_button-container"
+        width="100%"
+        onClick={() => {leaveRoom();}}
+      >
+        Exit
+      </div>
+
     </div>
   );
 };

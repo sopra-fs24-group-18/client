@@ -118,14 +118,12 @@ const WaitingAnswer = () => {
         </div>
       )}
 
-      {/*<div className="exit_button-container">
-        <Button
-          width="100%"
-          onClick={() => {leaveRoom();}}
-        >
-          Exit
-        </Button>
-      </div>*/}
+      <div className="exit_button-container"
+        width="100%"
+        onClick={() => {leaveRoom();}}
+      >
+        Exit
+      </div>
 
 
     </div>
