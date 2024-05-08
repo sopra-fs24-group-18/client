@@ -1,6 +1,7 @@
 import React from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {GameGuard} from "../routeProtectors/GameGuard";
+import {GameRoomGuard} from "../routeProtectors/GameRoomGuard";
 import GameRouter from "./GameRouter";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Login from "../../views/Login";
@@ -44,25 +45,41 @@ const AppRouter = () => {
         {/* this is for firstly open the mainpage */}
         <Route path="/" element={<Mainpage />} />
 
-        <Route path="/game/*" element={<GameGuard />}>
-          <Route path="/game/*" element={<GameRouter base="/game"/>} />
+        <Route path="/login" element={<LoginGuard />}>
+          <Route path="/login" element={<Login/>} />
+        </Route>
+        <Route path="/register" element={<LoginGuard />}>
+          <Route path="/register" element={<Register/>} />
         </Route>
 
-        <Route path="/login" element={<Login/>} />
+        <Route path="/roomcreation" element={<GameGuard />}>
+          <Route path="/roomcreation" element={<Roomcreation/>} />
+        </Route>
+        <Route path="/lobby/:userId" element={<GameGuard />}>
+          <Route path="/lobby/:userId" element={<Lobby />} />
+        </Route>
+        <Route path="/users/:userId" element={<GameGuard />}>
+          <Route path="/users/:userId" element={<Profile />} />
+        </Route>
 
-        {/*<Route path="/login" element={<LoginGuard />}>*/}
-        {/*</Route>*/}
-
-        <Route path="/register" element={<Register/>} />
-        <Route path="/shop" element={<Shop/>} />
-        <Route path="/roomcreation" element={<Roomcreation/>} />
-        <Route path="/lobby/:userId" element={<Lobby />} />
-        <Route path="/users/:userId" element={<Profile />} />
-        <Route path="/waiting-answer/:userAnswer" element={<WaitingAnswer />} />
-        <Route path="/rooms/:roomCode/:userId/guessing" element={<GameRoom />} />
-        <Route path="/rooms/:roomCode/:userId/budget" element={<GameRoomBudget />} />
-        <Route path="/rank" element={<Rank />} />
-        <Route path="/prepare" element={<Prepare />} />
+        <Route path="/prepare" element={<GameRoomGuard />}>
+          <Route path="/prepare" element={<Prepare/>} />
+        </Route>
+        <Route path="/rooms/:roomCode/:userId/guessing" element={<GameRoomGuard />}>
+          <Route path="/rooms/:roomCode/:userId/guessing" element={<GameRoom />} />
+        </Route>
+        <Route path="/rooms/:roomCode/:userId/budget" element={<GameRoomGuard />}>
+          <Route path="/rooms/:roomCode/:userId/budget" element={<GameRoomBudget />} />
+        </Route>
+        <Route path="/waiting-answer/:userAnswer" element={<GameRoomGuard />}>
+          <Route path="/waiting-answer/:userAnswer" element={<WaitingAnswer />} />
+        </Route>
+        <Route path="/shop" element={<GameRoomGuard />}>
+          <Route path="/shop" element={<Shop/>} />
+        </Route>
+        <Route path="/rank" element={<GameRoomGuard />}>
+          <Route path="/rank" element={<Rank />} />
+        </Route>
 
       </Routes>
     </BrowserRouter>

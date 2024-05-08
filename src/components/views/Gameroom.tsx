@@ -222,9 +222,9 @@ const GameRoom = () => {
   }, []);
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
-    <Button key={index} width="180%">
+    <div className="point-table" key={index}>
       {item.username}: points: {item.score}
-    </Button>
+    </div>
   ));
 
   const leaveRoom = async () => {
@@ -315,13 +315,13 @@ const GameRoom = () => {
             {roundNumber}
           </div>
 
-          <div className="gameRoom-point form"><br/><br/>
-            <div className="score-table">
+          <div className="gameRoom-point form">
+            <div className="pointsContainer">
               {pointList}
             </div>
           </div>
 
-        </div>
+    </div>
 
 
       </div>
