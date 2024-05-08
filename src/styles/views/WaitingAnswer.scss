@@ -1,16 +1,30 @@
-// WaitingAnswer.scss 文件
+// WaitingAnswer.scss
 
 @import "../theme";
+.background-container {
+  background-image: url('../../assets/background2.png');
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
 #wrap {
   width: 400px;
-  height: 200px;
-  background: #fafafa;
-  box-shadow: 5px 5px 5px #C9C9C9;
+  height: 300px;
+  background: url('../../assets/Table.png');
+  padding: 1px;
+  background-size: cover;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-clip: content-box;
+  box-sizing: content-box;
+  border: 10px solid #a3cac9;
 }
 
 .txt {
@@ -21,7 +35,7 @@
 }
 
 .tip {
-  position: absolute;
+  position: relative;
   bottom: 0;
   text-align: center;
   border-top: 1px solid #ccc;

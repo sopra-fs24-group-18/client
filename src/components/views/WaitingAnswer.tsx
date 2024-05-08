@@ -56,25 +56,27 @@ const WaitingAnswer = () => {
 
         return () => clearInterval(timer);
       } catch (error) {
-        console.error('Error receiving answers:', error);
+        console.error("Error receiving answers:", error);
       }
     };
     fetchScore();
   }, []);
 
   return (
-    <div>
-      <div className="hheader container" style={{height: "auto", fontSize: "10px"}}>
-        <h1 className="hheader title" style={{marginBottom: "30px"}}>The Price<br />Is Right</h1>
+    <div className="background-container">
+      <div className="hheader container" style={{ height: "auto", fontSize: "10px" }}>
+        <h1 className="hheader title" style={{ color: "#FFFFFF", marginBottom: "30px" }}>The Price<br />Is Right</h1>
       </div>
-      <h2 style={{ fontSize: "20px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center"  }}>Waiting for all players to submit their answers...</h2>
+      <h2 style={{ fontSize: "16px", color: "#123597",textAlign: "center" }}>Waiting for
+        all players to submit their answers...</h2>
       {showAlert && (
         <div id="wrap">
-          <div className="txt" style={{ fontSize: "30px", color: "#4860A8"}}>+ {score} points</div>
-          <div className="ans" style={{ fontSize: "12px", marginTop: "50px", textAlign: "center"}}>
+          <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {score} points</div>
+          <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" }}>
             {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {realPrice}
           </div>
-          <div className="tip" style={{ fontSize: "12px", fontFamily: "\"Microsoft YaHei\", sans-serif"}}>Next round starts after <span id="time">{countdown}</span>s</div>
+          <div className="tip" style={{ fontSize: "10px" }}>Next round starts after <span id="time">{countdown}</span>s
+          </div>
         </div>
       )}
     </div>
