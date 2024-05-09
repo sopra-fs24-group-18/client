@@ -75,6 +75,7 @@ const WaitingAnswer = () => {
         } else {
           roundNumber += 1;
           localStorage.setItem("roundNumber", String(roundNumber));
+          localStorage.setItem("timeLeft", "10");
           navigate("/shop");
         }
       }, 5000); // close the pop-up window after 5s

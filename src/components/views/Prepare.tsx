@@ -112,11 +112,11 @@ const Prepare = () => {
   return (
     <div className="main-page">
 
-      <div className="loading" >
+      <div className="prepare-loading" >
         <br/><br/><br/><br/>Preparing for the game ......<br/>
       </div>
 
-      <div className="buttonsContainer">
+      <div className="prepare-buttonsContainer">
         <Button width="150%" >Room: {roomCode} </Button>
       </div>
 

@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft")));
   const [message, setMessage] = useState({ text: "", type: "" });
   const [player, setPlayer] = useState("");
   const userId = localStorage.getItem("userId");
@@ -53,9 +53,14 @@ const Purchase = () => {
 
   // timer
   useEffect(() => {
+
     const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
+      if(timeLeft > 0) {
+        setTimeLeft(timeLeft - 1);
+        localStorage.setItem("timeLeft", timeLeft.toString());
+      }
     }, 1000);
+
     if (timeLeft === 0) {
       clearTimeout(timer);
       if (gameMode === "BUDGET"){navigate(`/rooms/${roomCode}/${userId}/budget`);}
