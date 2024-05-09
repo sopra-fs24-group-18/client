@@ -150,7 +150,7 @@ const GameRoomBudget = () => {
   const displayTool = (tool) => {
     if (!tool) {
       return (
-          <div className="tool item default"></div>
+        <div className="tool item default"></div>
       );
     }
 
@@ -169,9 +169,9 @@ const GameRoomBudget = () => {
     }
 
     return (
-        <div className={toolClassName}>
-          {toolContent}
-        </div>
+      <div className={toolClassName}>
+        {toolContent}
+      </div>
     );
   };
 
