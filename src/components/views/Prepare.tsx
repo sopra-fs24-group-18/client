@@ -78,6 +78,26 @@ const Prepare = () => {
     fetchPoints();
   }, []);
 
+  const leaveRoom = async () => {
+    try {
+      const requestBody = {roomId, userId};
+      await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+      localStorage.removeItem("isReady");
+      localStorage.removeItem("isReady_1");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("playerNames");
+      localStorage.removeItem("questionId");
+      localStorage.removeItem("rank");
+      localStorage.removeItem("roomCode");
+      localStorage.removeItem("roomId");
+      localStorage.removeItem("roundNumber");
+      localStorage.removeItem("timeLeft");
+      localStorage.removeItem("gameMode");
+      navigate(`/lobby/${userId}`);
+    } catch (error) {console.error("Error deleting server data:", error);
+    }
+  };
+
   return (
     <div className="main-page">
 
@@ -88,6 +108,14 @@ const Prepare = () => {
       <div className="buttonsContainer">
         <Button width="150%" >Room: {roomCode} </Button>
       </div>
+
+      <div className="exit_button-container"
+        width="100%"
+        onClick={() => {leaveRoom();}}
+      >
+        Exit
+      </div>
+
     </div>
 
   );

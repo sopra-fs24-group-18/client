@@ -16,6 +16,7 @@ import Rank from "../../views/Rank"
 import WaitingAnswer from "../../views/WaitingAnswer";
 import GameRoomBudget from "../../views/GameroomBudget";
 import Prepare from "../../views/Prepare";
+import Instruction from "../../views/Instruction";
 
 /**
  * Main router of your application.
@@ -44,6 +45,7 @@ const AppRouter = () => {
       <Routes>
         {/* this is for firstly open the mainpage */}
         <Route path="/" element={<Mainpage />} />
+        <Route path="/instruction" element={<Instruction />} />
 
         <Route path="/login" element={<LoginGuard />}>
           <Route path="/login" element={<Login/>} />

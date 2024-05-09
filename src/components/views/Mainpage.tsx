@@ -10,6 +10,9 @@ const Mainpage= () => {
   const navigateToRegister = ()=> {
     navigate("/register");
   };
+  const navigateToInstruction = ()=> {
+    navigate("/instruction");
+  };
 
   return (
     <div className="main-page">
@@ -22,7 +25,9 @@ const Mainpage= () => {
           onClick={navigateToLogin}
           className="button">Login</button>
       </div>
-      <button className="settings-button"></button>
+      <button
+        onClick={navigateToInstruction}
+        className="Instruction-button"></button>
     </div>
   );
 };

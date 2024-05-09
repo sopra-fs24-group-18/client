@@ -35,14 +35,14 @@
   }
 }
 
-.settings-button {
+.Instruction-button {
   &:hover {
       transform: translateY(-2px);
   }
   position: absolute;
   top: 20px;
   right: 20px;
-  background-image: url('../../assets/setting_but.png');
+  background-image: url('../../assets/instruction_button.png');
   background-size: contain;
   background-repeat: no-repeat;
   width: 80px;
