@@ -93,14 +93,17 @@ const GameRoomBudget = () => {
   };
   const handleImageSelect = (id) => {
     console.log("Clicked image ID:", id);
-    setSelectedItemIds(prev => {
+    setSelectedItemIds((prev) => {
+      let updatedSelection;
       if (prev.includes(id)) {
-        return prev.filter(item => item !== id); // if selected click cancel
+        updatedSelection = prev.filter((item) => item !== id);
       } else {
-        return [...prev, id]; // add to selected list
+        updatedSelection = [...prev, id];
       }
+      setUserAnswer(updatedSelection.join(","));
+
+      return updatedSelection;
     });
-    setUserAnswer(selectedItemIds.join(","));
   };
 
   // sent user choice
@@ -120,7 +123,6 @@ const GameRoomBudget = () => {
       console.error("Error posting value", error);
       setMessage_1("Failed to confirm!");
     }*/
-
   };
 
   // Tool display
