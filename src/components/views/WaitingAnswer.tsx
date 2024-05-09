@@ -24,13 +24,12 @@ const WaitingAnswer = () => {
         const questionId = localStorage.getItem("questionId");
         let response = null;
         if (gameMode === "GUESSING") {
-          response = await api.post(`/answers/guessMode`, {
+          response = await api.post("/answers/guessMode", {
             questionId,
             userId,
             guessedPrice: Number(userAnswer)
           });
-        }
-        else{
+        } else {
           response = await api.post("/answers/budgetMode", {
             questionId,
             userId,
@@ -51,7 +50,7 @@ const WaitingAnswer = () => {
           // continue polling if not ready
         }
       } catch (error) {
-        console.error('Error receiving answers:', error);
+        console.error("Error receiving answers:", error);
       }
     };
     fetchScore();
