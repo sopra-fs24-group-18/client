@@ -6,7 +6,7 @@ import {Button} from "components/ui/Button";
 const Instruction= () => {
   const navigate = useNavigate();
   const navigateToMainPage = () => {
-    navigate("/");
+    navigate("/register");
   };
 
   return (
