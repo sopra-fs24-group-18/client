@@ -31,7 +31,7 @@ const FormField = ({
 
   return (
     <div className="register field">
-      <label className="register label">{label}</label>
+      <label className="register register-label">{label}</label>
       <div className="input-wrapper" style={{ display: "flex", alignItems: "center" }}>
         <input
           className="register input"
