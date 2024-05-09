@@ -69,16 +69,18 @@ const Rank = () => {
 
       // for waiting answer
       localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("isReady_answer_timer");
       localStorage.removeItem("myScore");
       localStorage.removeItem("realPrice");
       localStorage.removeItem("showAlert");
-      navigate(`/lobby/${userId}`);
 
       // for shop
       localStorage.removeItem("isHintDisabled");
       localStorage.removeItem("isBlurDisabled");
       localStorage.removeItem("showAlert_shop");
       localStorage.removeItem("showAlert_loading");
+
+      navigate(`/lobby/${userId}`);
 
     } catch (error) {console.error("Error deleting server data:", error);
     }

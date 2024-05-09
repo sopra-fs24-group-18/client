@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft")));
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [player, setPlayer] = useState("");
   const userId = localStorage.getItem("userId");
@@ -48,7 +48,7 @@ const Purchase = () => {
       clearTimeout(timer);
       if (gameMode === "BUDGET"){navigate(`/rooms/${roomCode}/${userId}/budget`);}
       else{
-        localStorage.setItem("timeLeft", "20");
+        localStorage.setItem("timeLeft", "22");
         navigate(`/rooms/${roomCode}/${userId}/guessing`);
       }
 
@@ -116,7 +116,7 @@ const Purchase = () => {
       localStorage.removeItem("myScore");
       localStorage.removeItem("realPrice");
       localStorage.removeItem("showAlert");
-      navigate(`/lobby/${userId}`);
+      localStorage.removeItem("isReady_answer_timer");
 
       // for shop
       localStorage.removeItem("isHintDisabled");

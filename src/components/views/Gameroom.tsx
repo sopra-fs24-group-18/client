@@ -99,7 +99,8 @@ const GameRoom = () => {
     //   console.error("Error posting value", error);
     //   setMessage_1("Failed to confirm!");
     // }
-    localStorage.setItem("timeLeft", "5");
+    localStorage.setItem("timeLeft", "7");
+    localStorage.setItem("isReady_answer_timer", "false");
     localStorage.setItem("isReady_answer", "false");
     navigate(`/waiting-answer/${userAnswer}`);
   };
@@ -168,7 +169,7 @@ const GameRoom = () => {
 
   // point display
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft")));
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
@@ -202,7 +203,8 @@ const GameRoom = () => {
             .then(() => {
               // after auto-handleConfirmClick
               localStorage.setItem("isReady_answer", "false");
-              localStorage.setItem("timeLeft", "5");
+              localStorage.setItem("isReady_answer_timer", "false");
+              localStorage.setItem("timeLeft", "7");
               navigate(`/waiting-answer/${userAnswer}`);
             })
             .catch((error) => {
@@ -212,7 +214,8 @@ const GameRoom = () => {
         } else {
           // if already clicked confirm
           localStorage.setItem("isReady_answer", "false");
-          localStorage.setItem("timeLeft", "5");
+          localStorage.setItem("isReady_answer_timer", "false");
+          localStorage.setItem("timeLeft", "7");
           navigate(`/waiting-answer/${userAnswer}`);
         }
       }
@@ -256,7 +259,7 @@ const GameRoom = () => {
       localStorage.removeItem("myScore");
       localStorage.removeItem("realPrice");
       localStorage.removeItem("showAlert");
-      navigate(`/lobby/${userId}`);
+      localStorage.removeItem("isReady_answer_timer");
 
       // for shop
       localStorage.removeItem("isHintDisabled");

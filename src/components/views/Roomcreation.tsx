@@ -119,7 +119,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
         if (gameMode === "BUDGET"){ navigate(`/rooms/${roomCode}/${userId}/budget`);}
         else{
-          localStorage.setItem("timeLeft", "2");
+          localStorage.setItem("timeLeft", "4");
           navigate(`/prepare`);
         }
         console.log("Room created:", { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode, roundNumber });

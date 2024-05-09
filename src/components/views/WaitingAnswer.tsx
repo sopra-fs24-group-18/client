@@ -11,7 +11,7 @@ const WaitingAnswer = () => {
   const navigate = useNavigate();
   let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [showAlert, setShowAlert] = useState(false);
-  const [countdown, setCountdown] = useState(parseInt(localStorage.getItem("timeLeft"))); // set count down timer to 5s
+  const [countdown, setCountdown] = useState(parseInt(localStorage.getItem("timeLeft"))-2); // set count down timer to 5s
   const [isReady_answer, setIsReady_answer] = useState(false);
   const gameMode = localStorage.getItem("gameMode");
 
@@ -25,12 +25,13 @@ const WaitingAnswer = () => {
           userId,
           guessedPrice: Number(userAnswer)
         });
+        localStorage.setItem("isReady_answer", "true");
         console.log(response.data);
         if (response.data) {
           //clearInterval(interval);
           console.log("All players have answered:", response.data);
           setIsReady_answer(true);
-          localStorage.setItem("isReady_answer", "true");
+          localStorage.setItem("isReady_answer_timer", "true");
           console.log("Success:", response.data);
           localStorage.setItem("myScore", response.data.point.toString());
           localStorage.setItem("realPrice", response.data.realPrice.toString());
@@ -62,7 +63,7 @@ const WaitingAnswer = () => {
 
 
 useEffect(() => {
-    if (localStorage.getItem("isReady_answer") === "true") {  // when post ready, begin to countdown
+    if (localStorage.getItem("isReady_answer_timer") === "true") {  // when post ready, begin to countdown
       const timer = setInterval(() => {
         if(countdown > 0) {
           setCountdown((prevCountdown) => prevCountdown - 1);
@@ -79,7 +80,7 @@ useEffect(() => {
         } else {
           roundNumber += 1;
           localStorage.setItem("roundNumber", String(roundNumber));
-          localStorage.setItem("timeLeft", "10");
+          localStorage.setItem("timeLeft", "12");
           localStorage.setItem("isHintDisabled", "false");
           localStorage.setItem("isBlurDisabled", "false");
           localStorage.setItem("showAlert_shop", "true");
@@ -110,7 +111,7 @@ useEffect(() => {
       localStorage.removeItem("myScore");
       localStorage.removeItem("realPrice");
       localStorage.removeItem("showAlert");
-      navigate(`/lobby/${userId}`);
+      localStorage.removeItem("isReady_answer_timer");
 
       // for shop
       localStorage.removeItem("isHintDisabled");

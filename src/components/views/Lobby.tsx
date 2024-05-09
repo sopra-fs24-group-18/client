@@ -78,7 +78,7 @@ const Lobby = () => {
         if (response.data.gameMode === "BUDGET"){
           navigate(`/rooms/${roomCode}/${userId}/budget`);}
         else{
-          localStorage.setItem("timeLeft", "2");
+          localStorage.setItem("timeLeft", "4");
           navigate(`/prepare`);
         }
 
