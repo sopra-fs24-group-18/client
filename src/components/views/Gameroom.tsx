@@ -99,6 +99,8 @@ const GameRoom = () => {
     //   console.error("Error posting value", error);
     //   setMessage_1("Failed to confirm!");
     // }
+    localStorage.setItem("timeLeft", "5");
+    localStorage.setItem("isReady_answer", "false");
     navigate(`/waiting-answer/${userAnswer}`);
   };
 
@@ -166,7 +168,7 @@ const GameRoom = () => {
 
   // point display
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft")));
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
@@ -184,9 +186,13 @@ const GameRoom = () => {
     fetchUser();
   }, [userId]);
 
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
+      if(timeLeft > 0) {
+        setTimeLeft(timeLeft - 1);
+        localStorage.setItem("timeLeft", timeLeft.toString());
+      }
     }, 1000);
 
       if (timeLeft === 0) {
@@ -195,6 +201,8 @@ const GameRoom = () => {
           handleConfirmClick()
             .then(() => {
               // after auto-handleConfirmClick
+              localStorage.setItem("isReady_answer", "false");
+              localStorage.setItem("timeLeft", "5");
               navigate(`/waiting-answer/${userAnswer}`);
             })
             .catch((error) => {
@@ -203,6 +211,8 @@ const GameRoom = () => {
             });
         } else {
           // if already clicked confirm
+          localStorage.setItem("isReady_answer", "false");
+          localStorage.setItem("timeLeft", "5");
           navigate(`/waiting-answer/${userAnswer}`);
         }
       }
@@ -232,17 +242,27 @@ const GameRoom = () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
-      localStorage.removeItem("rank");
       localStorage.removeItem("roomCode");
       localStorage.removeItem("roomId");
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
+      navigate(`/lobby/${userId}`);
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

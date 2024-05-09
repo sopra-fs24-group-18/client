@@ -48,17 +48,21 @@ const Prepare = () => {
     };
   }, [roomId, userId]);
 
-  const [timeLeft, setTimeLeft] = useState(2);
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft")));
+
 
   useEffect(() => {
-    console.log("isReady for timer");
     if (isReady === true) {  // when post ready, begin to countdown
       const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
+        if(timeLeft > 0) {
+          setTimeLeft(timeLeft - 1);
+          localStorage.setItem("timeLeft", timeLeft.toString());
+        }
       }, 1000);
 
       if (timeLeft === 0) {
         clearTimeout(timer);
+        localStorage.setItem("timeLeft", "20");
         navigate("/rooms/${roomCode}/${userId}/guessing");
       }
 
@@ -87,23 +91,31 @@ const Prepare = () => {
   ));
 
 
-
-
   const leaveRoom = async () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
-      localStorage.removeItem("rank");
       localStorage.removeItem("roomCode");
       localStorage.removeItem("roomId");
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
+      navigate(`/lobby/${userId}`);
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

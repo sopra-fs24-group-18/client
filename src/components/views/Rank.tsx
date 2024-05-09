@@ -57,18 +57,29 @@ const Rank = () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
-      localStorage.removeItem("rank");
       localStorage.removeItem("roomCode");
       localStorage.removeItem("roomId");
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
       navigate(`/lobby/${userId}`);
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
+
     } catch (error) {console.error("Error deleting server data:", error);
     }
   };

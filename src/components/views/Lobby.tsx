@@ -106,10 +106,10 @@ const Lobby = () => {
   };
 
   const handleLogout = () => {
+    // for logging into lobby
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    localStorage.removeItem("creation_date");
     navigate("/login");
   };
 
