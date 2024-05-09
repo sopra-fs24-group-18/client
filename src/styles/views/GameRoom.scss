@@ -128,7 +128,6 @@
   }
 
   .score{
-
     .pointsContainer {
       position: fixed;
       left: 1em;
@@ -136,7 +135,7 @@
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: -10px; // between button;
+      gap: -1px; // between button;
     }
     .score-table {
       position: absolute;
@@ -145,7 +144,6 @@
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: -10px; // between button
     }
     .label{
       position: absolute;
@@ -156,54 +154,19 @@
     }
 
     .gameRoom-point {
-      &.container{
-        background-image: url('../../assets/Name_Table 2.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        //background-position: center;
-       // min-height: 600px; // Set a minimum height for consistency
-      }
-      &.form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 40%;
-        max-width: 30em;
-        height: 20em;
-        font-size: 20px;
-        font-weight: 300;
-        padding-left: 37px;
-        padding-right: 37px;
-        border-radius: 0.75em;
-        transition: opacity 0.5s ease, transform 0.5s ease;
-      }
-      &.field {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 40%;
+      max-width: 30em;
+      height: 20em;
+      font-size: 20px;
+      font-weight: 300;
+      padding-left: 37px;
+      padding-right: 37px;
+      border-radius: 0.75em;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
   }
 }
 
-.point-table {
-  background-image: url('../../assets/player_table.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  color: $textColor;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 300;
-  padding-left: 37px;
-  padding-right: 37px;
-  border-radius: 0.75em;
-  align-items: center;
-  gap: -10px; // between button;
-}

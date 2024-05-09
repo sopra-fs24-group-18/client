@@ -3,6 +3,7 @@ import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/Prepare.scss";
 import {useNavigate} from "react-router-dom";
+import { PlayerTable } from "components/ui/PlayerTable";
 
 const Prepare = () => {
   const navigate = useNavigate();
@@ -76,7 +77,17 @@ const Prepare = () => {
       }
     };
     fetchPoints();
-  }, []);
+  }, [isReady]);
+
+  const sortedRankData = rankData.sort((a, b) => b.score - a.score);
+  const pointList = sortedRankData.map((item, index) => (
+    <PlayerTable key={index}>
+      {item.username}
+    </PlayerTable>
+  ));
+
+
+
 
   const leaveRoom = async () => {
     try {
@@ -114,6 +125,15 @@ const Prepare = () => {
         onClick={() => {leaveRoom();}}
       >
         Exit
+      </div>
+
+
+      <div className="score">
+        <div className="gameRoom-point form">
+          <div className="pointsContainer">
+            {pointList}
+          </div>
+        </div>
       </div>
 
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef} from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
+import { PlayerTable } from "components/ui/PlayerTable";
 import "styles/views/GameRoom.scss";
 import {useNavigate} from "react-router-dom";
 
@@ -222,9 +223,9 @@ const GameRoom = () => {
   }, []);
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
-    <div className="point-table" key={index}>
-      {item.username}: points: {item.score}
-    </div>
+    <PlayerTable key={index}>
+      &nbsp;&nbsp;&nbsp;&nbsp;{item.username}: {item.score}
+    </PlayerTable>
   ));
 
   const leaveRoom = async () => {
@@ -321,7 +322,7 @@ const GameRoom = () => {
             </div>
           </div>
 
-    </div>
+        </div>
 
 
       </div>
