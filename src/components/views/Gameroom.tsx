@@ -241,6 +241,29 @@ const GameRoom = () => {
     </PlayerTable>
   ));
 
+  // handling unexpected exit, clear local storage after ten minutes gaming
+  useEffect(() => {
+    const gameStartTime = new Date().getTime();
+    const gameDuration = 10 * 60 * 1000; // duration as 10 minutes
+
+    const timer = setInterval(() => {
+      const currentTime = new Date().getTime(); // get current time
+      const elapsedTime = currentTime - gameStartTime;
+
+      console.log("the game is continued xx time：", elapsedTime);
+
+      // if the game is longer than ten minutes, which normally not, exept an unexpected exit.
+      if (elapsedTime >= gameDuration) {
+        // clear local storage
+        localStorage.clear();
+        clearInterval(timer);
+        console.log("the game is over 10 minutes, the localstorage is cleared");
+      }
+    }, 10*1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const leaveRoom = async () => {
     try {
       const requestBody = {roomId, userId};
@@ -260,6 +283,8 @@ const GameRoom = () => {
     } catch (error) {console.error("Error deleting server data:", error);
     }
   };
+
+
 
   return (
     <div className="gameRoom">
