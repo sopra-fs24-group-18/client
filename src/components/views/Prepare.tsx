@@ -51,6 +51,7 @@ const Prepare = () => {
   const [timeLeft, setTimeLeft] = useState(2);
 
   useEffect(() => {
+    const gameMode = localStorage.getItem("gameMode")
     console.log("isReady for timer");
     if (isReady === true) {  // when post ready, begin to countdown
       const timer = setTimeout(() => {
@@ -59,7 +60,10 @@ const Prepare = () => {
 
       if (timeLeft === 0) {
         clearTimeout(timer);
-        navigate("/rooms/${roomCode}/${userId}/guessing");
+        if (gameMode === "GUESSING"){
+          navigate(`/rooms/${roomCode}/${userId}/guessing`);}
+        else{
+          navigate(`/rooms/${roomCode}/${userId}/budget`);}
       }
 
       return () => clearTimeout(timer);

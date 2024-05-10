@@ -19,50 +19,15 @@ const GameRoomBudget = () => {
   const [itemImages, setItemImages] = useState([]);
   const [itemIds, setItemIds] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
+  const [hintNum, setHinNum] = useState(0);
+  const [isBlurred, setIsBlurred] = useState(false);
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
-      if (roundNumber === 1) {
-        try {
-          const response = await api.post(`games/${roomId}/${userId}/getReady`);
-          console.log("Response for round 1:", response.data);
-
-          if (response.data === "wait") {
-            // continue polling if not ready
-          } else if (response.data === "ready") {
-            setIsReady(true);
-            clearInterval(interval);
-            console.log("Game is ready:", response.data);
-            await fetchImageUrls(roomId, roundNumber);
-          } else {
-            alert("Failed to get ready, status: " + response.status);
-            clearInterval(interval);
-          }
-        } catch (error) {
-          console.error("Error during getReady call:", error);
-          clearInterval(interval);
-        }
-      } else {
-        // directly fetch image
-        setIsReady(true);
-        await fetchImageUrls(roomId, roundNumber);
-      }
+      await fetchImageUrls(roomId, roundNumber);
     };
 
-    const interval = roundNumber === 1 ? setInterval(() => {
-      initializeGame();
-    }, 1000) : null;
-
-    if (roundNumber !== 1) {
-      // if it's not the first round, initialize game immediately without waiting
-      initializeGame();
-    }
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
+    initializeGame();
   }, [roomId, userId, roundNumber]);
 
   const fetchImageUrls = async (roomId, roundNumber, retryCount = 0) => {
@@ -73,10 +38,14 @@ const GameRoomBudget = () => {
       const itemImages = response.data.itemImageList.split(",");
       const itemIds = response.data.itemList.split(",");
       const totalPrice = response.data.budget;
+      const numHint = response.data.selectedItemNum
 
       setItemImages(itemImages);
       setItemIds(itemIds);
       setTotalPrice(totalPrice);
+      setIsBlurred(response.data.blur);
+      if (numHint !== 0)
+      { setHinNum(numHint); }
 
       console.log("check images:", itemImages);
       console.log("check ids:", itemIds);
@@ -93,19 +62,25 @@ const GameRoomBudget = () => {
   };
   const handleImageSelect = (id) => {
     console.log("Clicked image ID:", id);
-    setSelectedItemIds(prev => {
+    setSelectedItemIds((prev) => {
+      let updatedSelection;
       if (prev.includes(id)) {
-        return prev.filter(item => item !== id); // if selected click cancel
+        updatedSelection = prev.filter((item) => item !== id);
       } else {
-        return [...prev, id]; // add to selected list
+        updatedSelection = [...prev, id];
       }
+      setUserAnswer(updatedSelection.join(","));
+
+      return updatedSelection;
     });
-    setUserAnswer(selectedItemIds.join(","));
   };
 
   // sent user choice
   const handleConfirmClick = async () => {
-    navigate(`/waiting-answer/${userAnswer}`);
+    if (userAnswer !== "") {
+      navigate(`/waiting-answer/${userAnswer}`);
+    }
+    else { navigate("/waiting-answer/null");}
     /*try {
       const questionId = localStorage.getItem("questionId");
       setIsConfirmed(true);
@@ -120,7 +95,6 @@ const GameRoomBudget = () => {
       console.error("Error posting value", error);
       setMessage_1("Failed to confirm!");
     }*/
-
   };
 
   // Tool display
@@ -148,7 +122,7 @@ const GameRoomBudget = () => {
   const displayTool = (tool) => {
     if (!tool) {
       return (
-          <div className="tool item default"></div>
+        <div className="tool item default"></div>
       );
     }
 
@@ -167,9 +141,9 @@ const GameRoomBudget = () => {
     }
 
     return (
-        <div className={toolClassName}>
-          {toolContent}
-        </div>
+      <div className={toolClassName}>
+        {toolContent}
+      </div>
     );
   };
 
@@ -232,29 +206,12 @@ const GameRoomBudget = () => {
           handleConfirmClick()
             .then(() => {
               // after auto-handleConfirmClick
-              if (roundNumber === 3) {
-                navigate("/rank");
-              } else {
-                roundNumber += 1;
-                localStorage.setItem("isReady_1","True")
-                localStorage.setItem("roundNumber", String(roundNumber));
-                navigate(`/waiting-answer/${userAnswer}`);
-              }
+              console.log("Auto-confirmation Successful")
             })
             .catch((error) => {
               console.error("Failed to auto-confirm:", error);
               // handle error
             });
-        } else {
-          // if already clicked confirm
-          if (roundNumber === 3) {
-            navigate("/rank");
-          } else {
-            roundNumber += 1;
-            localStorage.setItem("isReady_1","True")
-            localStorage.setItem("roundNumber", String(roundNumber));
-            navigate("/shop");
-          }
         }
       }
 
@@ -300,17 +257,29 @@ const GameRoomBudget = () => {
       <div className="gameRoomContainer">
         <div className="image">
           <div className="imageGrid">
-            {itemImages.map((src, index) => (
-              <img
-                key={src}
-                src={src}
-                alt={`Item ${itemIds[index]}`}
-                className={selectedItemIds.includes(itemIds[index]) ? "selected" : ""}
-                onClick={() => handleImageSelect(itemIds[index])}
-              />
-            ))}
+            {itemImages.map((src, index) => {
+              // blur 0 and 5
+              const shouldBlur = isBlurred && (index === 0 || index === 5);
+              const classNames = [
+                selectedItemIds.includes(itemIds[index]) ? "selected" : "",
+                shouldBlur ? "blurred" : ""
+              ].join(" ");
+
+              return (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`Item ${itemIds[index]}`}
+                  className={classNames}
+                  onClick={() => handleImageSelect(itemIds[index])}
+                />
+              );
+            })}
           </div>
           <div className="text">Total Price: {totalPrice}CHF</div>
+          {hintNum !== 0 && (
+            <div className="text">Hint for right total number: <span id="num">{hintNum}</span></div>
+          )}
           <div className="buttonsContainer">
             <Button width="150%">Room: {roomCode}</Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>

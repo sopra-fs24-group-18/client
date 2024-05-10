@@ -16,7 +16,7 @@ specific components that belong to the main one in the same file.
 const FormField = (props) => {
   return (
     <div className="login field">
-      <label className="login label">{props.label}</label>
+      <label className="login login-label">{props.label}</label>
       <input
         className="login input"
         placeholder="enter here.."

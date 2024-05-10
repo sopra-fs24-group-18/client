@@ -67,7 +67,7 @@ const Lobby = () => {
       const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
       const roomData = response.data;
       setGameMode(response.data.gameMode);
-      console.log("gameMode: ", response.data.gameMode);
+      console.log("gameMode: ", gameMode);
       localStorage.setItem("roomId", roomData.id);
       localStorage.setItem("roomCode", roomData.roomCode);
       localStorage.setItem("playerNames", roomData.playerNames);
@@ -75,16 +75,12 @@ const Lobby = () => {
       localStorage.setItem("gameMode",response.data.gameMode);
       // check if the room id exist in the backend
       if (response.data) {
-        if (response.data.gameMode === "BUDGET"){
-          navigate(`/rooms/${roomCode}/${userId}/budget`);}
-        else{navigate(`/prepare`);}
-
-      } else {
-        setErrorMessage("This room does not exist. Please check the room ID.");
+        navigate("/prepare");
       }
     } catch (error) {
+      setErrorMessage("This room does not exist. Please check the room ID.");
       console.error("Error joining room:", error);
-      setErrorMessage("Failed to join room. Please try again.");
+
     }
   };
 
@@ -124,24 +120,24 @@ const Lobby = () => {
           <Button width="100%" onClick={profileManagement}>Profile</Button>
           <Button width="100%" onClick={handleCreateRoom}>Create Room</Button>
 
-          <section className={`modal ${modalHidden ? 'hidden' : ''}`}>
+          <section className={`modal ${modalHidden ? "hidden" : ""}`}>
             <div className="flex">
               <p>Room Code:</p>
               <button className="btn-close" onClick={closeModal}>⨉</button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+            <div style={{ display: "flex", alignItems: "flex-start" }}>
               <div>
                 <FormField
                   value={roomCode}
                   onChange={(un: string) => setRoomCode(un)}
                   type="text"
-                  style={{ background: 'white', color: 'black', width: '300px', height: '35px', borderWidth: '3px' }}
+                  style={{ background: "white", color: "black", width: "300px", height: "35px", borderWidth: "3px" }}
                 />
               </div>
 
               <button
-                style={{ background: '#4860A8', color: "white", width: '100px', height: '35px', padding: '3px', marginLeft: '5px'}}
+                style={{ background: "#4860A8", color: "white", width: "100px", height: "35px", padding: "3px", marginLeft: "5px"}}
                 onClick={handleJoinRoom}>
                 Join
               </button>
@@ -153,7 +149,7 @@ const Lobby = () => {
             )}
           </section>
 
-          <div className={`overlay ${overlayHidden ? 'hidden' : ''}`}></div>
+          <div className={`overlay ${overlayHidden ? "hidden" : ""}`}></div>
           <Button width="100%" onClick={openModal}>Join Room</Button>
           <Button width="100%" onClick={handleLogout}>Logout</Button>
         </div>

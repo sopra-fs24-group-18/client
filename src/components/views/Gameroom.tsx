@@ -14,12 +14,15 @@ const GameRoom = () => {
   let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [Min, setMin] = useState<number>(0);
   const [Max, setMax] = useState<number>(1000);
+  const [oriMin, setOriMin] = useState<number>(0);
+  const [oriMax, setOriMax] = useState<number>(0);
   const userId = localStorage.getItem("userId");
   // const [chosenItemList, setChosenItemList] = useState<string>("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const roomCode = localStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
   const [userAnswer, setUserAnswer] = useState<number>(0);
+  const [isBlurred, setIsBlurred] = useState(false);
 
 
   // gain item picture ui
@@ -35,10 +38,18 @@ const GameRoom = () => {
     try {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem("questionId", response.data.id);
-      const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
-      setImageUrl(newImageUrl);
-      setSliderRange(response.data.leftRange, response.data.rightRange);
-      console.log("check:", newImageUrl, imageUrl, Min, Max);
+      //const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
+      setIsBlurred(response.data.blur);
+      setImageUrl(response.data.itemImage);
+
+      if (response.data.leftRange === response.data.originLeftRange
+        && response.data.rightRange === response.data.originRightRange)
+      { setSliderRange(response.data.leftRange, response.data.rightRange);}
+      else { setSliderRange(response.data.leftRange, response.data.rightRange);
+        setOriMax(response.data.originRightRange);
+        setOriMin(response.data.originLeftRange);}
+
+      console.log("check:", imageUrl, Min, Max, oriMax, oriMin);
     } catch (error) {
       console.error("Error fetching image URL:", error);
       if (error.response && error.response.status === 404 && retryCount < 2) {
@@ -54,6 +65,7 @@ const GameRoom = () => {
     setMin(min);
     setMax(max);
   };
+
 
   // bar
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -127,7 +139,7 @@ const GameRoom = () => {
   const displayTool = (tool) => {
     if (!tool) {
       return (
-          <div className="tool item default"></div>
+        <div className="tool item default"></div>
       );
     }
 
@@ -146,9 +158,9 @@ const GameRoom = () => {
     }
 
     return (
-        <div className={toolClassName}>
-          {toolContent}
-        </div>
+      <div className={toolClassName}>
+        {toolContent}
+      </div>
     );
   };
 
@@ -189,23 +201,24 @@ const GameRoom = () => {
       setTimeLeft(timeLeft - 1);
     }, 1000);
 
-      if (timeLeft === 0) {
-        clearTimeout(timer);
-        if (!isConfirmed) {
-          handleConfirmClick()
-            .then(() => {
-              // after auto-handleConfirmClick
-              navigate(`/waiting-answer/${userAnswer}`);
-            })
-            .catch((error) => {
-              console.error("Failed to auto-confirm:", error);
-              // handle error
-            });
-        } else {
-          // if already clicked confirm
-          navigate(`/waiting-answer/${userAnswer}`);
-        }
+    if (timeLeft === 0) {
+      clearTimeout(timer);
+      if (!isConfirmed) {
+        handleConfirmClick()
+          .then(() => {
+            // after auto-handleConfirmClick
+            navigate(`/waiting-answer/${userAnswer}`);
+          })
+          .catch((error) => {
+            console.error("Failed to auto-confirm:", error);
+            // handle error
+          });
+      } else {
+        // if already clicked confirm
+        navigate(`/waiting-answer/${userAnswer}`);
       }
+    }
+    
     return () => clearTimeout(timer);
   }, [timeLeft, isConfirmed, roundNumber]); // dependency
 
@@ -254,7 +267,9 @@ const GameRoom = () => {
 
         {/*image part*/}
         <div className="image">
-          <img src={imageUrl} alt="Item display" className="gameRoomImage"/>
+          <img src={imageUrl}
+            alt="Item display"
+            className={`gameRoomImage ${isBlurred ? "blurred" : ""}`}/>
 
           <div className="text">
                         Slide to choose the price <br/>
@@ -263,7 +278,12 @@ const GameRoom = () => {
           <div className="text">{sliderValue}</div>
 
           <div className="sliderWrapper">
-            <div className="minValue">{Min}CHF</div>
+            {/* check origin 0 */}
+            {oriMin === 0 && oriMax === 0 ? (
+              <div className="minValue">{Min}CHF</div>
+            ) : (
+              <div className="minValue">{oriMin}&rArr;{Min}CHF</div>
+            )}
             <input
               type="range"
               min={Min}
@@ -273,7 +293,11 @@ const GameRoom = () => {
               className="rangeInput"
               ref={sliderRef}
             />
-            <div className="maxValue">{Max}CHF</div>
+            {oriMin === 0 && oriMax === 0 ? (
+              <div className="maxValue">{Max}CHF</div>
+            ) : (
+              <div className="maxValue">{Max}CHF&lArr;{oriMax}</div>
+            )}
           </div>
 
           <div className="buttonsContainer">

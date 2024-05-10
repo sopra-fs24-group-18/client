@@ -19,6 +19,10 @@
       align-items: center; // center horizontally
       justify-content: center; // center vertically
 
+      .blurred {
+        filter: blur(10px); //can adjust this for more blur
+      }
+
       .imageGrid {
         display: grid;
         //grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -56,6 +60,9 @@
         margin-bottom: 0.5em;
         font-size: 16px;
         color: rgb(36, 36, 150);
+      }
+      #num {
+        color: red;
       }
     }
 
