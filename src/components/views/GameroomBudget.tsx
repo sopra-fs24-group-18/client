@@ -24,47 +24,10 @@ const GameRoomBudget = () => {
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
-      if (roundNumber === 1) {
-        try {
-          const response = await api.post(`games/${roomId}/${userId}/getReady`);
-          console.log("Response for round 1:", response.data);
-
-          if (response.data === "wait") {
-            // continue polling if not ready
-          } else if (response.data === "ready") {
-            setIsReady(true);
-            clearInterval(interval);
-            console.log("Game is ready:", response.data);
-            await fetchImageUrls(roomId, roundNumber);
-          } else {
-            alert("Failed to get ready, status: " + response.status);
-            clearInterval(interval);
-          }
-        } catch (error) {
-          console.error("Error during getReady call:", error);
-          clearInterval(interval);
-        }
-      } else {
-        // directly fetch image
-        setIsReady(true);
-        await fetchImageUrls(roomId, roundNumber);
-      }
+      await fetchImageUrls(roomId, roundNumber);
     };
 
-    const interval = roundNumber === 1 ? setInterval(() => {
-      initializeGame();
-    }, 1000) : null;
-
-    if (roundNumber !== 1) {
-      // if it's not the first round, initialize game immediately without waiting
-      initializeGame();
-    }
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
+    initializeGame();
   }, [roomId, userId, roundNumber]);
 
   const fetchImageUrls = async (roomId, roundNumber, retryCount = 0) => {

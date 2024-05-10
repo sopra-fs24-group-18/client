@@ -67,7 +67,7 @@ const Lobby = () => {
       const response = await api.post(`/rooms/${roomCode}/${userId}/enter`);
       const roomData = response.data;
       setGameMode(response.data.gameMode);
-      console.log("gameMode: ", response.data.gameMode);
+      console.log("gameMode: ", gameMode);
       localStorage.setItem("roomId", roomData.id);
       localStorage.setItem("roomCode", roomData.roomCode);
       localStorage.setItem("playerNames", roomData.playerNames);
@@ -75,16 +75,12 @@ const Lobby = () => {
       localStorage.setItem("gameMode",response.data.gameMode);
       // check if the room id exist in the backend
       if (response.data) {
-        if (gameMode === "GUESSING"){
-          navigate("prepare");}
-        else{navigate(`/rooms/${roomCode}/${userId}/budget`);}
-
-      } else {
-        setErrorMessage("This room does not exist. Please check the room ID.");
+        navigate("/prepare");
       }
     } catch (error) {
+      setErrorMessage("This room does not exist. Please check the room ID.");
       console.error("Error joining room:", error);
-      setErrorMessage("Failed to join room. Please try again.");
+
     }
   };
 
