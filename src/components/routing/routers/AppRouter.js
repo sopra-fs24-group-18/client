@@ -4,6 +4,9 @@ import {GameGuard} from "../routeProtectors/GameGuard";
 import {GameRoomGuard} from "../routeProtectors/GameRoomGuard";
 import GameRouter from "./GameRouter";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
+import {ProfileGuard} from "../routeProtectors/ProfileGuard";
+import {RegisterGuard} from "../routeProtectors/RegisterGuard";
+
 import Login from "../../views/Login";
 import Mainpage from "../../views/Mainpage";
 import Register from "../../views/Register";
@@ -28,42 +31,31 @@ import Instruction from "../../views/Instruction";
  * Documentation about routing in React: https://reactrouter.com/en/main/start/tutorial 
  */
 
-//const GameRoomPage = () => {
-//  return (
-//    <div>
-//      <PointDisplay />
-//      <GameRoom />
-//      <ToolDisplay />
-//    </div>
-//  );
-//};
-
-
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
         {/* this is for firstly open the mainpage */}
-        <Route path="/" element={<Mainpage />} />
+        <Route path="/" element={<RegisterGuard />}>
+          <Route path="/" element={<Mainpage />} />
+        </Route>
         <Route path="/instruction" element={<Instruction />} />
 
         <Route path="/login" element={<LoginGuard />}>
           <Route path="/login" element={<Login/>} />
         </Route>
-        <Route path="/register" element={<LoginGuard />}>
+        <Route path="/register" element={<RegisterGuard />}>
           <Route path="/register" element={<Register/>} />
         </Route>
-
         <Route path="/roomcreation" element={<GameGuard />}>
           <Route path="/roomcreation" element={<Roomcreation/>} />
         </Route>
         <Route path="/lobby/:userId" element={<GameGuard />}>
           <Route path="/lobby/:userId" element={<Lobby />} />
         </Route>
-        <Route path="/users/:userId" element={<GameGuard />}>
+        <Route path="/users/:userId" element={<ProfileGuard />}>
           <Route path="/users/:userId" element={<Profile />} />
         </Route>
-
         <Route path="/prepare" element={<GameRoomGuard />}>
           <Route path="/prepare" element={<Prepare/>} />
         </Route>

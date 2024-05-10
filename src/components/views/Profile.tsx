@@ -28,11 +28,6 @@ const Profile = () => {
       const response = await api.get(`/users/${userId}`);
       // console.log("response data", response.data)
       setUserData(response.data);
-      // Check if userData is not null or undefined
-      // console.log("userData", userData);
-      // console.log("token", token);
-      // Store the token into the local storage.
-      //localStorage.setItem("token", userData.token);
       localStorage.setItem("userId", userId);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -81,6 +76,11 @@ const Profile = () => {
     navigate("/login");
   };
 
+  const exit = () => {
+    setEditing(false)
+    navigate(`/users/${userId}`);
+  };
+
   const back = () => {
     navigate(`/lobby/${userId}`);
   };
@@ -94,43 +94,43 @@ const Profile = () => {
             <p>Online Status: {userData.status}</p>
             <p>Username: {userData.username}</p>
             {/* Display password as asterisks or provide a mechanism to edit it */}
-            <p>Password: **********</p>
+            {/*<p>Password: **********</p>*/}
           </div>
         ) : (
           <p>Loading...</p>
         )}
         {editing && (
-          <div>
-            <div className="form-group">
-              <label>Set Username:</label>
-              <input
-                type="text"
-                value={newUsername}
-                onChange={(e) => setNewUsername(e.target.value)}
-              />
+            <div>
+              <div className="form-group">
+                <label>Set Username:</label>
+                <input
+                    type="text"
+                    value={newUsername}
+                    onChange={(e) => setNewUsername(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label>Set Password:</label>
+                <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              {showSuccessMessage && (
+                  <p className="success-message">Changes saved successfully!</p>
+              )}
             </div>
-            <div className="form-group">
-              <label>Set Password:</label>
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            {showSuccessMessage && (
-              <p className="success-message">Changes saved successfully!</p>
-            )}
-          </div>
         )
         }
         {
-          userData && (
-            <div className="left-button-container">
-              <div>
-                {editing && <Button
-                  disabled={!newUsername || !newPassword}
-                  width="100%"
-                  onClick={() => {
+            userData && (
+                <div className="left-button-container">
+                  <div>
+                    {editing && <Button
+                        disabled={!newUsername && !newPassword}
+                        width="100%"
+                        onClick={() => {
                     saveUserData(); // save user data
                     setEditing(false); // set editing state as false
                   }}>
@@ -146,8 +146,9 @@ const Profile = () => {
                 )}
               </div>
               <div>
-              <Button width="100%" onClick={back}>Back</Button>
-              {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
+                {editing && <Button width="100%" onClick={exit}>Exit</Button>}
+                {!editing &&  <Button width="100%" onClick={back}>Back</Button>}
+                {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
             </div>
             </div>
           )

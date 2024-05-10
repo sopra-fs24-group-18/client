@@ -1,27 +1,77 @@
-import React from "react";
-import {Navigate, Outlet} from "react-router-dom";
-import PropTypes from "prop-types";
+import {Navigate, Outlet, withRouter, useHistory, useNavigate} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
-/**
- * routeProtectors interfaces can tell the router whether or not it should allow navigation to a requested route.
- * They are functional components. Based on the props passed, a route gets rendered.
- * In this case, if the user is authenticated (i.e., a token is stored in the local storage)
- * <Outlet /> is rendered --> The content inside the <GameGuard> in the App.js file, i.e. the user is able to access the main app.
- * If the user isn't authenticated, the components redirects to the /login screen
- * @Guard
- * @param props
- */
-export const GameRoomGuard = () => {
-  if (!localStorage.getItem("token")) {
+// requirement: 1. during game, user can not return to last page. 2. prevent user
+// from refresh/exit the page.
+// 2. only a logged-in users who entered an existing room can be guided into the gameroom page
+
+export const GameRoomGuard = ({ children }) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const handlePopstate = () => {
+      // use navigate() to redirect users to the current path
+      navigate(window.location.pathname);
+    };
+    console.log("current path:", window.location.pathname)
+
+    // add a new path into history record
+    window.history.replaceState(null, null, window.location.href);
+    console.log("manually add path",window.location.href)
+
+    // add a listener to monitor the change of the pages
+    window.addEventListener('popstate', handlePopstate);
+
+    return () => {
+      // remove the listener
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [navigate]);
+
+  // const navigate = useNavigate();
+  //
+  // useEffect(() => {
+  //   const pushHistory = () => {
+  //     const state = {
+  //       title: "GameRoom Page",
+  //       url: window.location.href
+  //     };
+  //     window.history.pushState(state, "GameRoom Page", window.location.href);
+  //     console.log("url:", window.location.href)
+  //   };
+  //
+  //   window.onload = () => {
+  //     pushHistory();
+  //   };
+  //
+  //   window.addEventListener("popstate", () => {
+  //     pushHistory();
+  //   });
+  //
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
+  //     event.returnValue = '';
+  //   };
+  //
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+  //
+  //   return () => {
+  //     window.onload = null;
+  //     window.removeEventListener("popstate", pushHistory);
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, [navigate]);
+
+  if (!localStorage.getItem('token')) {
     return <Navigate to="/login" replace />;
-  } else if (!localStorage.getItem("roomId")) {
+  } else if (!localStorage.getItem('roomId')) {
     return <Navigate to="/lobby/:userId" replace />;
   } else {
     return <Outlet />;
   }
-
 };
 
 GameRoomGuard.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
+
