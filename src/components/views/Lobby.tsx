@@ -77,7 +77,7 @@ const Lobby = () => {
       if (response.data) {
         if (response.data.gameMode === "BUDGET"){
           navigate(`/rooms/${roomCode}/${userId}/budget`);}
-        else{navigate(`/prepare`);}
+        else{navigate("/prepare");}
 
       } else {
         setErrorMessage("This room does not exist. Please check the room ID.");

@@ -22,6 +22,7 @@ const GameRoom = () => {
   const roomCode = localStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
   const [userAnswer, setUserAnswer] = useState<number>(0);
+  const [isBlurred, setIsBlurred] = useState(false);
 
 
   // gain item picture ui
@@ -37,8 +38,9 @@ const GameRoom = () => {
     try {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem("questionId", response.data.id);
-      const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
-      setImageUrl(newImageUrl);
+      //const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
+      setIsBlurred(response.data.blur);
+      setImageUrl(response.data.itemImage);
 
       if (response.data.leftRange === response.data.originLeftRange
         && response.data.rightRange === response.data.originRightRange)
@@ -47,7 +49,7 @@ const GameRoom = () => {
         setOriMax(response.data.originRightRange);
         setOriMin(response.data.originLeftRange);}
 
-      console.log("check:", newImageUrl, imageUrl, Min, Max, oriMax, oriMin);
+      console.log("check:", imageUrl, Min, Max, oriMax, oriMin);
     } catch (error) {
       console.error("Error fetching image URL:", error);
       if (error.response && error.response.status === 404 && retryCount < 2) {
@@ -265,7 +267,9 @@ const GameRoom = () => {
 
         {/*image part*/}
         <div className="image">
-          <img src={imageUrl} alt="Item display" className="gameRoomImage"/>
+          <img src={imageUrl}
+            alt="Item display"
+            className={`gameRoomImage ${isBlurred ? "blurred" : ""}`}/>
 
           <div className="text">
                         Slide to choose the price <br/>

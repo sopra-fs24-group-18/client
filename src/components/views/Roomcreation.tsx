@@ -118,7 +118,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         localStorage.setItem("gameMode", gameMode);
 
         if (gameMode === "BUDGET"){ navigate(`/rooms/${roomCode}/${userId}/budget`);}
-        else{ navigate(`/prepare`);}
+        else{ navigate("/prepare");}
         console.log("Room created:", { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode, roundNumber });
       } else {
         alert("Failed to retrieve room code after creation");

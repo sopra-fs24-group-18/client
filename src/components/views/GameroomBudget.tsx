@@ -20,6 +20,7 @@ const GameRoomBudget = () => {
   const [itemIds, setItemIds] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
   const [hintNum, setHinNum] = useState(0);
+  const [isBlurred, setIsBlurred] = useState(false);
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
@@ -79,6 +80,7 @@ const GameRoomBudget = () => {
       setItemImages(itemImages);
       setItemIds(itemIds);
       setTotalPrice(totalPrice);
+      setIsBlurred(response.data.blur);
       if (numHint !== 0)
       { setHinNum(numHint); }
 
@@ -292,15 +294,24 @@ const GameRoomBudget = () => {
       <div className="gameRoomContainer">
         <div className="image">
           <div className="imageGrid">
-            {itemImages.map((src, index) => (
-              <img
-                key={src}
-                src={src}
-                alt={`Item ${itemIds[index]}`}
-                className={selectedItemIds.includes(itemIds[index]) ? "selected" : ""}
-                onClick={() => handleImageSelect(itemIds[index])}
-              />
-            ))}
+            {itemImages.map((src, index) => {
+              // blur 0 and 5
+              const shouldBlur = isBlurred && (index === 0 || index === 5);
+              const classNames = [
+                selectedItemIds.includes(itemIds[index]) ? "selected" : "",
+                shouldBlur ? "blurred" : ""
+              ].join(" ");
+
+              return (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`Item ${itemIds[index]}`}
+                  className={classNames}
+                  onClick={() => handleImageSelect(itemIds[index])}
+                />
+              );
+            })}
           </div>
           <div className="text">Total Price: {totalPrice}CHF</div>
           {hintNum !== 0 && (
