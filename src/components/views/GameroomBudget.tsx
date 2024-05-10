@@ -19,6 +19,7 @@ const GameRoomBudget = () => {
   const [itemImages, setItemImages] = useState([]);
   const [itemIds, setItemIds] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
+  const [hintNum, setHinNum] = useState(0);
   // gain item picture ui
   useEffect(() => {
     const initializeGame = async () => {
@@ -73,10 +74,13 @@ const GameRoomBudget = () => {
       const itemImages = response.data.itemImageList.split(",");
       const itemIds = response.data.itemList.split(",");
       const totalPrice = response.data.budget;
+      const numHint = response.data.selectedItemNum
 
       setItemImages(itemImages);
       setItemIds(itemIds);
       setTotalPrice(totalPrice);
+      if (numHint !== 0)
+      { setHinNum(numHint); }
 
       console.log("check images:", itemImages);
       console.log("check ids:", itemIds);
@@ -313,6 +317,9 @@ const GameRoomBudget = () => {
             ))}
           </div>
           <div className="text">Total Price: {totalPrice}CHF</div>
+          {hintNum !== 0 && (
+            <div className="text">Hint for right total number: <span id="num">{hintNum}</span></div>
+          )}
           <div className="buttonsContainer">
             <Button width="150%">Room: {roomCode}</Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
