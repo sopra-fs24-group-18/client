@@ -112,7 +112,10 @@ const GameRoomBudget = () => {
 
   // sent user choice
   const handleConfirmClick = async () => {
-    navigate(`/waiting-answer/${userAnswer}`);
+    if (userAnswer !== "") {
+      navigate(`/waiting-answer/${userAnswer}`);
+    }
+    else { navigate("/waiting-answer/null");}
     /*try {
       const questionId = localStorage.getItem("questionId");
       setIsConfirmed(true);
@@ -238,29 +241,12 @@ const GameRoomBudget = () => {
           handleConfirmClick()
             .then(() => {
               // after auto-handleConfirmClick
-              if (roundNumber === 3) {
-                navigate("/rank");
-              } else {
-                roundNumber += 1;
-                localStorage.setItem("isReady_1","True")
-                localStorage.setItem("roundNumber", String(roundNumber));
-                navigate(`/waiting-answer/${userAnswer}`);
-              }
+              console.log("Auto-confirmation Successful")
             })
             .catch((error) => {
               console.error("Failed to auto-confirm:", error);
               // handle error
             });
-        } else {
-          // if already clicked confirm
-          if (roundNumber === 3) {
-            navigate("/rank");
-          } else {
-            roundNumber += 1;
-            localStorage.setItem("isReady_1","True")
-            localStorage.setItem("roundNumber", String(roundNumber));
-            navigate("/shop");
-          }
         }
       }
 

@@ -16,6 +16,7 @@ const WaitingAnswer = () => {
   const [countdown, setCountdown] = useState(5); // set count down timer to 5s
   const [isReady_answer, setIsReady_answer] = useState(false);
   const gameMode = localStorage.getItem("gameMode");
+  const [message, setMessage] = useState("");
 
 
   useEffect(() => {
@@ -30,11 +31,20 @@ const WaitingAnswer = () => {
             guessedPrice: Number(userAnswer)
           });
         } else {
-          response = await api.post("/answers/budgetMode", {
+          if (userAnswer !== "null") {
+            response = await api.post("/answers/budgetMode", {
+              questionId,
+              userId,
+              chosenItemList: userAnswer
+            });
+          } else {response = await api.post("/answers/budgetMode", {
             questionId,
             userId,
-            chosenItemList: userAnswer
+            chosenItemList: ""
           });
+          setMessage("You didn't select any images ")
+          }
+
         }
         if (response.data) {
           //clearInterval(interval);
@@ -111,6 +121,8 @@ const WaitingAnswer = () => {
         all players to submit their answers...</h2>
       {showAlert && (
         <div id="wrap">
+          {message !== "" &&(
+            <div className="txt">You did not select any images </div>)}
           <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {score} points</div>
           <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" }}>
             {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {realPrice}
