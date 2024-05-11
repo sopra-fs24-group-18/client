@@ -8,6 +8,7 @@ const WaitingAnswer = () => {
   const { userAnswer } = useParams<{ userAnswer: string }>();
   const [score, setScore] = useState(null);
   const [realPrice, setRealPrice] = useState<number>(0);
+  const [bonus, setBonus] = useState<number>(0);
   const userId = localStorage.getItem("userId");
   const roomId = localStorage.getItem("roomId");
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const WaitingAnswer = () => {
   useEffect(() => {
     const fetchScore = async () => {
       try {
+        console.log("userAnswer is: ", userAnswer);
         const questionId = localStorage.getItem("questionId");
         let response = null;
         if (gameMode === "GUESSING") {
@@ -54,6 +56,7 @@ const WaitingAnswer = () => {
           console.log("Success:", response.data);
           setScore(response.data.point);
           setRealPrice(response.data.realPrice);
+          setBonus(response.data.bonus);
           setShowAlert(true);
 
         } else {
@@ -123,7 +126,23 @@ const WaitingAnswer = () => {
         <div id="wrap">
           {message !== "" &&(
             <div className="txt">You did not select any images </div>)}
-          <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {score} points</div>
+
+          {bonus < 0 && (
+            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}> {bonus} points</div>
+          )}
+          {bonus >= 0 &&
+            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {score + bonus} points</div>
+          }
+          {bonus < 0 && (
+            <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" }}>
+              You took a gamble but lose.
+            </div>
+          )}
+
+          {bonus >= 0 &&
+            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF" }}>(including bonus: {bonus} points)</div>
+          }
+
           <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" }}>
             {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {realPrice}
           </div>
