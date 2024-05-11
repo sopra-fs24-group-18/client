@@ -22,13 +22,19 @@ export const LoginGuard = () => {
     // add a new path into history record
     window.history.replaceState(null, null, window.location.href);
     console.log("manually add path",window.location.href)
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
 
     // add a listener to monitor the change of the pages
     window.addEventListener('popstate', handlePopstate);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
       // remove the listener
       window.removeEventListener('popstate', handlePopstate);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [navigate]);
 
@@ -36,8 +42,8 @@ export const LoginGuard = () => {
     
     return <Outlet />;
   }
-  
-  return <Navigate to="/lobby/:userId" replace />;
+
+  return <Navigate to='/lobby/${userId}' replace />;
 };
 
 LoginGuard.propTypes = {

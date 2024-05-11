@@ -19,12 +19,20 @@ export const GameRoomGuard = ({ children }) => {
     window.history.replaceState(null, null, window.location.href);
     console.log("manually add path",window.location.href)
 
+    // alert when refresh/exit the window
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
     // add a listener to monitor the change of the pages
     window.addEventListener('popstate', handlePopstate);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
       // remove the listener
       window.removeEventListener('popstate', handlePopstate);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [navigate]);
 
