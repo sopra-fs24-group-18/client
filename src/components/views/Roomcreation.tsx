@@ -13,10 +13,10 @@ specific components that belong to the main one in the same file.
  */
 const FormField = (props) => {
   return (
-    <div className="creation creation-field">
-      <label className="creation creation-label">{props.label}</label>
+    <div className="creation field">
+      <label className="creation label">{props.label}</label>
       <input
-        className="creation creation-input"
+        className="creation input"
         placeholder="enter here.."
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
@@ -134,8 +134,8 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
   return (
     <div className="background-container">
-      <div className="creation creation-container">
-        <div className="creation creation-form">
+      <div className="creation container">
+        <div className="creation form">
 
           <DropdownMenu
             title="Player Number"

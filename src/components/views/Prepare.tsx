@@ -131,19 +131,13 @@ const Prepare = () => {
   return (
     <div className="main-page">
 
-      <div className="prepare-loading" >
+      <div className="loading" >
         <br/><br/><br/><br/>Preparing for the game ......<br/>
       </div>
 
-      <div className="prepare-buttonsContainer">
+      <div className="buttonsContainer">
         <Button width="150%" >Room: {roomCode} </Button>
-      </div>
-
-      <div className="exit_button-container"
-        width="100%"
-        onClick={() => {leaveRoom();}}
-      >
-        Exit
+        <Button width="150%" onClick={() => {leaveRoom();}}>Exit</Button>
       </div>
 
 

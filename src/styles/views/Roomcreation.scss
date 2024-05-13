@@ -12,7 +12,7 @@
 }
 
 .creation {
-  &.creation-container {
+  &.container {
     background-image: url('../../assets/window_create.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -26,7 +26,7 @@
     justify-content: center;
     align-items: center;
   }
-  &.creation-form {
+  &.form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,14 +43,14 @@
     margin-top: 40px;
     //margin-left: 200px;
   }
-  &.creation-field {
+  &.field {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 12em;
     margin-top: 25px;
   }
-  &.creation-input {
+  &.input {
     height: 35px;
     //padding-left: 15px;
     margin-left: -4px;
@@ -65,7 +65,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 
   }
-  &.creation-label {
+  &.label {
     margin-top: 18.1em;
     color: $textColor;
     margin-bottom: 10px;

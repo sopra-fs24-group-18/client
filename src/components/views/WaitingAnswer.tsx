@@ -162,19 +162,19 @@ const WaitingAnswer = () => {
             <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {parseInt(localStorage.getItem("myScore")) + parseInt(localStorage.getItem("bonus"))} points</div>
           }
           {parseInt(localStorage.getItem("bonus")) < 0 && (
-            <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" }}>
+            <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" , fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>
               You took a gamble but lose.
             </div>
           )}
 
           {parseInt(localStorage.getItem("bonus")) >= 0 &&
-            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF" }}>(including bonus: {localStorage.getItem("bonus")} points)</div>
+            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF", fontFamily: "Microsoft YaHei", fontWeight: "bold" }}>(including bonus: {localStorage.getItem("bonus")} points)</div>
           }
 
-          <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" }}>
+          <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" , color: "#FFFFFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>
             {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {localStorage.getItem("realPrice")}
           </div>
-          <div className="tip" style={{ fontSize: "10px" }}>Next round starts after <span id="time">{countdown}</span>s
+          <div className="tip" style={{ fontSize: "10px" , color: "#97ABFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>Next round starts after <span id="time">{countdown}</span>s
           </div>
         </div>
       )}
