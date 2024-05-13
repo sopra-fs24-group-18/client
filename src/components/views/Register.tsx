@@ -32,19 +32,21 @@ const FormField = ({
   return (
     <div className="register field">
       <label className="register register-label">{label}</label>
-      <div className="input-wrapper" style={{ display: "flex", alignItems: "center" }}>
-        <input
-          className="register input"
-          placeholder="enter here.."
-          type={showPassword ? "text" : type}
-          value={maskedValue}
-          onChange={handleInputChange}
-          autoComplete="off"
-        />
-        {type === "password" && maskPassword && (
-          <ShowButton className="show-password" onClick={toggleShowPassword}>
-          </ShowButton>
-        )}
+      <div className="input-wrapper" style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <input
+            className="register input"
+            placeholder="enter here.."
+            type={showPassword ? "text" : type}
+            value={maskedValue}
+            onChange={handleInputChange}
+            autoComplete="off"
+          />
+          {type === "password" && maskPassword && (
+            <ShowButton className="show-password" onClick={toggleShowPassword}>
+            </ShowButton>
+          )}
+        </div>
       </div>
     </div>
   );
