@@ -11,34 +11,14 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [player, setPlayer] = useState("");
   const userId = localStorage.getItem("userId");
   const roomId = localStorage.getItem("roomId");
   const roomCode = localStorage.getItem("roomCode");
   const gameMode = localStorage.getItem("gameMode");
-  const [isHintDisabled, setIsHintDisabled] = useState(false);
-  const [isBlurDisabled, setIsBlurDisabled] = useState(false);
-  const [isDefenseDisabled, setIsDefenseDisabled] = useState(false);
-  const [isBonusDisabled, setIsBobusDisabled] = useState(false);
-  const [isGambleDisabled, setIsGambleDisabled] = useState(false);
-  const [showAlert_shop, setShowAlert_shop] = useState(true);
-  const [showAlert_loading, setShowAlert_loading] = useState(false);
 
-  //useEffect(() => {
-  //  const timer = setInterval(async () => {
-  //    try {
-  //      const response = await api.get(`/users/${userId}`);
-  //      setPlayer(response.data);
-  //      console.log("User data fetched successfully:", response.data);
-  //    } catch (error) {
-  //      console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-  //    }
-  //  }, 100);
-  //
-  //  return () => clearInterval(timer);
-  //}, [userId]);
 
   useEffect(() => {
     async function fetchUser() {
@@ -58,13 +38,19 @@ const Purchase = () => {
   // timer
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
+      if(timeLeft > 0) {
+        setTimeLeft(timeLeft - 1);
+        localStorage.setItem("timeLeft", timeLeft.toString());
+      }
     }, 1000);
+
     if (timeLeft === 0) {
       clearTimeout(timer);
       if (gameMode === "BUDGET") {
+        localStorage.setItem("timeLeft", "22");
         navigate(`/rooms/${roomCode}/${userId}/budget`);
       } else {
+        localStorage.setItem("timeLeft", "22");
         navigate(`/rooms/${roomCode}/${userId}/guessing`);
       }
 
@@ -81,7 +67,7 @@ const Purchase = () => {
         const toolId = tool.id;
         const response_2 = await api.post(`/tools/${toolId}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        setIsHintDisabled(true);
+        localStorage.setItem("isHintDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[1].type) {
@@ -89,7 +75,7 @@ const Purchase = () => {
         const toolId_2 = tool_2.id;
         const response_3 = await api.post(`/tools/${toolId_2}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        setIsBlurDisabled(true);
+        localStorage.setItem("isBlurDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[2].type) {
@@ -97,7 +83,7 @@ const Purchase = () => {
         const toolId_3 = tool_3.id;
         const response_4 = await api.post(`/tools/${toolId_3}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        setIsDefenseDisabled(true);
+        localStorage.setItem("isDefenseDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[3].type) {
@@ -105,8 +91,8 @@ const Purchase = () => {
         const toolId_4 = tool_4.id;
         const response_5 = await api.post(`/tools/${toolId_4}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        setIsBobusDisabled(true);
-        setIsGambleDisabled(true);
+        localStorage.setItem("isBonusDisabled", "true");
+        localStorage.setItem("isGambleDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[4].type) {
@@ -114,8 +100,8 @@ const Purchase = () => {
         const toolId_5 = tool_5.id;
         const response_6 = await api.post(`/tools/${toolId_5}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        setIsBobusDisabled(true);
-        setIsGambleDisabled(true);
+        localStorage.setItem("isBonusDisabled", "true");
+        localStorage.setItem("isGambleDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else {
@@ -141,9 +127,7 @@ const Purchase = () => {
     try {
       const requestBody = { roomId, userId };
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
       localStorage.removeItem("rank");
@@ -152,6 +136,22 @@ const Purchase = () => {
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
+      localStorage.removeItem("isReady_answer_timer");
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("isDefenseDisabled");
+      localStorage.removeItem("isBobusDisabled");
+      localStorage.removeItem("isGambleDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {
       console.error("Error deleting server data:", error);
@@ -159,14 +159,14 @@ const Purchase = () => {
   };
 
   const skipShop = async () => {
-    setShowAlert_shop(false);
-    setShowAlert_loading(true);
+    localStorage.setItem("showAlert_shop", "false");
+    localStorage.setItem("showAlert_loading", "true");
   };
 
 
   return (
     <div className="background-container">
-      {showAlert_shop && (<BaseContainer>
+      {(localStorage.getItem("showAlert_shop")==="true") && (<BaseContainer>
         <div className="shop container">
           <div className="shop form"><br /><br />
 
@@ -190,7 +190,7 @@ const Purchase = () => {
                  style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop hint"></button>
               <button className="shop buy-button"
-                      disabled={isHintDisabled}
+                      disabled={(localStorage.getItem("isHintDisabled")==="true")}
                       onClick={() => doPurchase("HINT")}
               >
                 Buy
@@ -208,7 +208,7 @@ const Purchase = () => {
                  style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bomb"></button>
               <button className="shop buy-button"
-                      disabled={isBlurDisabled}
+                      disabled={(localStorage.getItem("isBlurDisabled")==="true")}
                       onClick={() => doPurchase("BLUR")}
               >
                 Buy
@@ -226,7 +226,7 @@ const Purchase = () => {
                  style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop defense"></button>
               <button className="shop buy-button"
-                      disabled={isDefenseDisabled}
+                      disabled={(localStorage.getItem("isDefenseDisabled")==="true")}
                       onClick={() => doPurchase("DEFENSE")}
               >
                 Buy
@@ -244,7 +244,7 @@ const Purchase = () => {
                  style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bonus"></button>
               <button className="shop buy-button"
-                      disabled={isBonusDisabled}
+                      disabled={(localStorage.getItem("isBonusDisabled")==="true")}
                       onClick={() => doPurchase("BONUS")}
               >
                 Buy
@@ -262,7 +262,7 @@ const Purchase = () => {
                  style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop gamble"></button>
               <button className="shop buy-button"
-                      disabled={isGambleDisabled}
+                      disabled={(localStorage.getItem("isGambleDisabled")==="true")}
                       onClick={() => doPurchase("GAMBLE")}
               >
                 Buy
@@ -297,7 +297,7 @@ const Purchase = () => {
 
       </BaseContainer>)}
 
-      {showAlert_loading && (<div className="shop_loading">
+      {(localStorage.getItem("showAlert_loading")==="true") && (<div className="shop_loading">
         <br /><br /><br /><br />Preparing for the next round ......<br />
       </div>)}
 

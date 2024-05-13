@@ -48,18 +48,21 @@ const Prepare = () => {
     };
   }, [roomId, userId]);
 
-  const [timeLeft, setTimeLeft] = useState(2);
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
 
   useEffect(() => {
     const gameMode = localStorage.getItem("gameMode")
-    console.log("isReady for timer");
     if (isReady === true) {  // when post ready, begin to countdown
       const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
+        if(timeLeft > 0) {
+          setTimeLeft(timeLeft - 1);
+          localStorage.setItem("timeLeft", timeLeft.toString());
+        }
       }, 1000);
 
       if (timeLeft === 0) {
         clearTimeout(timer);
+        localStorage.setItem("timeLeft", "22");
         if (gameMode === "GUESSING"){
           navigate(`/rooms/${roomCode}/${userId}/guessing`);}
         else{
@@ -91,23 +94,34 @@ const Prepare = () => {
   ));
 
 
-
-
   const leaveRoom = async () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
-      localStorage.removeItem("rank");
       localStorage.removeItem("roomCode");
       localStorage.removeItem("roomId");
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
+      localStorage.removeItem("isReady_answer_timer");
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("isDefenseDisabled");
+      localStorage.removeItem("isBobusDisabled");
+      localStorage.removeItem("isGambleDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }
@@ -116,11 +130,11 @@ const Prepare = () => {
   return (
     <div className="main-page">
 
-      <div className="loading" >
+      <div className="prepare-loading" >
         <br/><br/><br/><br/>Preparing for the game ......<br/>
       </div>
 
-      <div className="buttonsContainer">
+      <div className="prepare-buttonsContainer">
         <Button width="150%" >Room: {roomCode} </Button>
       </div>
 

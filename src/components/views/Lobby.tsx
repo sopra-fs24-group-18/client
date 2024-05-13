@@ -75,6 +75,7 @@ const Lobby = () => {
       localStorage.setItem("gameMode",response.data.gameMode);
       // check if the room id exist in the backend
       if (response.data) {
+        localStorage.setItem("timeLeft", "4");
         navigate("/prepare");
       }
     } catch (error) {
@@ -102,10 +103,10 @@ const Lobby = () => {
   };
 
   const handleLogout = () => {
+    // for logging into lobby
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    localStorage.removeItem("creation_date");
     navigate("/login");
   };
 

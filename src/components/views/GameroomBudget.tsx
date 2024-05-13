@@ -77,9 +77,16 @@ const GameRoomBudget = () => {
   // sent user choice
   const handleConfirmClick = async () => {
     if (userAnswer !== "") {
+      localStorage.setItem("timeLeft", "7");
+      localStorage.setItem("isReady_answer_timer", "false");
+      localStorage.setItem("isReady_answer", "false");
       navigate(`/waiting-answer/${userAnswer}`);
     }
-    else { navigate("/waiting-answer/null");}
+    else {
+      localStorage.setItem("timeLeft", "7");
+      localStorage.setItem("isReady_answer_timer", "false");
+      localStorage.setItem("isReady_answer", "false");
+      navigate("/waiting-answer/null");}
     /*try {
       const questionId = localStorage.getItem("questionId");
       setIsConfirmed(true);
@@ -160,7 +167,7 @@ const GameRoomBudget = () => {
 
   // point display
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
@@ -180,7 +187,10 @@ const GameRoomBudget = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
+      if(timeLeft > 0) {
+        setTimeLeft(timeLeft - 1);
+        localStorage.setItem("timeLeft", timeLeft.toString());
+      }
     }, 1000);
 
     if (timeLeft === 0) {
@@ -190,6 +200,9 @@ const GameRoomBudget = () => {
           .then(() => {
             // after auto-handleConfirmClick
             console.log("Auto-confirmation Successful")
+            localStorage.setItem("timeLeft", "7");
+            localStorage.setItem("isReady_answer_timer", "false");
+            localStorage.setItem("isReady_answer", "false");
             navigate(`/waiting-answer/${userAnswer}`);
           })
           .catch((error) => {
@@ -198,6 +211,9 @@ const GameRoomBudget = () => {
           });
       } else{
         // if already clicked confirm
+        localStorage.setItem("timeLeft", "7");
+        localStorage.setItem("isReady_answer_timer", "false");
+        localStorage.setItem("isReady_answer", "false");
         navigate(`/waiting-answer/${userAnswer}`);
       }
     }
@@ -252,17 +268,30 @@ const GameRoomBudget = () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
-      localStorage.removeItem("rank");
       localStorage.removeItem("roomCode");
       localStorage.removeItem("roomId");
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
+      localStorage.removeItem("isReady_answer_timer");
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("isDefenseDisabled");
+      localStorage.removeItem("isBobusDisabled");
+      localStorage.removeItem("isGambleDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

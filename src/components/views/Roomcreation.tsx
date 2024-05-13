@@ -13,10 +13,10 @@ specific components that belong to the main one in the same file.
  */
 const FormField = (props) => {
   return (
-    <div className="creation field">
-      <label className="creation label">{props.label}</label>
+    <div className="creation creation-field">
+      <label className="creation creation-label">{props.label}</label>
       <input
-        className="creation input"
+        className="creation creation-input"
         placeholder="enter here.."
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
@@ -116,6 +116,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         localStorage.setItem("playerNames", roomData.playerNames);
         localStorage.setItem("roomCode", roomCode);
         localStorage.setItem("gameMode", gameMode);
+        localStorage.setItem("timeLeft", "4");
         navigate("/prepare");
         console.log("Room created:", { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode, roundNumber });
       } else {
@@ -133,8 +134,8 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
   return (
     <div className="background-container">
-      <div className="creation container">
-        <div className="creation form">
+      <div className="creation creation-container">
+        <div className="creation creation-form">
 
           <DropdownMenu
             title="Player Number"

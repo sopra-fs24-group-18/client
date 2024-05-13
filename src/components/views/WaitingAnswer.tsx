@@ -6,15 +6,12 @@ import { Button } from "components/ui/Button";
 
 const WaitingAnswer = () => {
   const { userAnswer } = useParams<{ userAnswer: string }>();
-  const [score, setScore] = useState(null);
-  const [realPrice, setRealPrice] = useState<number>(0);
-  const [bonus, setBonus] = useState<number>(0);
   const userId = localStorage.getItem("userId");
   const roomId = localStorage.getItem("roomId");
   const navigate = useNavigate();
+  const [countdown, setCountdown] = useState(parseInt(localStorage.getItem("timeLeft"))-2); // set count down timer to 5s
   let roundNumber = Number(localStorage.getItem("roundNumber"));
   const [showAlert, setShowAlert] = useState(false);
-  const [countdown, setCountdown] = useState(5); // set count down timer to 5s
   const [isReady_answer, setIsReady_answer] = useState(false);
   const gameMode = localStorage.getItem("gameMode");
   const [message, setMessage] = useState("");
@@ -48,15 +45,17 @@ const WaitingAnswer = () => {
           }
 
         }
+        localStorage.setItem("isReady_answer", "true");
         if (response.data) {
           //clearInterval(interval);
           console.log("All players have answered:", response.data);
           setIsReady_answer(true);
-
+          localStorage.setItem("isReady_answer_timer", "true");
           console.log("Success:", response.data);
-          setScore(response.data.point);
-          setRealPrice(response.data.realPrice);
-          setBonus(response.data.bonus);
+          localStorage.setItem("myScore", response.data.point.toString());
+          localStorage.setItem("realPrice", response.data.realPrice.toString());
+          localStorage.setItem("showAlert", "true");
+          localStorage.setItem("bonus", response.data.bonus.toString());
           setShowAlert(true);
 
         } else {
@@ -66,41 +65,53 @@ const WaitingAnswer = () => {
         console.error("Error receiving answers:", error);
       }
     };
-    fetchScore();
+
+    if (localStorage.getItem("isReady_answer") === "false"){;
+      fetchScore();
+    }
 
   }, []);
 
 
   useEffect(() => {
-    if (isReady_answer === true) {  // when post ready, begin to countdown
-      console.log("isReady for answer timer");
+    if (localStorage.getItem("isReady_answer_timer") === "true") {  // when post ready, begin to countdown
       const timer = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
+        if(countdown > 0) {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+          localStorage.setItem("timeLeft", countdown.toString());
+        }
       }, 1000);
 
-      setTimeout(() => {
+      if (countdown === 0) {
         clearInterval(timer);
         setShowAlert(false); // close the pop-up window
+        localStorage.setItem("showAlert", "false");
         if (roundNumber === 3) {
           navigate("/rank");
         } else {
           roundNumber += 1;
           localStorage.setItem("roundNumber", String(roundNumber));
+          localStorage.setItem("timeLeft", "12");
+          localStorage.setItem("isHintDisabled", "false");
+          localStorage.setItem("isBlurDisabled", "false");
+          localStorage.setItem("isDefenseDisabled", "false");
+          localStorage.setItem("isBonusDisabled", "false");
+          localStorage.setItem("isGambleDisabled", "false");
+          localStorage.setItem("showAlert_shop", "true");
+          localStorage.setItem("showAlert_loading", "false");
           navigate("/shop");
         }
-      }, 5000); // close the pop-up window after 5s
+      }
 
       return () => clearInterval(timer);
     }
-  }, [isReady_answer]);
+  }, [isReady_answer, countdown]);
 
   const leaveRoom = async () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      localStorage.removeItem("isReady");
-      localStorage.removeItem("isReady_1");
-      localStorage.removeItem("myScore");
+      // for game room
       localStorage.removeItem("playerNames");
       localStorage.removeItem("questionId");
       localStorage.removeItem("rank");
@@ -109,6 +120,22 @@ const WaitingAnswer = () => {
       localStorage.removeItem("roundNumber");
       localStorage.removeItem("timeLeft");
       localStorage.removeItem("gameMode");
+
+      // for waiting answer
+      localStorage.removeItem("isReady_answer");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("realPrice");
+      localStorage.removeItem("showAlert");
+      localStorage.removeItem("isReady_answer_timer");
+
+      // for shop
+      localStorage.removeItem("isHintDisabled");
+      localStorage.removeItem("isBlurDisabled");
+      localStorage.removeItem("isDefenseDisabled");
+      localStorage.removeItem("isBobusDisabled");
+      localStorage.removeItem("isGambleDisabled");
+      localStorage.removeItem("showAlert_shop");
+      localStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }
@@ -122,29 +149,29 @@ const WaitingAnswer = () => {
       </div>
       <h2 style={{ fontSize: "16px", color: "#123597",textAlign: "center" }}>Waiting for
         all players to submit their answers...</h2>
-      {showAlert && (
+      {(localStorage.getItem("showAlert")==="true") && (
         <div id="wrap">
           {message !== "" &&(
             <div className="txt">You did not select any images </div>)}
 
-          {bonus < 0 && (
-            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}> {bonus} points</div>
+          {parseInt(localStorage.getItem("bonus")) < 0 && (
+            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}> {localStorage.getItem("bonus")} points</div>
           )}
-          {bonus >= 0 &&
-            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {score + bonus} points</div>
+          {parseInt(localStorage.getItem("bonus")) >= 0 &&
+            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {parseInt(localStorage.getItem("myScore")) + parseInt(localStorage.getItem("bonus"))} points</div>
           }
-          {bonus < 0 && (
+          {parseInt(localStorage.getItem("bonus")) < 0 && (
             <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" }}>
               You took a gamble but lose.
             </div>
           )}
 
-          {bonus >= 0 &&
-            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF" }}>(including bonus: {bonus} points)</div>
+          {parseInt(localStorage.getItem("bonus")) >= 0 &&
+            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF" }}>(including bonus: {localStorage.getItem("bonus")} points)</div>
           }
 
           <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" }}>
-            {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {realPrice}
+            {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {localStorage.getItem("realPrice")}
           </div>
           <div className="tip" style={{ fontSize: "10px" }}>Next round starts after <span id="time">{countdown}</span>s
           </div>
