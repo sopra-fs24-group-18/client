@@ -95,7 +95,7 @@ const Register = () => {
         displayMessage("Register failed because this username already exists.", "error-message");
       }
       else{
-        displayMessage(`Something went wrong during the registration: ${handleError(error)}`, "error-message");
+        displayMessage("Something went wrong during the registration.", "error-message");
       }
     }
   };
