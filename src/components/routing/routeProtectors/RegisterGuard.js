@@ -33,8 +33,12 @@ export const RegisterGuard = ({children }) => {
         };
     }, [navigate]);
 
-    return <Outlet />;
+  if (!localStorage.getItem("token")) {
 
+    return <Outlet />;
+  }
+
+  return <Navigate to='/lobby/${userId}' replace />;
 };
 
 RegisterGuard.propTypes = {

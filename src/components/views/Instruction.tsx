@@ -11,16 +11,16 @@ const Instruction= () => {
 
   return (
   <div className="instruction">
-    <h1 className="instruction_text">
-      <br /><br />Instruction:<br /><br />
-      After logging into Lobby, you can either set a game room or join a room using room code.<br /><br />
-      We have two game modes:<br /><br />
-      1. Guessing: You will see an image and need to use the slider bar to choose a price and then press on confirm within 20 seconds.<br /><br />
-      2. Budget: You will be given a budget and need to choose a group of images from 6 within 20 seconds.<br /><br />
-      After each round, you will have chances to buy tools with points for the next round. Every player has 100 original points.<br /><br />
-      The winner for each round gets 100 points while others get 70.<br /><br />
-      Remember to choose the closest price and enjoy!
-    </h1>
+    <div className="instruction_container">
+        Instruction:<br /><br />
+        After logging into Lobby, you can either set a game room or join a room using room code.<br /><br />
+        We have two game modes:<br /><br />
+        1. Guessing: You will see an image and need to use the slider bar to choose a price and then press on confirm within 20 seconds.<br /><br />
+        2. Budget: You will be given a budget and need to choose a group of images from 6 within 20 seconds.<br /><br />
+        After each round, you will have chances to buy tools with points for the next round. Every player has 100 original points.<br /><br />
+        The winner for each round gets 100 points while others get 70.<br /><br />
+        Remember to choose the closest price and enjoy!<br /><br /><br /><br /><br />
+    </div>
 
     <Button
       style={{
@@ -39,6 +39,7 @@ const Instruction= () => {
     >
       Got it!
     </Button>
+
   </div>
 
   );
