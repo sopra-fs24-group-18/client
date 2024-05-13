@@ -3,6 +3,7 @@ import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/GameRoomBudget.scss";
 import {useNavigate} from "react-router-dom";
+import { PlayerTable } from "components/ui/PlayerTable";
 
 const GameRoomBudget = () => {
   const roomId = localStorage.getItem("roomId");
@@ -235,10 +236,11 @@ const GameRoomBudget = () => {
   }, []);
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
-    <div key={index}>
-      {item.username}: points: {item.score}
-    </div>
+    <PlayerTable key={index}>
+      &nbsp;&nbsp;&nbsp;&nbsp;{item.username}: {item.score}
+    </PlayerTable>
   ));
+
 
   // handling unexpected exit, clear local storage after ten minutes gaming
   useEffect(() => {
@@ -367,9 +369,10 @@ const GameRoomBudget = () => {
             {roundNumber}
           </div>
 
-          <div className="gameRoom-point form"><br/><br/>
-            <div className="score-table">
-              <Button width="180%">{pointList}</Button>
+
+          <div className="gameRoom-point form">
+            <div className="pointsContainer">
+              {pointList}
             </div>
           </div>
 
