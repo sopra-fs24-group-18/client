@@ -10,8 +10,6 @@ const GameRoomBudget = () => {
   const userId = localStorage.getItem("userId");
   // const [chosenItemList, setChosenItemList] = useState<string>("");
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const isReady_1 = localStorage.getItem(("isReady_1"))
   const roomCode = localStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
@@ -167,21 +165,6 @@ const GameRoomBudget = () => {
 
   const [player, setPlayer] = useState("");
 
-  // fetch current user data
-  //useEffect(() => {
-  //  const timer = setInterval(async () => {
-  //    try {
-  //      const response = await api.get(`/users/${userId}`);
-  //      setPlayer(response.data);
-  //      console.log("User data fetched successfully:", response.data);
-  //    } catch (error) {
-  //      console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-  //    }
-  //  }, 100);
-  //
-  //  return () => clearInterval(timer);
-  //}, [userId]);
-
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -193,47 +176,35 @@ const GameRoomBudget = () => {
       }
     }
     fetchUser();
-  }, [isReady, userId]);
+  }, [userId]);
 
   useEffect(() => {
-    if (isReady || isReady_1 === "True") {  // when post ready, begin to countdown
-      const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
+    const timer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
 
-      if (timeLeft === 0) {
-        clearTimeout(timer);
-        if (!isConfirmed) {
-          handleConfirmClick()
-            .then(() => {
-              // after auto-handleConfirmClick
-              console.log("Auto-confirmation Successful")
-            })
-            .catch((error) => {
-              console.error("Failed to auto-confirm:", error);
-              // handle error
-            });
-        }
+    if (timeLeft === 0) {
+      clearTimeout(timer);
+      if (!isConfirmed) {
+        handleConfirmClick()
+          .then(() => {
+            // after auto-handleConfirmClick
+            console.log("Auto-confirmation Successful")
+            navigate(`/waiting-answer/${userAnswer}`);
+          })
+          .catch((error) => {
+            console.error("Failed to auto-confirm:", error);
+            // handle error
+          });
+      } else{
+        // if already clicked confirm
+        navigate(`/waiting-answer/${userAnswer}`);
       }
-
-      return () => clearTimeout(timer);
     }
-  }, [timeLeft, isConfirmed, roundNumber, isReady, isReady_1]); // dependency
 
-  //rank
-  //const [rankData, setRankData] = useState([]);
-  //useEffect(() => {
-  //  const timer_rank = setInterval(async () => {
-  //    try {
-  //      const response_rank = await api.get(`/rooms/${roomId}/rank`);
-  //      setRankData(response_rank.data);
-  //    } catch (error) {
-  //      console.error("Error fetching points", error);
-  //    }
-  //  }, 100);
-  //
-  //  return () => clearInterval(timer_rank);
-  //}, []);
+    return () => clearTimeout(timer);
+  }, [timeLeft, isConfirmed, roundNumber]); // dependency
+
   const [rankData, setRankData] = useState([]);
   useEffect(() => {
     const fetchPoints = async () => {
@@ -245,7 +216,7 @@ const GameRoomBudget = () => {
       }
     };
     fetchPoints();
-  }, [isReady]);
+  }, []);
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
     <div key={index}>
@@ -275,6 +246,29 @@ const GameRoomBudget = () => {
 
     return () => clearInterval(timer);
   }, []);
+
+
+  const leaveRoom = async () => {
+    try {
+      const requestBody = {roomId, userId};
+      await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+      localStorage.removeItem("isReady");
+      localStorage.removeItem("isReady_1");
+      localStorage.removeItem("myScore");
+      localStorage.removeItem("playerNames");
+      localStorage.removeItem("questionId");
+      localStorage.removeItem("rank");
+      localStorage.removeItem("roomCode");
+      localStorage.removeItem("roomId");
+      localStorage.removeItem("roundNumber");
+      localStorage.removeItem("timeLeft");
+      localStorage.removeItem("gameMode");
+      navigate(`/lobby/${userId}`);
+    } catch (error) {console.error("Error deleting server data:", error);
+    }
+  };
+
+
 
   return (
     <div className="gameRoom">
@@ -308,6 +302,7 @@ const GameRoomBudget = () => {
             <Button width="150%">Room: {roomCode}</Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
             {message_1 && <div>{message_1}</div>}
+            <Button width="150%" onClick={() => {leaveRoom();}}>Exit</Button>
           </div>
         </div>
 
