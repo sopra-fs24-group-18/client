@@ -155,6 +155,8 @@ const Lobby = () => {
         </div>
       </div>
 
+      <button className="instruction-button" onClick={() => navigate(`/instruction`)}></button>
+
     </BaseContainer>
 
   );
