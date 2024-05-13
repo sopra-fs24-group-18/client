@@ -296,12 +296,14 @@ const GameRoom = () => {
       localStorage.removeItem("realPrice");
       localStorage.removeItem("showAlert");
       localStorage.removeItem("isReady_answer_timer");
+      localStorage.removeItem("bonus");
+
 
       // for shop
       localStorage.removeItem("isHintDisabled");
       localStorage.removeItem("isBlurDisabled");
       localStorage.removeItem("isDefenseDisabled");
-      localStorage.removeItem("isBobusDisabled");
+      localStorage.removeItem("isBonusDisabled");
       localStorage.removeItem("isGambleDisabled");
       localStorage.removeItem("showAlert_shop");
       localStorage.removeItem("showAlert_loading");
