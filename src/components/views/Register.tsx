@@ -66,7 +66,11 @@ const Register = () => {
   //   password confirm
   const [repeatPassword, setRepeatPassword] = useState("");
   const handleClick = () => {
-    if (password === repeatPassword) {
+    if (username.length < 3 || username.length > 8) {
+      displayMessage("Username length must be between 3 and 8 characters.", "error-message");
+    } else if (password.length < 3 || password.length > 8) {
+      displayMessage("Password length must be between 3 and 8 characters.", "error-message");
+    } else if (password === repeatPassword) {
       doRegister();
     } else {
       displayMessage("Passwords don't match.", "error-message");
