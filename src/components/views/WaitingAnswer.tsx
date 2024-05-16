@@ -45,11 +45,12 @@ const WaitingAnswer = () => {
           }
 
         }
-        localStorage.setItem("isReady_answer", "true");
         if (response.data) {
           //clearInterval(interval);
+
           console.log("All players have answered:", response.data);
           setIsReady_answer(true);
+          localStorage.setItem("isReady_answer", "true");
           localStorage.setItem("isReady_answer_timer", "true");
           console.log("Success:", response.data);
           localStorage.setItem("myScore", response.data.point.toString());
@@ -59,14 +60,14 @@ const WaitingAnswer = () => {
           setShowAlert(true);
 
         } else {
-          // continue polling if not ready
+          setTimeout(fetchScore, 2000);
         }
       } catch (error) {
         console.error("Error receiving answers:", error);
       }
     };
 
-    if (localStorage.getItem("isReady_answer") === "false"){;
+    if (localStorage.getItem("isReady_answer") === "false"){
       fetchScore();
     }
 
@@ -158,7 +159,7 @@ const WaitingAnswer = () => {
             <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}> {localStorage.getItem("bonus")} points</div>
           )}
           {parseInt(localStorage.getItem("bonus")) >= 0 &&
-            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {parseInt(localStorage.getItem("myScore")) + parseInt(localStorage.getItem("bonus"))} points</div>
+            <div className="txt" style={{ fontSize: "26px", color: "#FFFFFF" }}>+ {parseInt(localStorage.getItem("myScore")) + parseInt(localStorage.getItem("bonus"))} points</div>
           }
           {parseInt(localStorage.getItem("bonus")) < 0 && (
             <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" }}>
@@ -167,7 +168,7 @@ const WaitingAnswer = () => {
           )}
 
           {parseInt(localStorage.getItem("bonus")) >= 0 &&
-            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF" }}>(including bonus: {localStorage.getItem("bonus")} points)</div>
+            <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" }}>(including bonus: {localStorage.getItem("bonus")} points)</div>
           }
 
           <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" }}>
