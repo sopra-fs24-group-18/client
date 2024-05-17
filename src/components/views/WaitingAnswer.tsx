@@ -45,11 +45,12 @@ const WaitingAnswer = () => {
           }
 
         }
-        localStorage.setItem("isReady_answer", "true");
+
         if (response.data) {
           //clearInterval(interval);
           console.log("All players have answered:", response.data);
           setIsReady_answer(true);
+          localStorage.setItem("isReady_answer", "true");
           localStorage.setItem("isReady_answer_timer", "true");
           console.log("Success:", response.data);
           localStorage.setItem("myScore", response.data.point.toString());
