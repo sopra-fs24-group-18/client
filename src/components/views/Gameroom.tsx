@@ -21,7 +21,7 @@ const GameRoom = () => {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const roomCode = localStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
-  const [userAnswer, setUserAnswer] = useState<number>(0);
+  const [answer, setAnswer] = useState<number>(0);
   const [isBlurred, setIsBlurred] = useState(false);
   const [currentValue, setCurrentValue] = useState<number>(0);
   const [loading, setLoading] = useState(true);
@@ -77,7 +77,7 @@ const GameRoom = () => {
     setSliderValue(Number(event.target.value));
     setCurrentValue(Number(event.target.value))
     updateLabelPosition(event.target);
-    setUserAnswer(Number(event.target.value));
+    setAnswer(Number(event.target.value));
   };
 
   // pointed value
@@ -99,24 +99,17 @@ const GameRoom = () => {
          });*/
   };
 
-  useEffect(() => {
-    if (userAnswer !== 0) {
-      navigate(`/waiting-answer/${userAnswer}`);
-    }
-  }, [userAnswer]);
 
   // sent user choice
   const handleConfirmClick = async () => {
     localStorage.setItem("timeLeft", "7");
     localStorage.setItem("isReady_answer_timer", "false");
     localStorage.setItem("isReady_answer", "false");
-    if (sliderValue === 0)
-    {
-      setUserAnswer(currentValue);
-      console.log("no answer",{currentValue, userAnswer});
-    }
-    else{
-      navigate(`/waiting-answer/${userAnswer}`);}
+
+    const userAnswer = sliderValue === 0 ? currentValue : answer;
+    console.log("Navigating with answer:", userAnswer);
+    navigate(`/waiting-answer/${userAnswer}`);
+
   };
 
   // Tool display
