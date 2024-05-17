@@ -203,7 +203,7 @@ const Purchase = () => {
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
               Blur: 60 Points
             </div>
-            <div className="register button-container"
+            <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bomb"></button>
               <button className="shop buy-button"
@@ -221,7 +221,7 @@ const Purchase = () => {
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
               Defense: 20 Points
             </div>
-            <div className="register button-container"
+            <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop defense"></button>
               <button className="shop buy-button"
@@ -239,7 +239,7 @@ const Purchase = () => {
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
               Bonus: 20 Points
             </div>
-            <div className="register button-container"
+            <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bonus"></button>
               <button className="shop buy-button"
@@ -257,7 +257,7 @@ const Purchase = () => {
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
               Gamble: 40 Points
             </div>
-            <div className="register button-container"
+            <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop gamble"></button>
               <button className="shop buy-button"

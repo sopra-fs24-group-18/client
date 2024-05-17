@@ -23,6 +23,8 @@ const GameRoom = () => {
   const [message_1, setMessage_1] = useState("");
   const [userAnswer, setUserAnswer] = useState<number>(0);
   const [isBlurred, setIsBlurred] = useState(false);
+  const [currentValue, setCurrentValue] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
 
 
   // gain item picture ui
@@ -34,14 +36,17 @@ const GameRoom = () => {
     initializeGame();
   }, [roomId, userId, roundNumber]);
 
+
   const fetchImageUrl = async (roomId, roundNumber, retryCount = 0) => {
     try {
+      setLoading(true);
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
       localStorage.setItem("questionId", response.data.id);
       //const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
       setIsBlurred(response.data.blur);
       setImageUrl(response.data.itemImage);
-
+      setCurrentValue(response.data.leftRange)
+      setLoading(false);
       if (response.data.leftRange === response.data.originLeftRange
         && response.data.rightRange === response.data.originRightRange)
       { setSliderRange(response.data.leftRange, response.data.rightRange);}
@@ -70,6 +75,7 @@ const GameRoom = () => {
   // bar
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSliderValue(Number(event.target.value));
+    setCurrentValue(Number(event.target.value))
     updateLabelPosition(event.target);
     setUserAnswer(Number(event.target.value));
   };
@@ -93,28 +99,24 @@ const GameRoom = () => {
          });*/
   };
 
+  useEffect(() => {
+    if (userAnswer !== 0) {
+      navigate(`/waiting-answer/${userAnswer}`);
+    }
+  }, [userAnswer]);
+
   // sent user choice
   const handleConfirmClick = async () => {
-    // try {
-    //   const questionId = localStorage.getItem("questionId");
-    //   const result = await api.post("/answers/guessMode", {
-    //     questionId,
-    //     userId,
-    //     guessedPrice: sliderValue,
-    //     // chosenItemList,
-    //   });
-    //   console.log("Success:", result.data);
-    //   setImageUrl(`${process.env.PUBLIC_URL}/loading.png`);
-    //   setIsConfirmed(true);
-    //   setMessage_1("Confirmation successful!");
-    // } catch (error) {
-    //   console.error("Error posting value", error);
-    //   setMessage_1("Failed to confirm!");
-    // }
     localStorage.setItem("timeLeft", "7");
     localStorage.setItem("isReady_answer_timer", "false");
     localStorage.setItem("isReady_answer", "false");
-    navigate(`/waiting-answer/${userAnswer}`);
+    if (sliderValue === 0)
+    {
+      setUserAnswer(currentValue);
+      console.log("no answer",{currentValue, userAnswer});
+    }
+    else{
+      navigate(`/waiting-answer/${userAnswer}`);}
   };
 
   // Tool display
@@ -213,10 +215,8 @@ const GameRoom = () => {
         handleConfirmClick()
           .then(() => {
             // after auto-handleConfirmClick
-            localStorage.setItem("isReady_answer_timer", "false");
-            localStorage.setItem("timeLeft", "7");
-            localStorage.setItem("isReady_answer", "false");
-            navigate(`/waiting-answer/${userAnswer}`);
+            console.log("auto-confirmed")
+
           })
           .catch((error) => {
             console.error("Failed to auto-confirm:", error);
@@ -224,10 +224,7 @@ const GameRoom = () => {
           });
       } else {
         // if already clicked confirm
-        localStorage.setItem("isReady_answer_timer", "false");
-        localStorage.setItem("timeLeft", "7");
-        localStorage.setItem("isReady_answer", "false");
-        navigate(`/waiting-answer/${userAnswer}`);
+        console.log("already confirmed")
       }
     }
     
@@ -328,7 +325,8 @@ const GameRoom = () => {
                         Slide to choose the price <br/>
           </div>
 
-          <div className="text">{sliderValue}</div>
+          <div className="text">
+            {loading ? "Loading..." : currentValue}</div>
 
           <div className="sliderWrapper">
             {/* check origin 0 */}
@@ -344,7 +342,6 @@ const GameRoom = () => {
               value={sliderValue}
               onChange={handleSliderChange}
               className="rangeInput"
-              ref={sliderRef}
             />
             {oriMin === 0 && oriMax === 0 ? (
               <div className="maxValue">{Max}CHF</div>
@@ -353,7 +350,7 @@ const GameRoom = () => {
             )}
           </div>
 
-          <div className="buttonsContainer">
+          <div className="buttonsContainer1">
             {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
             <Button width="150%" >Room: {roomCode} </Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>

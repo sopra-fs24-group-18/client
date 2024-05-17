@@ -298,7 +298,7 @@ const GameRoomBudget = () => {
 
 
   return (
-    <div className="gameRoomB">
+    <div className="gameRoom">
       <div className="gameRoomContainer">
         <div className="image">
           <div className="imageGrid">
