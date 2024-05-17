@@ -166,16 +166,14 @@ const Purchase = () => {
 
   return (
     <div className="background-container">
-      {(localStorage.getItem("showAlert_shop")==="true") && (<BaseContainer>
+      {(localStorage.getItem("showAlert_shop") === "true") && (<BaseContainer>
         <div className="shop container">
           <div className="shop form"><br /><br />
-
             {/* Display remaining time */}
             <div style={{ position: "absolute", top: 50, left: 100, textAlign: "center" }}>
               Time: <br />
               {timeLeft}
             </div>
-
             {/* Display Points */}
             <div style={{ position: "absolute", top: 50, right: 100, textAlign: "center" }}>
               Your Point: <br />
@@ -183,15 +181,15 @@ const Purchase = () => {
             </div>
 
             {/* Get Hints */}
-            <div style={{ marginTop: "120px", textAlign: "left", fontSize: "15px" }}>
+            <div style={{ marginTop: "80px", textAlign: "left", fontSize: "15px" }}>
               Hints: 30 Points
             </div>
             <div className="shop button-container"
-                 style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
+              style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop hint"></button>
               <button className="shop buy-button"
-                      disabled={(localStorage.getItem("isHintDisabled")==="true")}
-                      onClick={() => doPurchase("HINT")}
+                disabled={(localStorage.getItem("isHintDisabled") === "true")}
+                onClick={() => doPurchase("HINT")}
               >
                 Buy
               </button>
@@ -205,11 +203,11 @@ const Purchase = () => {
               Blur: 60 Points
             </div>
             <div className="register button-container"
-                 style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
+              style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bomb"></button>
               <button className="shop buy-button"
-                      disabled={(localStorage.getItem("isBlurDisabled")==="true")}
-                      onClick={() => doPurchase("BLUR")}
+                disabled={(localStorage.getItem("isBlurDisabled") === "true")}
+                onClick={() => doPurchase("BLUR")}
               >
                 Buy
               </button>
@@ -223,11 +221,11 @@ const Purchase = () => {
               Defense: 20 Points
             </div>
             <div className="register button-container"
-                 style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
+              style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop defense"></button>
               <button className="shop buy-button"
-                      disabled={(localStorage.getItem("isDefenseDisabled")==="true")}
-                      onClick={() => doPurchase("DEFENSE")}
+                disabled={(localStorage.getItem("isDefenseDisabled") === "true")}
+                onClick={() => doPurchase("DEFENSE")}
               >
                 Buy
               </button>
@@ -241,11 +239,11 @@ const Purchase = () => {
               Bonus: 20 Points
             </div>
             <div className="register button-container"
-                 style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
+              style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bonus"></button>
               <button className="shop buy-button"
-                      disabled={(localStorage.getItem("isBonusDisabled")==="true")}
-                      onClick={() => doPurchase("BONUS")}
+                disabled={(localStorage.getItem("isBonusDisabled") === "true")}
+                onClick={() => doPurchase("BONUS")}
               >
                 Buy
               </button>
@@ -259,11 +257,11 @@ const Purchase = () => {
               Gamble: 40 Points
             </div>
             <div className="register button-container"
-                 style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
+              style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop gamble"></button>
               <button className="shop buy-button"
-                      disabled={(localStorage.getItem("isGambleDisabled")==="true")}
-                      onClick={() => doPurchase("GAMBLE")}
+                disabled={(localStorage.getItem("isGambleDisabled") === "true")}
+                onClick={() => doPurchase("GAMBLE")}
               >
                 Buy
               </button>
@@ -273,17 +271,6 @@ const Purchase = () => {
               all.
             </div>
             <br />
-          </div>
-
-          <div className="shop button-container">
-            <Button
-              width="100%"
-              onClick={() => {
-                skipShop();
-              }}
-            >
-              Skip
-            </Button>
           </div>
 
           {/* Display message */}
@@ -297,15 +284,26 @@ const Purchase = () => {
 
       </BaseContainer>)}
 
-      {(localStorage.getItem("showAlert_loading")==="true") && (<div className="shop_loading">
+      {(localStorage.getItem("showAlert_loading") === "true") && (<div className="shop_loading">
         <br /><br /><br /><br />Preparing for the next round ......<br />
       </div>)}
 
+      <div className="shop button-container">
+        <Button
+          width="100%"
+          onClick={() => {
+            skipShop();
+          }}
+        >
+          Skip
+        </Button>
+      </div>
+
       <div className="exit_button-container"
-           width="100%"
-           onClick={() => {
-             leaveRoom();
-           }}
+        width="100%"
+        onClick={() => {
+          leaveRoom();
+        }}
       >
         Exit
       </div>
