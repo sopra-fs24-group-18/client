@@ -169,6 +169,13 @@ const Purchase = () => {
     <div className="background-container">
       {(localStorage.getItem("showAlert_shop") === "true") && (<BaseContainer>
         <div className="shop container">
+          {/* Display message */}
+          {message.text && (
+            <div style={{ fontSize: "20px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center"}}>
+              {/*<div className={`message-container ${message.type}`}>*/}
+              {message.text}
+            </div>
+          )}
           <div className="shop form"><br /><br />
             {/* Display remaining time */}
             <div style={{ position: "absolute", top: 50, left: 100, textAlign: "center" }}>
@@ -274,13 +281,6 @@ const Purchase = () => {
             <br />
           </div>
 
-          {/* Display message */}
-          {message.text && (
-            <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              {/*<div className={`message-container ${message.type}`}>*/}
-              {message.text}
-            </div>
-          )}
         </div>
 
       </BaseContainer>)}
