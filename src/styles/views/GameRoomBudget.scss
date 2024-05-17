@@ -1,6 +1,6 @@
 @import "../theme";
 
-.gameRoom{
+.gameRoomB{
   .gameRoomContainer {
     //position: absolute;
     text-align: center;
@@ -48,7 +48,7 @@
 
       .buttonsContainer {
            position: absolute;
-           margin-right: -140px;
+           margin-right: -300px;
            top: 120%;
            transform: translateY(-50%);
            display: flex;

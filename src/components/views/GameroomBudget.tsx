@@ -77,6 +77,7 @@ const GameRoomBudget = () => {
 
   // sent user choice
   const handleConfirmClick = async () => {
+    setIsConfirmed(true);
     if (userAnswer !== "") {
       localStorage.setItem("timeLeft", "7");
       localStorage.setItem("isReady_answer_timer", "false");
@@ -201,10 +202,7 @@ const GameRoomBudget = () => {
           .then(() => {
             // after auto-handleConfirmClick
             console.log("Auto-confirmation Successful")
-            localStorage.setItem("timeLeft", "7");
-            localStorage.setItem("isReady_answer_timer", "false");
-            localStorage.setItem("isReady_answer", "false");
-            navigate(`/waiting-answer/${userAnswer}`);
+
           })
           .catch((error) => {
             console.error("Failed to auto-confirm:", error);
@@ -212,10 +210,7 @@ const GameRoomBudget = () => {
           });
       } else{
         // if already clicked confirm
-        localStorage.setItem("timeLeft", "7");
-        localStorage.setItem("isReady_answer_timer", "false");
-        localStorage.setItem("isReady_answer", "false");
-        navigate(`/waiting-answer/${userAnswer}`);
+        console.log("Already confirmed")
       }
     }
 
@@ -303,7 +298,7 @@ const GameRoomBudget = () => {
 
 
   return (
-    <div className="gameRoom">
+    <div className="gameRoomB">
       <div className="gameRoomContainer">
         <div className="image">
           <div className="imageGrid">
