@@ -146,6 +146,15 @@ const GameRoomBudget = () => {
     } else if (toolType === "BLUR") {
       toolClassName = "tool item bomb";
       toolContent = "Blur";
+    } else if (toolType === "DEFENSE") {
+      toolClassName = "tool item defense";
+      toolContent = "Defense";
+    } else if (toolType === "BONUS") {
+      toolClassName = "tool item bonus";
+      toolContent = "Bonus";
+    } else if (toolType === "GAMBLE") {
+      toolClassName = "tool item gamble";
+      toolContent = "Gamble";
     }
 
     return (
@@ -157,8 +166,8 @@ const GameRoomBudget = () => {
 
   // making array to render tools, ensure the length is 3
   const renderTools = () => {
-    const displayedTools = tools.slice(0, 3); // display the first three tools from tool list in the slot
-    const emptySlotsCount = Math.max(3 - displayedTools.length, 0); // calculate the empty slot
+    const displayedTools = tools.slice(0, 5); // display the first three tools from tool list in the slot
+    const emptySlotsCount = Math.max(5 - displayedTools.length, 0); // calculate the empty slot
 
     return [
       ...displayedTools.map((tool) => displayTool(tool)),
@@ -321,10 +330,15 @@ const GameRoomBudget = () => {
               );
             })}
           </div>
-          <div className="text">Total Price: {totalPrice}CHF</div>
-          {hintNum !== 0 && (
-            <div className="text">Hint for right total number: <span id="num">{hintNum}</span></div>
-          )}
+          <div className="text-display">
+            <div className="text">Total Price: {totalPrice}CHF</div>
+
+            {hintNum !== 0 && (
+                <div className="text">Hint for right total number: <span id="num">{hintNum}</span></div>
+            )}
+
+          </div>
+
           <div className="buttonsContainer">
             <Button width="150%">Room: {roomCode}</Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
@@ -336,7 +350,7 @@ const GameRoomBudget = () => {
         {/*tool part*/}
         <div className="tool">
           <div className="tool display">
-            <label className="tool label">Tools</label>
+            <label className="tool tool-label">Tools</label>
             <div className="tool container">
               {renderTools()}
             </div>
@@ -359,14 +373,19 @@ const GameRoomBudget = () => {
           </div>
 
           {/*round display*/}
-          <div className="label" style={{center: 0, color: "white"}}>
+          <div className="score-label">
             Round:
             {roundNumber}
           </div>
 
 
-          <div className="gameRoom-point form">
-            <div className="pointsContainer">
+          {/*<div className="gameRoom-point form">*/}
+          {/*  <div className="pointsContainer">*/}
+          {/*    {pointList}*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          <div className="pointsContainer">
+            <div className="gameRoom-point">
               {pointList}
             </div>
           </div>

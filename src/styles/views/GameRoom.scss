@@ -1,14 +1,17 @@
 @import "../theme";
 .gameRoom{
   .gameRoomContainer {
-    //position: absolute;
-    text-align: center;
-    padding: 20px;
+    background-image: url('../../assets/background4.png');
+    background-size: contain;
+    background-position: center;
+
+    //text-align: center;
+    //padding: 20px;
     //position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center; // center horizontally
-    justify-content: center; // center vertically
+    //display: flex;
+    //flex-direction: column;
+    //align-items: center; // center horizontally
+    //justify-content: center; // center vertically
   }
   .image{
     display: flex;
@@ -21,7 +24,7 @@
     }
 
     .gameRoomImage {
-      margin-top: 5em;
+      margin-top: 3em;
       margin-bottom: 3em;
       width: auto;
       height: 400px;
@@ -64,7 +67,7 @@
     .buttonsContainer1 {
       position: absolute;
       margin-right: -1000px;
-      top: 120%;
+      top: 110%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
@@ -79,27 +82,29 @@
 
   .tool{
     &.display {
-      position: absolute;
-      bottom: 20%;
+      //position: absolute;
+      margin-bottom: -6em;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
       background-color: rgba(255, 255, 255, 0.5);
-      padding: 10px;
+      //padding: 10px;
       border-radius: 10px;
       display: flex;
       align-items: center; /* Align items vertically centered */
       justify-content: flex-start; /* Align items to the left */
     }
 
-    &.label {
+    &.tool-label {
       font-size: 24px;
       font-weight: bold;
       //margin-bottom: 20px;
-      margin-right:1em;
+      margin-right:0.8em;
+      color: rgb(36, 36, 150);
     }
 
     &.container {
+      font-size:12px;
       display: flex;
       align-items: center; /* Align items vertically centered */
       justify-content: flex-start; /* Align items to the left */
@@ -126,6 +131,24 @@
       background-repeat: no-repeat;
       background-position: center;
     }
+    &.defense{
+      background-image: url('../../assets/defense.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.bonus{
+      background-image: url('../../assets/bonus.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.gamble{
+      background-image: url('../../assets/gamble.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
     &.default {
       background-color: rgb(69, 69, 103);
     }
@@ -133,9 +156,9 @@
 
   .score{
     .pointsContainer {
-      position: absolute;
-      left: 1em;
-      top: 70%;
+      //position: absolute;
+      //left: 10px;
+      top: 90%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
@@ -143,14 +166,15 @@
     }
     .score-table {
       position: absolute;
-      left: 4em;
+      //left: 4em;
       top: 70%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
     }
-    .label{
+    .score-label{
       position: absolute;
+      margin-left: -3em;
       top: 50px;
       text-align: center;
       color: rgb(36, 36, 150);
@@ -163,11 +187,13 @@
       justify-content: center;
       width: 40%;
       max-width: 30em;
-      height: 20em;
+      margin-left: -40em;
+      //margin-bottom: 10em;
+      height: 15em;
       font-size: 20px;
       font-weight: 300;
-      padding-left: 37px;
-      padding-right: 37px;
+      //padding-left: 10em;
+      //padding-right: 37px;
       border-radius: 0.75em;
       transition: opacity 0.5s ease, transform 0.5s ease;
     }

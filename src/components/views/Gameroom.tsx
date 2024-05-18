@@ -153,7 +153,17 @@ const GameRoom = () => {
     } else if (toolType === "BLUR") {
       toolClassName = "tool item bomb";
       toolContent = "Blur";
+    } else if (toolType === "DEFENSE") {
+      toolClassName = "tool item defense";
+      toolContent = "Defense";
+    } else if (toolType === "BONUS") {
+      toolClassName = "tool item bonus";
+      toolContent = "Bonus";
+    } else if (toolType === "GAMBLE") {
+      toolClassName = "tool item gamble";
+      toolContent = "Gamble";
     }
+
 
     return (
       <div className={toolClassName}>
@@ -164,8 +174,8 @@ const GameRoom = () => {
 
   // making array to render tools, ensure the length is 3
   const renderTools = () => {
-    const displayedTools = tools.slice(0, 3); // display the first three tools from tool list in the slot
-    const emptySlotsCount = Math.max(3 - displayedTools.length, 0); // calculate the empty slot
+    const displayedTools = tools.slice(0, 5); // display the first three tools from tool list in the slot
+    const emptySlotsCount = Math.max(5 - displayedTools.length, 0); // calculate the empty slot
 
     return [
       ...displayedTools.map((tool) => displayTool(tool)),
@@ -220,7 +230,7 @@ const GameRoom = () => {
         console.log("already confirmed")
       }
     }
-    
+
     return () => clearTimeout(timer);
   }, [timeLeft, isConfirmed, roundNumber]); // dependency
 
@@ -355,7 +365,7 @@ const GameRoom = () => {
         {/*tool part*/}
         <div className="tool">
           <div className="tool display">
-            <label className="tool label">Tools</label>
+          <label className="tool tool-label">Tools</label>
             <div className="tool container">
               {renderTools()}
             </div>
@@ -378,13 +388,13 @@ const GameRoom = () => {
           </div>
 
           {/*round display*/}
-          <div className="label" style={{center: 0, color: "white"}}>
+          <div className="score score-label" >
                         Round:
             {roundNumber}
           </div>
 
-          <div className="gameRoom-point form">
-            <div className="pointsContainer">
+          <div className="pointsContainer">
+            <div className="gameRoom-point">
               {pointList}
             </div>
           </div>

@@ -14,7 +14,7 @@
 
     .image {
       position: relative;
-      top: 100px;
+      top: 6em;
       flex-direction: column;
       align-items: center; // center horizontally
       justify-content: center; // center vertically
@@ -29,19 +29,20 @@
         //grid-auto-rows: minmax(100px, auto);
         grid-template-columns: repeat(3, 1fr); /* 3 pictures */
         grid-template-rows: repeat(2, 1fr); /* 2 row */
-        gap: 5px;
+        gap: 15px;
       }
 
       img { // Apply styles directly to all <img> tags under .imageGrid
-        max-width: 70%;
-        height: 70%;
+        //max-width: 70%;
+        width: 210px;
+        height: 210px;
         background-color: rgba(61, 160, 239, 0.8);
         padding: 10px;
         border-radius: 5px;
-        margin-bottom: 3em; // only bottom margin to space out images vertically
+        margin-bottom: 2em; // only bottom margin to space out images vertically
       }
       .selected {
-        border: 2px solid blue;
+        border: 6px solid rgba(255, 0, 195, 0.82);
         background-color: lightblue;
       }
 
@@ -49,12 +50,23 @@
       .buttonsContainer {
            position: absolute;
            margin-right: -300px;
-           top: 120%;
+           top: 110%;
            transform: translateY(-50%);
            display: flex;
            flex-direction: column;
            gap: -10px; // between button
          }
+      .text-display{
+        position: absolute;
+        bottom: -55px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        border: 2px solid rgb(36, 36, 150);
+
+      }
 
       .text {
         margin-bottom: 0.5em;
@@ -70,7 +82,7 @@
   .tool{
     &.display {
       position: absolute;
-      bottom: 20%;
+      bottom: 8em;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -82,15 +94,17 @@
       justify-content: flex-start; /* Align items to the left */
     }
 
-    &.label {
+    &.tool-label {
       font-size: 24px;
       font-weight: bold;
       //margin-bottom: 20px;
       margin-right:1em;
+      color: rgb(36, 36, 150);
     }
 
     &.container {
       display: flex;
+      font-size:12px;
       align-items: center; /* Align items vertically centered */
       justify-content: flex-start; /* Align items to the left */
     }
@@ -116,23 +130,49 @@
       background-repeat: no-repeat;
       background-position: center;
     }
+    &.defense{
+      background-image: url('../../assets/defense.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.bonus{
+      background-image: url('../../assets/bonus.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    &.gamble{
+      background-image: url('../../assets/gamble.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
     &.default {
       background-color: rgb(69, 69, 103);
     }
   }
-
   .score{
+    .pointsContainer {
+      //position: absolute;
+      //left: 10px;
+      top: 90%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: -1px; // between button;
+    }
     .score-table {
       position: absolute;
-      left: 4em;
+      //left: 4em;
       top: 70%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: -10px; // between button
     }
-    .label{
+    .score-label{
       position: absolute;
+      margin-left: -3em;
       top: 50px;
       text-align: center;
       color: rgb(36, 36, 150);
@@ -140,34 +180,70 @@
     }
 
     .gameRoom-point {
-      &.container{
-        background-image: url('../../assets/Name_Table 2.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        //background-position: center;
-        // min-height: 600px; // Set a minimum height for consistency
-      }
-      &.form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 40%;
-        max-width: 30em;
-        height: 20em;
-        font-size: 20px;
-        font-weight: 300;
-        padding-left: 37px;
-        padding-right: 37px;
-        border-radius: 0.75em;
-        transition: opacity 0.5s ease, transform 0.5s ease;
-      }
-      &.field {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 40%;
+      max-width: 30em;
+      margin-left: -40em;
+      //margin-bottom: 10em;
+      height: 15em;
+      font-size: 20px;
+      font-weight: 300;
+      //padding-left: 10em;
+      //padding-right: 37px;
+      border-radius: 0.75em;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
   }
+
+  //.score{
+  //  .score-table {
+  //    position: absolute;
+  //    left: 4em;
+  //    top: 70%;
+  //    transform: translateY(-50%);
+  //    display: flex;
+  //    flex-direction: column;
+  //    gap: -10px; // between button
+  //  }
+  //  .label{
+  //    position: absolute;
+  //    top: 50px;
+  //    text-align: center;
+  //    color: rgb(36, 36, 150);
+  //    font-size: 20px;
+  //  }
+  //
+  //  .gameRoom-point {
+  //    &.container{
+  //      background-image: url('../../assets/Name_Table 2.png');
+  //      background-size: contain;
+  //      background-repeat: no-repeat;
+  //      //background-position: center;
+  //      // min-height: 600px; // Set a minimum height for consistency
+  //    }
+  //    &.form {
+  //      display: flex;
+  //      flex-direction: column;
+  //      justify-content: center;
+  //      width: 40%;
+  //      max-width: 30em;
+  //      height: 20em;
+  //      font-size: 20px;
+  //      font-weight: 300;
+  //      padding-left: 37px;
+  //      padding-right: 37px;
+  //      border-radius: 0.75em;
+  //      transition: opacity 0.5s ease, transform 0.5s ease;
+  //    }
+  //    &.field {
+  //      display: flex;
+  //      flex-direction: column;
+  //      justify-content: center;
+  //    }
+  //  }
+  //}
 }
 
 
