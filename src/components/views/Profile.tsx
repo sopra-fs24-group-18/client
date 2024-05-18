@@ -14,19 +14,15 @@ const Profile = () => {
   const [editing, setEditing] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [roomCode, setRoomCode] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false)
-  // const currentIdString = localStorage.getItem("userId");
-  // const currentId = parseInt(currentIdString);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showMessageBox, setShowMessageBox] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  console.log("shi", userId);
   const fetchUserData = async () => {
     try {
       const response = await api.get(`/users/${userId}`);
-      // console.log("response data", response.data)
       setUserData(response.data);
       localStorage.setItem("userId", userId);
     } catch (error) {
@@ -36,37 +32,47 @@ const Profile = () => {
 
   const saveUserData = async () => {
     try {
-      const requestBody = {
-        id: userId,
-        username: newUsername,
-        password: newPassword,
+      const requestBody: { token: string; username?: string; password?: string } = {
         token: token,
       };
 
-      console.log("request body", requestBody)
-      console.log("userId:", userId);
-      await api.put(`/users/${userId}`, requestBody);
+      if (newUsername) {
+        requestBody.username = newUsername;
+      }
 
-      setNewUsername("");
-      setNewPassword("");
-      setShowSuccessMessage(true);
+      if (newPassword) {
+        requestBody.password = newPassword;
+      }
+
+      console.log("request body", requestBody)
+      await api.put(`/users/${userId}`, requestBody);
+      setNewUsername("")
+      setNewPassword("")
+      setSuccessMessage('User updated successfully!');
       setTimeout(() => {
-        setShowSuccessMessage(false);
+        setSuccessMessage('');
       }, 3000);
 
       fetchUserData(); // Refresh user data after saving
       setEditing(false); // Exit edit mode
-    } catch (error) {console.error("Error saving user data:", error);
+
+    } catch (error) {
+      setEditing(true);
+      if (error.response) {
+        setErrorMessage(`Error: ${error.response.data.message}`);
+      } else {
+        setErrorMessage('Error: Something went wrong!');
+      }
+    } finally {
+      setShowMessageBox(true);
     }
   };
+
 
   useEffect(() => {
     fetchUserData(); // Fetch user data on component mount
   }, [userId]); // Re-fetch data when ID changes
 
-  const handleEditClick = () => {
-    setEditing(false);
-  };
   console.log(localStorage);
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -78,6 +84,9 @@ const Profile = () => {
 
   const exit = () => {
     setEditing(false)
+    setNewUsername("");
+    setNewPassword("");
+    setErrorMessage("")
     navigate(`/users/${userId}`);
   };
 
@@ -93,12 +102,16 @@ const Profile = () => {
             <p>ID: {userData.id}</p>
             <p>Online Status: {userData.status}</p>
             <p>Username: {userData.username}</p>
-            {/* Display password as asterisks or provide a mechanism to edit it */}
-            {/*<p>Password: **********</p>*/}
           </div>
         ) : (
           <p>Loading...</p>
         )}
+        {successMessage&& (
+            <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+              {successMessage}
+            </div>
+        )}
+
         {editing && (
             <div>
               <div className="form-group">
@@ -106,7 +119,9 @@ const Profile = () => {
                 <input
                     type="text"
                     value={newUsername}
-                    onChange={(e) => setNewUsername(e.target.value)}
+                    onChange={(e) => {
+                        setNewUsername(e.target.value);
+                    }}
                 />
               </div>
               <div className="form-group">
@@ -114,46 +129,47 @@ const Profile = () => {
                 <input
                     type="password"
                     value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
+                    onChange={(e) => {
+                      setNewPassword(e.target.value);
+                    }}
                 />
               </div>
-              {showSuccessMessage && (
-                  <p className="success-message">Changes saved successfully!</p>
+              {errorMessage && (
+                  <div className="error-message">
+                    {errorMessage}
+                  </div>
               )}
             </div>
-        )
-        }
-        {
-            userData && (
-                <div className="left-button-container">
-                  <div>
-                    {editing && <Button
-                        disabled={!newUsername && !newPassword}
-                        width="100%"
-                        onClick={() => {
-                    saveUserData(); // save user data
-                    setEditing(false); // set editing state as false
-                  }}>
-                  Save
-                </Button>}
-              </div>
-              <div>
-                {/* enable editing button or not */}
-                {!editing && (
-                  <Button width="100%" onClick={() => setEditing(true)}>
-                      Edit
-                  </Button>
-                )}
-              </div>
-              <div>
-                {editing && <Button width="100%" onClick={exit}>Exit</Button>}
-                {!editing &&  <Button width="100%" onClick={back}>Back</Button>}
-                {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
-            </div>
-            </div>
-          )
-        }
+        )}
 
+        {userData && (
+          <div className="left-button-container">
+            <div>
+              {editing && <Button
+                  disabled={!newUsername && !newPassword}
+                  width="100%"
+                  onClick={() => {
+              saveUserData(); // save user data
+              setEditing(false); // set editing state as false
+            }}>
+            Save
+          </Button>}
+            </div>
+            <div>
+              {/* enable editing button or not */}
+              {!editing && (
+                <Button width="100%" onClick={() => setEditing(true)}>
+                    Edit
+                </Button>
+              )}
+            </div>
+            <div>
+              {editing && <Button width="100%" onClick={exit}>Exit</Button>}
+              {!editing &&  <Button width="100%" onClick={back}>Back</Button>}
+              {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
+            </div>
+          </div>
+          )}
       </div>
     </BaseContainer>
   );

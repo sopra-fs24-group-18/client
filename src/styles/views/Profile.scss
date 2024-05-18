@@ -71,16 +71,16 @@
       align-self: center;
       align-items: center;
     }
-
-    .success-message {
-
-      color: green;
-      font-size: 10px;
-      margin-bottom: 1em;
-
-    }
   }
 }
+  .error-message{
+    font-size: 16px;
+    font-family: "Microsoft YaHei", sans-serif;
+    text-align: center;
+    margin: 0 auto;
+    word-wrap: break-word; /* Break words to fit within the specified width */
+    max-width: 300px;
+  }
 
   .right-section {
     margin-top: 5em;
