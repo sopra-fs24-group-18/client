@@ -13,8 +13,8 @@ export const Button = props => (
 
 
 Button.propTypes = {
-  width: PropTypes.number,
-  style: PropTypes.string,
+  width: PropTypes.string,
+  style: PropTypes.object,
   className: PropTypes.string,
   children: PropTypes.node,
 };

@@ -313,7 +313,6 @@ const GameRoom = () => {
   };
 
 
-
   return (
     <div className="gameRoom">
       <div className="gameRoomContainer">
@@ -365,7 +364,7 @@ const GameRoom = () => {
         {/*tool part*/}
         <div className="tool">
           <div className="tool display">
-          <label className="tool tool-label">Tools</label>
+            <label className="tool tool-label">Tools</label>
             <div className="tool container">
               {renderTools()}
             </div>

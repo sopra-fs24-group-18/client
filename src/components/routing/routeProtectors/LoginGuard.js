@@ -1,6 +1,6 @@
-import {Navigate, Outlet, withRouter, useHistory, useNavigate} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import {Navigate, Outlet, withRouter, useHistory, useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 
 /**
  *
@@ -24,16 +24,16 @@ export const LoginGuard = () => {
     console.log("manually add path",window.location.href)
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      event.returnValue = '';
+      event.returnValue = "";
     };
 
     // add a listener to monitor the change of the pages
-    window.addEventListener('popstate', handlePopstate);
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("popstate", handlePopstate);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       // remove the listener
-      window.removeEventListener('popstate', handlePopstate);
+      window.removeEventListener("popstate", handlePopstate);
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [navigate]);

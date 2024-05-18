@@ -10,8 +10,8 @@ const Instruction= () => {
   };
 
   return (
-  <div className="instruction">
-    <div className="instruction_container">
+    <div className="instruction">
+      <div className="instruction_container">
         Instruction:<br /><br />
         After logging into Lobby, you can either set a game room or join a room using room code.<br /><br />
         We have two game modes:<br /><br />
@@ -20,27 +20,27 @@ const Instruction= () => {
         After each round, you will have chances to buy tools with points for the next round. Every player has 100 original points.<br /><br />
         The winner for each round gets 100 points while others get 70.<br /><br />
         Remember to choose the closest price and enjoy!<br /><br /><br /><br /><br />
-    </div>
+      </div>
 
-    <Button
-      style={{
-        width: "20%",
-        position: "fixed",
-        bottom: "10%",
-        left: "40%",
-      }}
-      onClick={navigateToMainPage}
-      onMouseEnter={(e) => {
-        e.target.style.transform = "scale(1.05)";
-      }}
-      onMouseLeave={(e) => {
-        e.target.style.transform = "scale(1)";
-      }}
-    >
+      <Button
+        style={{
+          width: "20%",
+          position: "fixed",
+          bottom: "10%",
+          left: "40%",
+        }}
+        onClick={navigateToMainPage}
+        onMouseEnter={(e) => {
+          e.target.style.transform = "scale(1.05)";
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.transform = "scale(1)";
+        }}
+      >
       Got it!
-    </Button>
+      </Button>
 
-  </div>
+    </div>
 
   );
 };

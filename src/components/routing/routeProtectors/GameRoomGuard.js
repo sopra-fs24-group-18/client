@@ -1,6 +1,6 @@
-import {Navigate, Outlet, withRouter, useHistory, useNavigate} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import {Navigate, Outlet, withRouter, useHistory, useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 
 // requirement: 1. during game, user can not return to last page. 2. prevent user
 // from refresh/exit the page.
@@ -22,16 +22,16 @@ export const GameRoomGuard = ({ children }) => {
     // alert when refresh/exit the window
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      event.returnValue = '';
+      event.returnValue = "";
     };
 
     // add a listener to monitor the change of the pages
-    window.addEventListener('popstate', handlePopstate);
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("popstate", handlePopstate);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       // remove the listener
-      window.removeEventListener('popstate', handlePopstate);
+      window.removeEventListener("popstate", handlePopstate);
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [navigate]);
@@ -70,9 +70,9 @@ export const GameRoomGuard = ({ children }) => {
   //   };
   // }, [navigate]);
 
-  if (!localStorage.getItem('token')) {
+  if (!localStorage.getItem("token")) {
     return <Navigate to="/login" replace />;
-  } else if (!localStorage.getItem('roomId')) {
+  } else if (!localStorage.getItem("roomId")) {
     return <Navigate to="/lobby/:userId" replace />;
   } else {
     return <Outlet />;

@@ -305,7 +305,6 @@ const GameRoomBudget = () => {
   };
 
 
-
   return (
     <div className="gameRoom">
       <div className="gameRoomContainer">
@@ -334,7 +333,7 @@ const GameRoomBudget = () => {
             <div className="text">Total Price: {totalPrice}CHF</div>
 
             {hintNum !== 0 && (
-                <div className="text">Hint for right total number: <span id="num">{hintNum}</span></div>
+              <div className="text">Hint for right total number: <span id="num">{hintNum}</span></div>
             )}
 
           </div>

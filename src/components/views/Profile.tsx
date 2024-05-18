@@ -14,8 +14,8 @@ const Profile = () => {
   const [editing, setEditing] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [showMessageBox, setShowMessageBox] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -48,9 +48,9 @@ const Profile = () => {
       await api.put(`/users/${userId}`, requestBody);
       setNewUsername("")
       setNewPassword("")
-      setSuccessMessage('User updated successfully!');
+      setSuccessMessage("User updated successfully!");
       setTimeout(() => {
-        setSuccessMessage('');
+        setSuccessMessage("");
       }, 3000);
 
       fetchUserData(); // Refresh user data after saving
@@ -61,7 +61,7 @@ const Profile = () => {
       if (error.response) {
         setErrorMessage(`Error: ${error.response.data.message}`);
       } else {
-        setErrorMessage('Error: Something went wrong!');
+        setErrorMessage("Error: Something went wrong!");
       }
     } finally {
       setShowMessageBox(true);
@@ -107,53 +107,53 @@ const Profile = () => {
           <p>Loading...</p>
         )}
         {successMessage&& (
-            <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              {successMessage}
-            </div>
+          <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+            {successMessage}
+          </div>
         )}
 
         {editing && (
-            <div>
-              <div className="form-group">
-                <label>Set Username:</label>
-                <input
-                    type="text"
-                    value={newUsername}
-                    onChange={(e) => {
-                        setNewUsername(e.target.value);
-                    }}
-                />
-              </div>
-              <div className="form-group">
-                <label>Set Password:</label>
-                <input
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => {
-                      setNewPassword(e.target.value);
-                    }}
-                />
-              </div>
-              {errorMessage && (
-                  <div className="error-message">
-                    {errorMessage}
-                  </div>
-              )}
+          <div>
+            <div className="form-group">
+              <label>Set Username:</label>
+              <input
+                type="text"
+                value={newUsername}
+                onChange={(e) => {
+                  setNewUsername(e.target.value);
+                }}
+              />
             </div>
+            <div className="form-group">
+              <label>Set Password:</label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                }}
+              />
+            </div>
+            {errorMessage && (
+              <div className="error-message">
+                {errorMessage}
+              </div>
+            )}
+          </div>
         )}
 
         {userData && (
           <div className="left-button-container">
             <div>
               {editing && <Button
-                  disabled={!newUsername && !newPassword}
-                  width="100%"
-                  onClick={() => {
-              saveUserData(); // save user data
-              setEditing(false); // set editing state as false
-            }}>
+                disabled={!newUsername && !newPassword}
+                width="100%"
+                onClick={() => {
+                  saveUserData(); // save user data
+                  setEditing(false); // set editing state as false
+                }}>
             Save
-          </Button>}
+              </Button>}
             </div>
             <div>
               {/* enable editing button or not */}
@@ -169,7 +169,7 @@ const Profile = () => {
               {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
             </div>
           </div>
-          )}
+        )}
       </div>
     </BaseContainer>
   );

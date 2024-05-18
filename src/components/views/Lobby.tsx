@@ -28,7 +28,7 @@ FormField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   type: PropTypes.string, // Add a prop for input type
-  style: PropTypes.style
+  style: PropTypes.object
 };
 
 const Lobby = () => {
@@ -156,7 +156,7 @@ const Lobby = () => {
         </div>
       </div>
 
-      <button className="instruction-button" onClick={() => navigate(`/instruction`)}></button>
+      <button className="instruction-button" onClick={() => navigate("/instruction")}></button>
 
     </BaseContainer>
 
