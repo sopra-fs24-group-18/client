@@ -175,7 +175,7 @@ const WaitingAnswer = () => {
           <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" , color: "#FFFFFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>
             {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {localStorage.getItem("realPrice")}
           </div>
-          <div className="tip" style={{ fontSize: "10px" , color: "#97ABFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>Next round starts after <span id="time">{countdown}</span>s
+          <div className="tip" style={{ fontSize: "10px" , color: "#97ABFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>This round ends after <span id="time">{countdown}</span>s
           </div>
         </div>
       )}
