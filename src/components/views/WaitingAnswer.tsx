@@ -149,8 +149,8 @@ const WaitingAnswer = () => {
       <div className="hheader container" style={{ height: "auto", fontSize: "10px" }}>
         <h1 className="hheader title" style={{ color: "#FFFFFF", marginBottom: "30px" }}>The Price<br />Is Right</h1>
       </div>
-      <h2 style={{ fontSize: "16px", color: "#123597",textAlign: "center" }}>Waiting for
-        all players to submit their answers...</h2>
+      {(localStorage.getItem("showAlert")==="false") && (<h2 style={{ fontSize: "16px", color: "#123597",textAlign: "center" }}>Waiting for
+        all players to submit their answers...</h2>)}
       {(localStorage.getItem("showAlert")==="true") && (
         <div id="wrap">
           {message !== "" &&(

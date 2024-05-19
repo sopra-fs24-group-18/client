@@ -108,6 +108,7 @@ const GameRoom = () => {
 
     const userAnswer = sliderValue === 0 ? currentValue : answer;
     console.log("Navigating with answer:", userAnswer);
+    localStorage.setItem("showAlert", "false");
     navigate(`/waiting-answer/${userAnswer}`);
 
   };

@@ -13,7 +13,7 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
-const FormField = ({
+const FormField_2 = ({
   label,
   type = "text",
   value,
@@ -51,12 +51,35 @@ const FormField = ({
     </div>
   );
 };
-FormField.propTypes = {
+FormField_2.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
   maskPassword: PropTypes.bool,
+};
+
+
+const FormField = (props) => {
+  return (
+    <div className="login field">
+      <label className="login login-label">{props.label}</label>
+      <input
+        className="login input"
+        placeholder="enter here.."
+        value={props.value}
+        onChange={(e) => props.onChange(e.target.value)}
+        type={props.type} // Set the input type dynamically
+      />
+    </div>
+  );
+};
+
+FormField.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  type: PropTypes.string, // Add a prop for input type
 };
 
 const Register = () => {
@@ -68,7 +91,9 @@ const Register = () => {
   //   password confirm
   const [repeatPassword, setRepeatPassword] = useState("");
   const handleClick = () => {
-    if (username.length < 3 || username.length > 8) {
+    if (/\s/.test(username) || /\s/.test(password)) {
+      displayMessage("Username and password can't contain whitespace.", "error-message");
+    } else if (username.length < 3 || username.length > 8) {
       displayMessage("Username length must be between 3 and 8 characters.", "error-message");
     } else if (password.length < 3 || password.length > 8) {
       displayMessage("Password length must be between 3 and 8 characters.", "error-message");
@@ -117,7 +142,10 @@ const Register = () => {
     <div className="background-container">
       <BaseContainer>
         <div className="register container">
-          <div className="register form"><br /><br />
+          <div className="register form">
+            <div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+              <br /><br /><br /><br />
+            </div>
             <FormField
               label="Username"
               value={username}
@@ -128,16 +156,16 @@ const Register = () => {
               type="password"
               value={password}
               onChange={(p) => setPassword(p)}
-              maskPassword
             />
             <FormField
               label="Repeat Password"
               type="password"
               value={repeatPassword}
               onChange={(rp) => setRepeatPassword(rp)}
-              maskPassword
             />
-
+            <div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+              Username & Password: 3-8 characters without space
+            </div>
             <div className="register button-container" style={{display: "flex",justifyContent: "space-between"}} >
               {/*<div className="register button-container">*/}
               <Button
@@ -158,7 +186,7 @@ const Register = () => {
             </div>
             {/* Display message */}
             {message.text && (
-              <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+              <div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
                 {/*<div className={`message-container ${message.type}`}>*/}
                 {message.text}
               </div>

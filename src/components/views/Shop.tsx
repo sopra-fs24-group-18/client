@@ -189,7 +189,7 @@ const Purchase = () => {
             </div>
 
             {/* Get Hints */}
-            <div style={{ marginTop: "80px", textAlign: "left", fontSize: "15px" }}>
+            <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
               Hints: 30 Points
             </div>
             <div className="shop button-container"
@@ -289,7 +289,7 @@ const Purchase = () => {
         <br /><br /><br /><br />Preparing for the next round ......<br />
       </div>)}
 
-      <div className="shop button-container">
+      {(localStorage.getItem("showAlert_shop") === "true") && (<div className="shop button-container">
         <Button
           width="100%"
           onClick={() => {
@@ -298,7 +298,7 @@ const Purchase = () => {
         >
           Skip
         </Button>
-      </div>
+      </div>)}
 
       <div className="exit_button-container"
         width="100%"

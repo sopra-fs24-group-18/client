@@ -82,12 +82,14 @@ const GameRoomBudget = () => {
       localStorage.setItem("timeLeft", "7");
       localStorage.setItem("isReady_answer_timer", "false");
       localStorage.setItem("isReady_answer", "false");
+      localStorage.setItem("showAlert", "false");
       navigate(`/waiting-answer/${userAnswer}`);
     }
     else {
       localStorage.setItem("timeLeft", "7");
       localStorage.setItem("isReady_answer_timer", "false");
       localStorage.setItem("isReady_answer", "false");
+      localStorage.setItem("showAlert", "false");
       navigate("/waiting-answer/null");}
     /*try {
       const questionId = localStorage.getItem("questionId");
