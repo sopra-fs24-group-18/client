@@ -104,6 +104,7 @@ const Lobby = () => {
 
   const handleLogout = () => {
     // for logging into lobby
+    localStorage.clear();
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");

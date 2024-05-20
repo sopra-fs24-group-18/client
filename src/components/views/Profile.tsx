@@ -75,6 +75,7 @@ const Profile = () => {
 
   console.log(localStorage);
   const handleLogout = () => {
+    localStorage.clear();
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");

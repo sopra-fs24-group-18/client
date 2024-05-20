@@ -281,6 +281,8 @@ const GameRoom = () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
+      //delete all
+      localStorage.clear();
 
       // for game room
       localStorage.removeItem("playerNames");
@@ -298,6 +300,7 @@ const GameRoom = () => {
       localStorage.removeItem("showAlert");
       localStorage.removeItem("isReady_answer_timer");
       localStorage.removeItem("bonus");
+
 
 
       // for shop
