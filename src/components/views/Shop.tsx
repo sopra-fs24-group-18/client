@@ -278,7 +278,7 @@ const Purchase = () => {
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-                You can use this tool to gamble. If you win 1st prize next round, your points triple; if not, you lose
+                You can use this tool to gamble. If you win 1st prize next round, your points double; if not, you lose
                 all.
             </div>
             <br />
