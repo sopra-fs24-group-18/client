@@ -321,10 +321,10 @@ const GameRoom = () => {
         <div className="image">
           <img src={imageUrl}
             alt="Item display"
-            className={`gameRoomImage ${isBlurred ? "blurred" : ""}`}/>
+            className={`gameRoomImage ${isBlurred ? "blurred" : ""}`} />
 
           <div className="text">
-                        Slide to choose the price <br/>
+            Slide to choose the price <br />
           </div>
 
           <div className="text">
@@ -354,10 +354,12 @@ const GameRoom = () => {
 
           <div className="buttonsContainer1">
             {/*<Button width="150%" onClick={handleStart}>START</Button>*/}
-            <Button width="150%" >Room: {roomCode} </Button>
+            <Button width="150%">Room: {roomCode} </Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
             {message && <div>{message_1}</div>}
-            <Button width="150%" onClick={() => {leaveRoom();}}>Exit</Button>
+            <Button width="150%" onClick={() => {
+              leaveRoom();
+            }}>Exit</Button>
           </div>
         </div>
 
@@ -371,25 +373,26 @@ const GameRoom = () => {
           </div>
         </div>
 
+
         {/*points part*/}
         <div className="score">
 
           {/* Display remaining time */}
-          <div className="label" style={{left: 100}}>
-                        Time: <br/>
+          <div className="label" style={{ left: 100 }}>
+            Time: <br />
             {timeLeft}
           </div>
 
           {/* Display Points */}
-          <div className="label" style={{right: 100}}>
-                        Your Point: <br/>
+          <div className="label" style={{ right: 100 }}>
+            Your Point: <br />
             {player.score}
           </div>
 
           {/*round display*/}
-          <div className="score score-label" >
-                        Round:
-            {roundNumber}
+          <div className="score score-label">
+            Round:
+            {roundNumber}/3
           </div>
 
           <div className="pointsContainer">
@@ -400,9 +403,10 @@ const GameRoom = () => {
 
         </div>
 
-
       </div>
-
+      <div style={{ marginTop: "-25px",fontSize: "20px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center",color: "white"}}>
+        The toolbar shows the tools that have been used automatically in this round.
+      </div>
     </div>
   );
 };

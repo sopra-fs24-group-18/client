@@ -91,6 +91,11 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
         return;
       }
+      if (name ==="" || playerAmount === "" || gameMode === "")
+      { alert("Please fill out all blanks: room name, game mode and player number.")
+
+        return ;}
+
       console.log("test:", { name, ownerId, playerAmount: Number(playerAmount), gameMode });
       // request to create room
       const response = await api.post("/rooms", {
@@ -155,7 +160,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
           />
 
           <div className="button-group">
-            <button className="button-ok" onClick={handleSubmit} disabled={!gameMode || !playerAmount|| !name}>
+            <button className="button-ok" onClick={handleSubmit}>
             </button>
             <button className="button-cancel" onClick={handleCancel}>
             </button>

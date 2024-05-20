@@ -168,10 +168,13 @@ const Purchase = () => {
   return (
     <div className="background-container">
       {(localStorage.getItem("showAlert_shop") === "true") && (<BaseContainer>
+        <div style={{ marginTop: "80px",marginBottom: "-40px", fontSize: "22px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center" }}>
+          Tools are automatically used immediately after purchase.
+        </div>
         <div className="shop container">
           {/* Display message */}
           {message.text && (
-            <div style={{ fontSize: "20px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center"}}>
+            <div style={{ fontSize: "20px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center" }}>
               {/*<div className={`message-container ${message.type}`}>*/}
               {message.text}
             </div>
@@ -179,18 +182,18 @@ const Purchase = () => {
           <div className="shop form"><br /><br />
             {/* Display remaining time */}
             <div style={{ position: "absolute", top: 50, left: 100, textAlign: "center" }}>
-              Time: <br />
+                Time: <br />
               {timeLeft}
             </div>
             {/* Display Points */}
             <div style={{ position: "absolute", top: 50, right: 100, textAlign: "center" }}>
-              Your Point: <br />
+                Your Point: <br />
               {player.score}
             </div>
 
             {/* Get Hints */}
-            <div style={{ marginTop: "22px", textAlign: "left", fontSize: "15px" }}>
-              Hints: 30 Points
+            <div style={{ marginTop: "26px", textAlign: "left", fontSize: "15px" }}>
+                Hints: 30 Points
             </div>
             <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
@@ -199,16 +202,16 @@ const Purchase = () => {
                 disabled={(localStorage.getItem("isHintDisabled") === "true")}
                 onClick={() => doPurchase("HINT")}
               >
-                Buy
+                  Buy
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              You can use this tool to get hints.
+                You can use this tool to get hints.
             </div>
 
             {/* Disturb Others */}
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
-              Blur: 60 Points
+                Blur: 60 Points
             </div>
             <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
@@ -217,16 +220,16 @@ const Purchase = () => {
                 disabled={(localStorage.getItem("isBlurDisabled") === "true")}
                 onClick={() => doPurchase("BLUR")}
               >
-                Buy
+                  Buy
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              You can use this tool to disturb other player.
+                You can use this tool to disturb other player.
             </div>
 
             {/* Prevent your images from being blurred */}
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
-              Defense: 20 Points
+                Defense: 20 Points
             </div>
             <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
@@ -235,16 +238,16 @@ const Purchase = () => {
                 disabled={(localStorage.getItem("isDefenseDisabled") === "true")}
                 onClick={() => doPurchase("DEFENSE")}
               >
-                Buy
+                  Buy
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              You can use this tool to prevent your images from being blurred.
+                You can use this tool to prevent your images from being blurred.
             </div>
 
             {/* If you get the first prize in the next round, you can get an extra 60 points */}
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
-              Bonus: 20 Points
+                Bonus: 20 Points
             </div>
             <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
@@ -253,16 +256,16 @@ const Purchase = () => {
                 disabled={(localStorage.getItem("isBonusDisabled") === "true")}
                 onClick={() => doPurchase("BONUS")}
               >
-                Buy
+                  Buy
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              You can use this tool to earn an extra 60 points by winning 1st prize in the next round.
+                You can use this tool to earn an extra 60 points by winning 1st prize in the next round.
             </div>
 
             {/* Prevent your images from being blurred */}
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
-              Gamble: 40 Points
+                Gamble: 40 Points
             </div>
             <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
@@ -271,12 +274,12 @@ const Purchase = () => {
                 disabled={(localStorage.getItem("isGambleDisabled") === "true")}
                 onClick={() => doPurchase("GAMBLE")}
               >
-                Buy
+                  Buy
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-              You can use this tool to gamble. If you win 1st prize next round, your points triple; if not, you lose
-              all.
+                You can use this tool to gamble. If you win 1st prize next round, your points triple; if not, you lose
+                all.
             </div>
             <br />
           </div>

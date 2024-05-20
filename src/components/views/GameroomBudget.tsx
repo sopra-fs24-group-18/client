@@ -344,7 +344,9 @@ const GameRoomBudget = () => {
             <Button width="150%">Room: {roomCode}</Button>
             <Button width="150%" onClick={handleConfirmClick}>Confirm</Button>
             {message_1 && <div>{message_1}</div>}
-            <Button width="150%" onClick={() => {leaveRoom();}}>Exit</Button>
+            <Button width="150%" onClick={() => {
+              leaveRoom();
+            }}>Exit</Button>
           </div>
         </div>
 
@@ -362,21 +364,21 @@ const GameRoomBudget = () => {
         <div className="score">
 
           {/* Display remaining time */}
-          <div className="label" style={{left: 100}}>
-            Time: <br/>
+          <div className="label" style={{ left: 100 }}>
+            Time: <br />
             {timeLeft}
           </div>
 
           {/* Display Points */}
-          <div className="label" style={{right: 100}}>
-            Your Point: <br/>
+          <div className="label" style={{ right: 100 }}>
+            Your Point: <br />
             {player.score}
           </div>
 
           {/*round display*/}
           <div className="score-label">
             Round:
-            {roundNumber}
+            {roundNumber}/3
           </div>
 
 
@@ -394,6 +396,15 @@ const GameRoomBudget = () => {
         </div>
 
 
+      </div>
+      <div style={{
+        marginTop: "-25px",
+        fontSize: "20px",
+        fontFamily: "\"Microsoft YaHei\", sans-serif",
+        textAlign: "center",
+        color: "white"
+      }}>
+        The toolbar shows the tools that have been used automatically in this round.
       </div>
 
     </div>
