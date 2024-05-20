@@ -299,8 +299,6 @@ const GameRoom = () => {
       localStorage.removeItem("isReady_answer_timer");
       localStorage.removeItem("bonus");
 
-
-
       // for shop
       localStorage.removeItem("isHintDisabled");
       localStorage.removeItem("isBlurDisabled");
