@@ -189,7 +189,7 @@ const Purchase = () => {
             </div>
 
             {/* Get Hints */}
-            <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
+            <div style={{ marginTop: "22px", textAlign: "left", fontSize: "15px" }}>
               Hints: 30 Points
             </div>
             <div className="shop button-container"

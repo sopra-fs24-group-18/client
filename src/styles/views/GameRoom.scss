@@ -1,14 +1,23 @@
 @import "../theme";
 .gameRoom{
   .gameRoomContainer {
-    background-image: url('../../assets/background4.png');
-    background-size: contain;
-    background-position: center;
+    display: flex;
+    //justify-content: space-between; // Arrange sections in a flex container with space between
+    margin-top: 0em;
+    padding: 2em; // Add padding for spacing
+    align-items: center;
+    flex-direction: column;
 
+
+    //background-image: url('../../assets/background4.png');
+    //background-size: contain;
+    //background-position: center;
+    //display: flex;
+    //margin-top: 0em;
     //text-align: center;
     //padding: 20px;
     //position: relative;
-    //display: flex;
+
     //flex-direction: column;
     //align-items: center; // center horizontally
     //justify-content: center; // center vertically
