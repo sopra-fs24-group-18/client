@@ -281,8 +281,6 @@ const GameRoom = () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      //delete all
-      localStorage.clear();
 
       // for game room
       localStorage.removeItem("playerNames");
