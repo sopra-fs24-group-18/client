@@ -74,15 +74,15 @@ const Profile = () => {
     setMessage({ text: messageText, type: messageType });
     setTimeout(() => {
       setMessage({ text: "", type: "" });
-    }, 5000); // Hide message after 5 seconds
+    }, 3000); // Hide message after 5 seconds
   };
 
   const handleClick = () => {
-    if (/\s/.test(newUsername) || /\s/.test(newPassword)) {
+    if ((newUsername && /\s/.test(newUsername)) || (newPassword && /\s/.test(newPassword))) {
       displayMessage("Username and password can't contain whitespace.", "error-message");
-    } else if (newUsername.length < 3 || newUsername.length > 8) {
+    } else if (newUsername && (newUsername.length < 3 || newUsername.length > 8)) {
       displayMessage("Username length must be between 3 and 8 characters.", "error-message");
-    } else if (newPassword.length < 3 || newPassword.length > 8) {
+    } else if (newPassword && (newPassword.length < 3 || newPassword.length > 8)) {
       displayMessage("Password length must be between 3 and 8 characters.", "error-message");
     } else {
       saveUserData();
