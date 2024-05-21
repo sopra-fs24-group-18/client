@@ -19,6 +19,7 @@ const Profile = () => {
   const [showMessageBox, setShowMessageBox] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const fetchUserData = async () => {
     try {
@@ -29,6 +30,7 @@ const Profile = () => {
       console.error("Error fetching user data:", error);
     }
   };
+
 
   const saveUserData = async () => {
     try {
@@ -65,6 +67,26 @@ const Profile = () => {
       }
     } finally {
       setShowMessageBox(true);
+    }
+  };
+
+  const displayMessage = (messageText, messageType) => {
+    setMessage({ text: messageText, type: messageType });
+    setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 5000); // Hide message after 5 seconds
+  };
+
+  const handleClick = () => {
+    if (/\s/.test(newUsername) || /\s/.test(newPassword)) {
+      displayMessage("Username and password can't contain whitespace.", "error-message");
+    } else if (newUsername.length < 3 || newUsername.length > 8) {
+      displayMessage("Username length must be between 3 and 8 characters.", "error-message");
+    } else if (newPassword.length < 3 || newPassword.length > 8) {
+      displayMessage("Password length must be between 3 and 8 characters.", "error-message");
+    } else {
+      saveUserData();
+      setEditing(false);
     }
   };
 
@@ -135,6 +157,9 @@ const Profile = () => {
                 }}
               />
             </div>
+            <div className="error-message">
+              3-8 characters without space
+            </div>
             {errorMessage && (
               <div className="error-message">
                 {errorMessage}
@@ -150,8 +175,8 @@ const Profile = () => {
                 disabled={!newUsername && !newPassword}
                 width="100%"
                 onClick={() => {
-                  saveUserData(); // save user data
-                  setEditing(false); // set editing state as false
+                  handleClick(); // save user data
+                  // set editing state as false
                 }}>
             Save
               </Button>}
@@ -166,6 +191,12 @@ const Profile = () => {
             </div>
             <div>
               {editing && <Button width="100%" onClick={exit}>Exit</Button>}
+              {/* Display message */}
+              {message.text && (
+                <div className="error-message">
+                  {message.text}
+                </div>
+              )}
               {!editing &&  <Button width="100%" onClick={back}>Back</Button>}
               {!editing && <Button width="100%" onClick={handleLogout}>Logout</Button>}
             </div>
