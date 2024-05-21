@@ -11,13 +11,13 @@ import PropTypes from "prop-types";
 
 const Purchase = () => {
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
+  const [timeLeft, setTimeLeft] = useState(parseInt(sessionStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [player, setPlayer] = useState("");
-  const userId = localStorage.getItem("userId");
-  const roomId = localStorage.getItem("roomId");
-  const roomCode = localStorage.getItem("roomCode");
-  const gameMode = localStorage.getItem("gameMode");
+  const userId = sessionStorage.getItem("userId");
+  const roomId = sessionStorage.getItem("roomId");
+  const roomCode = sessionStorage.getItem("roomCode");
+  const gameMode = sessionStorage.getItem("gameMode");
 
 
   useEffect(() => {
@@ -40,17 +40,17 @@ const Purchase = () => {
     const timer = setTimeout(() => {
       if(timeLeft > 0) {
         setTimeLeft(timeLeft - 1);
-        localStorage.setItem("timeLeft", timeLeft.toString());
+        sessionStorage.setItem("timeLeft", timeLeft.toString());
       }
     }, 1000);
 
     if (timeLeft === 0) {
       clearTimeout(timer);
       if (gameMode === "BUDGET") {
-        localStorage.setItem("timeLeft", "22");
+        sessionStorage.setItem("timeLeft", "22");
         navigate(`/rooms/${roomCode}/${userId}/budget`);
       } else {
-        localStorage.setItem("timeLeft", "22");
+        sessionStorage.setItem("timeLeft", "22");
         navigate(`/rooms/${roomCode}/${userId}/guessing`);
       }
 
@@ -67,7 +67,7 @@ const Purchase = () => {
         const toolId = tool.id;
         const response_2 = await api.post(`/tools/${toolId}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        localStorage.setItem("isHintDisabled", "true");
+        sessionStorage.setItem("isHintDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[1].type) {
@@ -75,7 +75,7 @@ const Purchase = () => {
         const toolId_2 = tool_2.id;
         const response_3 = await api.post(`/tools/${toolId_2}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        localStorage.setItem("isBlurDisabled", "true");
+        sessionStorage.setItem("isBlurDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[2].type) {
@@ -83,7 +83,7 @@ const Purchase = () => {
         const toolId_3 = tool_3.id;
         const response_4 = await api.post(`/tools/${toolId_3}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        localStorage.setItem("isDefenseDisabled", "true");
+        sessionStorage.setItem("isDefenseDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[3].type) {
@@ -91,8 +91,8 @@ const Purchase = () => {
         const toolId_4 = tool_4.id;
         const response_5 = await api.post(`/tools/${toolId_4}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        localStorage.setItem("isBonusDisabled", "true");
-        localStorage.setItem("isGambleDisabled", "true");
+        sessionStorage.setItem("isBonusDisabled", "true");
+        sessionStorage.setItem("isGambleDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else if (toolType === response.data[4].type) {
@@ -100,8 +100,8 @@ const Purchase = () => {
         const toolId_5 = tool_5.id;
         const response_6 = await api.post(`/tools/${toolId_5}/${roomId}/${userId}`);
         displayMessage(`Buy and use the ${toolType} successfully!`, "success-message");
-        localStorage.setItem("isBonusDisabled", "true");
-        localStorage.setItem("isGambleDisabled", "true");
+        sessionStorage.setItem("isBonusDisabled", "true");
+        sessionStorage.setItem("isGambleDisabled", "true");
         const response_buy = await api.get(`/users/${userId}`);
         setPlayer(response_buy.data);
       } else {
@@ -128,31 +128,31 @@ const Purchase = () => {
       const requestBody = { roomId, userId };
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
       // for game room
-      localStorage.removeItem("playerNames");
-      localStorage.removeItem("questionId");
-      localStorage.removeItem("rank");
-      localStorage.removeItem("roomCode");
-      localStorage.removeItem("roomId");
-      localStorage.removeItem("roundNumber");
-      localStorage.removeItem("timeLeft");
-      localStorage.removeItem("gameMode");
+      sessionStorage.removeItem("playerNames");
+      sessionStorage.removeItem("questionId");
+      sessionStorage.removeItem("rank");
+      sessionStorage.removeItem("roomCode");
+      sessionStorage.removeItem("roomId");
+      sessionStorage.removeItem("roundNumber");
+      sessionStorage.removeItem("timeLeft");
+      sessionStorage.removeItem("gameMode");
 
       // for waiting answer
-      localStorage.removeItem("isReady_answer");
-      localStorage.removeItem("myScore");
-      localStorage.removeItem("realPrice");
-      localStorage.removeItem("showAlert");
-      localStorage.removeItem("isReady_answer_timer");
-      localStorage.removeItem("bonus");
+      sessionStorage.removeItem("isReady_answer");
+      sessionStorage.removeItem("myScore");
+      sessionStorage.removeItem("realPrice");
+      sessionStorage.removeItem("showAlert");
+      sessionStorage.removeItem("isReady_answer_timer");
+      sessionStorage.removeItem("bonus");
 
       // for shop
-      localStorage.removeItem("isHintDisabled");
-      localStorage.removeItem("isBlurDisabled");
-      localStorage.removeItem("isDefenseDisabled");
-      localStorage.removeItem("isBonusDisabled");
-      localStorage.removeItem("isGambleDisabled");
-      localStorage.removeItem("showAlert_shop");
-      localStorage.removeItem("showAlert_loading");
+      sessionStorage.removeItem("isHintDisabled");
+      sessionStorage.removeItem("isBlurDisabled");
+      sessionStorage.removeItem("isDefenseDisabled");
+      sessionStorage.removeItem("isBonusDisabled");
+      sessionStorage.removeItem("isGambleDisabled");
+      sessionStorage.removeItem("showAlert_shop");
+      sessionStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {
       console.error("Error deleting server data:", error);
@@ -160,14 +160,14 @@ const Purchase = () => {
   };
 
   const skipShop = async () => {
-    localStorage.setItem("showAlert_shop", "false");
-    localStorage.setItem("showAlert_loading", "true");
+    sessionStorage.setItem("showAlert_shop", "false");
+    sessionStorage.setItem("showAlert_loading", "true");
   };
 
 
   return (
     <div className="background-container">
-      {(localStorage.getItem("showAlert_shop") === "true") && (<BaseContainer>
+      {(sessionStorage.getItem("showAlert_shop") === "true") && (<BaseContainer>
         <div style={{ marginTop: "80px",marginBottom: "-40px", fontSize: "22px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center" }}>
           Tools are automatically used immediately after purchase.
         </div>
@@ -199,7 +199,7 @@ const Purchase = () => {
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop hint"></button>
               <button className="shop buy-button"
-                disabled={(localStorage.getItem("isHintDisabled") === "true")}
+                disabled={(sessionStorage.getItem("isHintDisabled") === "true")}
                 onClick={() => doPurchase("HINT")}
               >
                   Buy
@@ -217,7 +217,7 @@ const Purchase = () => {
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bomb"></button>
               <button className="shop buy-button"
-                disabled={(localStorage.getItem("isBlurDisabled") === "true")}
+                disabled={(sessionStorage.getItem("isBlurDisabled") === "true")}
                 onClick={() => doPurchase("BLUR")}
               >
                   Buy
@@ -235,7 +235,7 @@ const Purchase = () => {
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop defense"></button>
               <button className="shop buy-button"
-                disabled={(localStorage.getItem("isDefenseDisabled") === "true")}
+                disabled={(sessionStorage.getItem("isDefenseDisabled") === "true")}
                 onClick={() => doPurchase("DEFENSE")}
               >
                   Buy
@@ -253,7 +253,7 @@ const Purchase = () => {
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop bonus"></button>
               <button className="shop buy-button"
-                disabled={(localStorage.getItem("isBonusDisabled") === "true")}
+                disabled={(sessionStorage.getItem("isBonusDisabled") === "true")}
                 onClick={() => doPurchase("BONUS")}
               >
                   Buy
@@ -271,7 +271,7 @@ const Purchase = () => {
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
               <button className="shop gamble"></button>
               <button className="shop buy-button"
-                disabled={(localStorage.getItem("isGambleDisabled") === "true")}
+                disabled={(sessionStorage.getItem("isGambleDisabled") === "true")}
                 onClick={() => doPurchase("GAMBLE")}
               >
                   Buy
@@ -288,11 +288,11 @@ const Purchase = () => {
 
       </BaseContainer>)}
 
-      {(localStorage.getItem("showAlert_loading") === "true") && (<div className="shop_loading">
+      {(sessionStorage.getItem("showAlert_loading") === "true") && (<div className="shop_loading">
         <br /><br /><br /><br />Preparing for the next round ......<br />
       </div>)}
 
-      {(localStorage.getItem("showAlert_shop") === "true") && (<div className="shop button-container">
+      {(sessionStorage.getItem("showAlert_shop") === "true") && (<div className="shop button-container">
         <Button
           width="100%"
           onClick={() => {

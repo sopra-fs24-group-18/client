@@ -70,9 +70,9 @@ export const GameRoomGuard = ({ children }) => {
   //   };
   // }, [navigate]);
 
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
     return <Navigate to="/login" replace />;
-  } else if (!localStorage.getItem("roomId")) {
+  } else if (!sessionStorage.getItem("roomId")) {
     return <Navigate to="/lobby/:userId" replace />;
   } else {
     return <Outlet />;

@@ -38,7 +38,7 @@ export const LoginGuard = () => {
     };
   }, [navigate]);
 
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
     
     return <Outlet />;
   }

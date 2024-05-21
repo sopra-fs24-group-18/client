@@ -33,7 +33,7 @@ export const RegisterGuard = ({children }) => {
     };
   }, [navigate]);
 
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
 
     return <Outlet />;
   }

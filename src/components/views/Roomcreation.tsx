@@ -84,8 +84,8 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
 
   const handleSubmit = async () => {
     try {
-      const ownerId = localStorage.getItem("userId");
-      const userId = localStorage.getItem("userId");
+      const ownerId = sessionStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
       if (!ownerId) {
         alert("Owner ID is not available. Please log in again.");
 
@@ -110,18 +110,18 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
         const { roomCode } = response.data;
         //const roomId = response.data.id;
         // store it for using in game room
-        //localStorage.setItem("roomCode", roomCode);
-        localStorage.setItem("roundNumber", "1");
-        //localStorage.setItem("roomId", roomId);
-        const roundNumber = Number(localStorage.getItem("roundNumber"))
+        //sessionStorage.setItem("roomCode", roomCode);
+        sessionStorage.setItem("roundNumber", "1");
+        //sessionStorage.setItem("roomId", roomId);
+        const roundNumber = Number(sessionStorage.getItem("roundNumber"))
 
         // store it for using in game room
         const roomData = response.data;
-        localStorage.setItem("roomId", roomData.id);
-        localStorage.setItem("playerNames", roomData.playerNames);
-        localStorage.setItem("roomCode", roomCode);
-        localStorage.setItem("gameMode", gameMode);
-        localStorage.setItem("timeLeft", "4");
+        sessionStorage.setItem("roomId", roomData.id);
+        sessionStorage.setItem("playerNames", roomData.playerNames);
+        sessionStorage.setItem("roomCode", roomCode);
+        sessionStorage.setItem("gameMode", gameMode);
+        sessionStorage.setItem("timeLeft", "4");
         navigate("/prepare");
         console.log("Room created:", { roomCode, name, ownerId, playerAmount: Number(playerAmount), gameMode, roundNumber });
       } else {
@@ -132,7 +132,7 @@ const RoomCreation: React.FC<RoomCreationProps> = () => {
       alert(`Failed to create room: ${error}`);
     }
   };
-  const userId = localStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userId");
   const handleCancel = () => {
     navigate(`/lobby/${userId}`);
   };

@@ -6,12 +6,12 @@ import {useNavigate} from "react-router-dom";
 import { PlayerTable } from "components/ui/PlayerTable";
 
 const GameRoomBudget = () => {
-  const roomId = localStorage.getItem("roomId");
-  let roundNumber = Number(localStorage.getItem("roundNumber"));
-  const userId = localStorage.getItem("userId");
+  const roomId = sessionStorage.getItem("roomId");
+  let roundNumber = Number(sessionStorage.getItem("roundNumber"));
+  const userId = sessionStorage.getItem("userId");
   // const [chosenItemList, setChosenItemList] = useState<string>("");
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const roomCode = localStorage.getItem("roomCode");
+  const roomCode = sessionStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedItemIds, setSelectedItemIds] = useState([]);
@@ -33,7 +33,7 @@ const GameRoomBudget = () => {
   const fetchImageUrls = async (roomId, roundNumber, retryCount = 0) => {
     try {
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
-      localStorage.setItem("questionId", response.data.id);
+      sessionStorage.setItem("questionId", response.data.id);
 
       const itemImages = response.data.itemImageList.split(",");
       const itemIds = response.data.itemList.split(",");
@@ -79,20 +79,20 @@ const GameRoomBudget = () => {
   const handleConfirmClick = async () => {
     setIsConfirmed(true);
     if (userAnswer !== "") {
-      localStorage.setItem("timeLeft", "7");
-      localStorage.setItem("isReady_answer_timer", "false");
-      localStorage.setItem("isReady_answer", "false");
-      localStorage.setItem("showAlert", "false");
+      sessionStorage.setItem("timeLeft", "7");
+      sessionStorage.setItem("isReady_answer_timer", "false");
+      sessionStorage.setItem("isReady_answer", "false");
+      sessionStorage.setItem("showAlert", "false");
       navigate(`/waiting-answer/${userAnswer}`);
     }
     else {
-      localStorage.setItem("timeLeft", "7");
-      localStorage.setItem("isReady_answer_timer", "false");
-      localStorage.setItem("isReady_answer", "false");
-      localStorage.setItem("showAlert", "false");
+      sessionStorage.setItem("timeLeft", "7");
+      sessionStorage.setItem("isReady_answer_timer", "false");
+      sessionStorage.setItem("isReady_answer", "false");
+      sessionStorage.setItem("showAlert", "false");
       navigate("/waiting-answer/null");}
     /*try {
-      const questionId = localStorage.getItem("questionId");
+      const questionId = sessionStorage.getItem("questionId");
       setIsConfirmed(true);
       const result = await api.post("/answers/budgetMode", {
         questionId,
@@ -180,7 +180,7 @@ const GameRoomBudget = () => {
 
   // point display
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
+  const [timeLeft, setTimeLeft] = useState(parseInt(sessionStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
@@ -202,7 +202,7 @@ const GameRoomBudget = () => {
     const timer = setTimeout(() => {
       if(timeLeft > 0) {
         setTimeLeft(timeLeft - 1);
-        localStorage.setItem("timeLeft", timeLeft.toString());
+        sessionStorage.setItem("timeLeft", timeLeft.toString());
       }
     }, 1000);
 
@@ -262,9 +262,9 @@ const GameRoomBudget = () => {
       // if the game is longer than ten minutes, which normally not, exept an unexpected exit.
       if (elapsedTime >= gameDuration) {
         // clear local storage
-        localStorage.clear();
+        sessionStorage.clear();
         clearInterval(timer);
-        console.log("the game is over 10 minutes, the localstorage is cleared");
+        console.log("the game is over 10 minutes, the sessionStorage is cleared");
       }
     }, 10*1000);
 
@@ -277,30 +277,30 @@ const GameRoomBudget = () => {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
       // for game room
-      localStorage.removeItem("playerNames");
-      localStorage.removeItem("questionId");
-      localStorage.removeItem("roomCode");
-      localStorage.removeItem("roomId");
-      localStorage.removeItem("roundNumber");
-      localStorage.removeItem("timeLeft");
-      localStorage.removeItem("gameMode");
+      sessionStorage.removeItem("playerNames");
+      sessionStorage.removeItem("questionId");
+      sessionStorage.removeItem("roomCode");
+      sessionStorage.removeItem("roomId");
+      sessionStorage.removeItem("roundNumber");
+      sessionStorage.removeItem("timeLeft");
+      sessionStorage.removeItem("gameMode");
 
       // for waiting answer
-      localStorage.removeItem("isReady_answer");
-      localStorage.removeItem("myScore");
-      localStorage.removeItem("realPrice");
-      localStorage.removeItem("showAlert");
-      localStorage.removeItem("isReady_answer_timer");
-      localStorage.removeItem("bonus");
+      sessionStorage.removeItem("isReady_answer");
+      sessionStorage.removeItem("myScore");
+      sessionStorage.removeItem("realPrice");
+      sessionStorage.removeItem("showAlert");
+      sessionStorage.removeItem("isReady_answer_timer");
+      sessionStorage.removeItem("bonus");
 
       // for shop
-      localStorage.removeItem("isHintDisabled");
-      localStorage.removeItem("isBlurDisabled");
-      localStorage.removeItem("isDefenseDisabled");
-      localStorage.removeItem("isBonusDisabled");
-      localStorage.removeItem("isGambleDisabled");
-      localStorage.removeItem("showAlert_shop");
-      localStorage.removeItem("showAlert_loading");
+      sessionStorage.removeItem("isHintDisabled");
+      sessionStorage.removeItem("isBlurDisabled");
+      sessionStorage.removeItem("isDefenseDisabled");
+      sessionStorage.removeItem("isBonusDisabled");
+      sessionStorage.removeItem("isGambleDisabled");
+      sessionStorage.removeItem("showAlert_shop");
+      sessionStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

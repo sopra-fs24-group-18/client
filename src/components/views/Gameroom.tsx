@@ -9,17 +9,17 @@ const GameRoom = () => {
 
   const [sliderValue, setSliderValue] = useState<number>(0);
   const sliderRef = useRef<HTMLInputElement>(null);
-  const roomId = localStorage.getItem("roomId");
+  const roomId = sessionStorage.getItem("roomId");
   const [imageUrl, setImageUrl] = useState<string>(`${process.env.PUBLIC_URL}/loading.png`);
-  let roundNumber = Number(localStorage.getItem("roundNumber"));
+  let roundNumber = Number(sessionStorage.getItem("roundNumber"));
   const [Min, setMin] = useState<number>(0);
   const [Max, setMax] = useState<number>(1000);
   const [oriMin, setOriMin] = useState<number>(0);
   const [oriMax, setOriMax] = useState<number>(0);
-  const userId = localStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userId");
   // const [chosenItemList, setChosenItemList] = useState<string>("");
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const roomCode = localStorage.getItem("roomCode");
+  const roomCode = sessionStorage.getItem("roomCode");
   const [message_1, setMessage_1] = useState("");
   const [answer, setAnswer] = useState<number>(0);
   const [isBlurred, setIsBlurred] = useState(false);
@@ -41,7 +41,7 @@ const GameRoom = () => {
     try {
       setLoading(true);
       const response = await api.get(`games/${roomId}/${roundNumber}/${userId}`);
-      localStorage.setItem("questionId", response.data.id);
+      sessionStorage.setItem("questionId", response.data.id);
       //const newImageUrl = response.data.blur ? `${process.env.PUBLIC_URL}/mosaic.jpg` : response.data.itemImage;
       setIsBlurred(response.data.blur);
       setImageUrl(response.data.itemImage);
@@ -102,13 +102,13 @@ const GameRoom = () => {
 
   // sent user choice
   const handleConfirmClick = async () => {
-    localStorage.setItem("timeLeft", "7");
-    localStorage.setItem("isReady_answer_timer", "false");
-    localStorage.setItem("isReady_answer", "false");
+    sessionStorage.setItem("timeLeft", "7");
+    sessionStorage.setItem("isReady_answer_timer", "false");
+    sessionStorage.setItem("isReady_answer", "false");
 
     const userAnswer = sliderValue === 0 ? currentValue : answer;
     console.log("Navigating with answer:", userAnswer);
-    localStorage.setItem("showAlert", "false");
+    sessionStorage.setItem("showAlert", "false");
     navigate(`/waiting-answer/${userAnswer}`);
 
   };
@@ -187,7 +187,7 @@ const GameRoom = () => {
 
   // point display
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
+  const [timeLeft, setTimeLeft] = useState(parseInt(sessionStorage.getItem("timeLeft"))-2);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const [player, setPlayer] = useState("");
@@ -209,7 +209,7 @@ const GameRoom = () => {
     const timer = setTimeout(() => {
       if(timeLeft > 0) {
         setTimeLeft(timeLeft - 1);
-        localStorage.setItem("timeLeft", timeLeft.toString());
+        sessionStorage.setItem("timeLeft", timeLeft.toString());
       }
     }, 1000);
 
@@ -268,9 +268,9 @@ const GameRoom = () => {
       // if the game is longer than ten minutes, which normally not, exept an unexpected exit.
       if (elapsedTime >= gameDuration) {
         // clear local storage
-        localStorage.clear();
+        sessionStorage.clear();
         clearInterval(timer);
-        console.log("the game is over 10 minutes, the localstorage is cleared");
+        console.log("the game is over 10 minutes, the sessionStorage is cleared");
       }
     }, 10*1000);
 
@@ -283,30 +283,30 @@ const GameRoom = () => {
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
 
       // for game room
-      localStorage.removeItem("playerNames");
-      localStorage.removeItem("questionId");
-      localStorage.removeItem("roomCode");
-      localStorage.removeItem("roomId");
-      localStorage.removeItem("roundNumber");
-      localStorage.removeItem("timeLeft");
-      localStorage.removeItem("gameMode");
+      sessionStorage.removeItem("playerNames");
+      sessionStorage.removeItem("questionId");
+      sessionStorage.removeItem("roomCode");
+      sessionStorage.removeItem("roomId");
+      sessionStorage.removeItem("roundNumber");
+      sessionStorage.removeItem("timeLeft");
+      sessionStorage.removeItem("gameMode");
 
       // for waiting answer
-      localStorage.removeItem("isReady_answer");
-      localStorage.removeItem("myScore");
-      localStorage.removeItem("realPrice");
-      localStorage.removeItem("showAlert");
-      localStorage.removeItem("isReady_answer_timer");
-      localStorage.removeItem("bonus");
+      sessionStorage.removeItem("isReady_answer");
+      sessionStorage.removeItem("myScore");
+      sessionStorage.removeItem("realPrice");
+      sessionStorage.removeItem("showAlert");
+      sessionStorage.removeItem("isReady_answer_timer");
+      sessionStorage.removeItem("bonus");
 
       // for shop
-      localStorage.removeItem("isHintDisabled");
-      localStorage.removeItem("isBlurDisabled");
-      localStorage.removeItem("isDefenseDisabled");
-      localStorage.removeItem("isBonusDisabled");
-      localStorage.removeItem("isGambleDisabled");
-      localStorage.removeItem("showAlert_shop");
-      localStorage.removeItem("showAlert_loading");
+      sessionStorage.removeItem("isHintDisabled");
+      sessionStorage.removeItem("isBlurDisabled");
+      sessionStorage.removeItem("isDefenseDisabled");
+      sessionStorage.removeItem("isBonusDisabled");
+      sessionStorage.removeItem("isGambleDisabled");
+      sessionStorage.removeItem("showAlert_shop");
+      sessionStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

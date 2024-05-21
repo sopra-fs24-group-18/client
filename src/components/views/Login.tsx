@@ -48,8 +48,8 @@ const Login = () => {
       // Get the returned user and update a new object.
       const user = new User(response.data);
       // Store the userid into the local storage.
-      localStorage.setItem("userId", user.id)
-      localStorage.setItem("token", user.token)
+      sessionStorage.setItem("userId", user.id)
+      sessionStorage.setItem("token", user.token)
       console.log("id,", user.id)
       console.log("token", user.token)
       const userId = user.id;

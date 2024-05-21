@@ -7,9 +7,9 @@ import BaseContainer from "components/ui/BaseContainer";
 import {Spinner} from "../ui/Spinner";
 
 const Rank = () => {
-  const roomId = localStorage.getItem("roomId")
-  // const playerNames = localStorage.getItem('playerNames')
-  const userId = localStorage.getItem("userId");
+  const roomId = sessionStorage.getItem("roomId")
+  // const playerNames = sessionStorage.getItem('playerNames')
+  const userId = sessionStorage.getItem("userId");
   // point display
   const navigate = useNavigate();
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -49,7 +49,7 @@ const Rank = () => {
   ));
 
   console.log("pointList:", pointList)
-  console.log(localStorage);
+  console.log(sessionStorage);
 
   let content = <Spinner />;
 
@@ -58,30 +58,30 @@ const Rank = () => {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
       // for game room
-      localStorage.removeItem("playerNames");
-      localStorage.removeItem("questionId");
-      localStorage.removeItem("roomCode");
-      localStorage.removeItem("roomId");
-      localStorage.removeItem("roundNumber");
-      localStorage.removeItem("timeLeft");
-      localStorage.removeItem("gameMode");
+      sessionStorage.removeItem("playerNames");
+      sessionStorage.removeItem("questionId");
+      sessionStorage.removeItem("roomCode");
+      sessionStorage.removeItem("roomId");
+      sessionStorage.removeItem("roundNumber");
+      sessionStorage.removeItem("timeLeft");
+      sessionStorage.removeItem("gameMode");
 
       // for waiting answer
-      localStorage.removeItem("isReady_answer");
-      localStorage.removeItem("myScore");
-      localStorage.removeItem("realPrice");
-      localStorage.removeItem("showAlert");
-      localStorage.removeItem("isReady_answer_timer");
-      localStorage.removeItem("bonus");
+      sessionStorage.removeItem("isReady_answer");
+      sessionStorage.removeItem("myScore");
+      sessionStorage.removeItem("realPrice");
+      sessionStorage.removeItem("showAlert");
+      sessionStorage.removeItem("isReady_answer_timer");
+      sessionStorage.removeItem("bonus");
 
       // for shop
-      localStorage.removeItem("isHintDisabled");
-      localStorage.removeItem("isBlurDisabled");
-      localStorage.removeItem("isDefenseDisabled");
-      localStorage.removeItem("isBonusDisabled");
-      localStorage.removeItem("isGambleDisabled");
-      localStorage.removeItem("showAlert_shop");
-      localStorage.removeItem("showAlert_loading");
+      sessionStorage.removeItem("isHintDisabled");
+      sessionStorage.removeItem("isBlurDisabled");
+      sessionStorage.removeItem("isDefenseDisabled");
+      sessionStorage.removeItem("isBonusDisabled");
+      sessionStorage.removeItem("isGambleDisabled");
+      sessionStorage.removeItem("showAlert_shop");
+      sessionStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

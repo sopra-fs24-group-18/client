@@ -9,7 +9,7 @@ import {Button} from "components/ui/Button";
 //import axios from 'axios';
 
 const Profile = () => {
-  const userId= localStorage.getItem("userId");
+  const userId= sessionStorage.getItem("userId");
   const [userData, setUserData] = useState(null);
   const [editing, setEditing] = useState(false);
   const [newUsername, setNewUsername] = useState("");
@@ -18,14 +18,14 @@ const Profile = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showMessageBox, setShowMessageBox] = useState(false);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const fetchUserData = async () => {
     try {
       const response = await api.get(`/users/${userId}`);
       setUserData(response.data);
-      localStorage.setItem("userId", userId);
+      sessionStorage.setItem("userId", userId);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -95,13 +95,13 @@ const Profile = () => {
     fetchUserData(); // Fetch user data on component mount
   }, [userId]); // Re-fetch data when ID changes
 
-  console.log(localStorage);
+  console.log(sessionStorage);
   const handleLogout = () => {
-    localStorage.clear();
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("username");
-    localStorage.removeItem("creation_date");
+    sessionStorage.clear();
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("creation_date");
     navigate("/login");
   };
 

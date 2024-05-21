@@ -29,7 +29,7 @@ export const ProfileGuard = ({ children }) => {
   }, [navigate]);
 
 
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
     return <Navigate to="/login" replace />;
   } else {
     return (

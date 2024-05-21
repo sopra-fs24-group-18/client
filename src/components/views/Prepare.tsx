@@ -7,16 +7,16 @@ import { PlayerTable } from "components/ui/PlayerTable";
 
 const Prepare = () => {
   const navigate = useNavigate();
-  const roomId = localStorage.getItem("roomId");
-  const userId = localStorage.getItem("userId");
+  const roomId = sessionStorage.getItem("roomId");
+  const userId = sessionStorage.getItem("userId");
   const [isReady, setIsReady] = useState(false);
-  const roomCode = localStorage.getItem("roomCode");
+  const roomCode = sessionStorage.getItem("roomCode");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const initializeGame = async () => {
       try {
-        console.log(localStorage);
+        console.log(sessionStorage);
         const response = await api.post(`games/${roomId}/${userId}/getReady`);
         console.log("Response for round 1:", response.data);
 
@@ -48,21 +48,21 @@ const Prepare = () => {
     };
   }, [roomId, userId]);
 
-  const [timeLeft, setTimeLeft] = useState(parseInt(localStorage.getItem("timeLeft"))-2);
+  const [timeLeft, setTimeLeft] = useState(parseInt(sessionStorage.getItem("timeLeft"))-2);
 
   useEffect(() => {
-    const gameMode = localStorage.getItem("gameMode")
+    const gameMode = sessionStorage.getItem("gameMode")
     if (isReady === true) {  // when post ready, begin to countdown
       const timer = setTimeout(() => {
         if(timeLeft > 0) {
           setTimeLeft(timeLeft - 1);
-          localStorage.setItem("timeLeft", timeLeft.toString());
+          sessionStorage.setItem("timeLeft", timeLeft.toString());
         }
       }, 1000);
 
       if (timeLeft === 0) {
         clearTimeout(timer);
-        localStorage.setItem("timeLeft", "22");
+        sessionStorage.setItem("timeLeft", "22");
         if (gameMode === "GUESSING"){
           navigate(`/rooms/${roomCode}/${userId}/guessing`);}
         else{
@@ -99,30 +99,30 @@ const Prepare = () => {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
       // for game room
-      localStorage.removeItem("playerNames");
-      localStorage.removeItem("questionId");
-      localStorage.removeItem("roomCode");
-      localStorage.removeItem("roomId");
-      localStorage.removeItem("roundNumber");
-      localStorage.removeItem("timeLeft");
-      localStorage.removeItem("gameMode");
+      sessionStorage.removeItem("playerNames");
+      sessionStorage.removeItem("questionId");
+      sessionStorage.removeItem("roomCode");
+      sessionStorage.removeItem("roomId");
+      sessionStorage.removeItem("roundNumber");
+      sessionStorage.removeItem("timeLeft");
+      sessionStorage.removeItem("gameMode");
 
       // for waiting answer
-      localStorage.removeItem("isReady_answer");
-      localStorage.removeItem("myScore");
-      localStorage.removeItem("realPrice");
-      localStorage.removeItem("showAlert");
-      localStorage.removeItem("isReady_answer_timer");
-      localStorage.removeItem("bonus");
+      sessionStorage.removeItem("isReady_answer");
+      sessionStorage.removeItem("myScore");
+      sessionStorage.removeItem("realPrice");
+      sessionStorage.removeItem("showAlert");
+      sessionStorage.removeItem("isReady_answer_timer");
+      sessionStorage.removeItem("bonus");
 
       // for shop
-      localStorage.removeItem("isHintDisabled");
-      localStorage.removeItem("isBlurDisabled");
-      localStorage.removeItem("isDefenseDisabled");
-      localStorage.removeItem("isBonusDisabled");
-      localStorage.removeItem("isGambleDisabled");
-      localStorage.removeItem("showAlert_shop");
-      localStorage.removeItem("showAlert_loading");
+      sessionStorage.removeItem("isHintDisabled");
+      sessionStorage.removeItem("isBlurDisabled");
+      sessionStorage.removeItem("isDefenseDisabled");
+      sessionStorage.removeItem("isBonusDisabled");
+      sessionStorage.removeItem("isGambleDisabled");
+      sessionStorage.removeItem("showAlert_shop");
+      sessionStorage.removeItem("showAlert_loading");
       navigate(`/lobby/${userId}`);
     } catch (error) {console.error("Error deleting server data:", error);
     }

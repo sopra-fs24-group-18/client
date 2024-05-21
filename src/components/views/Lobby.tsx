@@ -36,7 +36,7 @@ const Lobby = () => {
   const [roomCode, setRoomCode] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false)
-  // const currentIdString = localStorage.getItem("userId");
+  // const currentIdString = sessionStorage.getItem("userId");
   // const currentId = parseInt(currentIdString);
   const [modalHidden, setModalHidden] = useState(true);
   const [overlayHidden, setOverlayHidden] = useState(true);
@@ -44,7 +44,7 @@ const Lobby = () => {
 
 
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const handleSingleRoom = () => {
     // Placeholder for handling single room button click
@@ -68,14 +68,14 @@ const Lobby = () => {
       const roomData = response.data;
       setGameMode(response.data.gameMode);
       console.log("gameMode: ", gameMode);
-      localStorage.setItem("roomId", roomData.id);
-      localStorage.setItem("roomCode", roomData.roomCode);
-      localStorage.setItem("playerNames", roomData.playerNames);
-      localStorage.setItem("roundNumber", "1");
-      localStorage.setItem("gameMode",response.data.gameMode);
+      sessionStorage.setItem("roomId", roomData.id);
+      sessionStorage.setItem("roomCode", roomData.roomCode);
+      sessionStorage.setItem("playerNames", roomData.playerNames);
+      sessionStorage.setItem("roundNumber", "1");
+      sessionStorage.setItem("gameMode",response.data.gameMode);
       // check if the room id exist in the backend
       if (response.data) {
-        localStorage.setItem("timeLeft", "4");
+        sessionStorage.setItem("timeLeft", "4");
         navigate("/prepare");
       }
     } catch (error) {
@@ -104,10 +104,10 @@ const Lobby = () => {
 
   const handleLogout = () => {
     // for logging into lobby
-    localStorage.clear();
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("username");
+    sessionStorage.clear();
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("username");
     navigate("/login");
   };
 
