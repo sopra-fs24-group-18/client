@@ -129,7 +129,7 @@ const Profile = () => {
         ) : (
           <p>Loading...</p>
         )}
-        {successMessage&& (
+        {!editing && successMessage && (
           <div style={{ fontSize: "16px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
             {successMessage}
           </div>
@@ -192,7 +192,7 @@ const Profile = () => {
             <div>
               {editing && <Button width="100%" onClick={exit}>Exit</Button>}
               {/* Display message */}
-              {message.text && (
+              {editing && message.text && (
                 <div className="error-message">
                   {message.text}
                 </div>
