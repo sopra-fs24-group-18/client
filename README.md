@@ -136,7 +136,7 @@ Although our project primarily focuses on the core gameplay experience, there's 
 <a name="authorsandacknowledgment"></a>
 ### Contributors
 
-- **Bingjie Xue** - [Github](https://github.com/binxxxxx)
+- **Bingjie Xue** - [Github](https://github.com/binxxxxx)   && [Github](https://github.com/Xuexue1111)
 - **Yanyang Gong** - [Github](https://github.com/YanYang-G0001)
 - **Yunfan Zhou** - [Github](https://github.com/saluttolove)
 - **Lu Li** - [Github](https://github.com/luliuzh)
