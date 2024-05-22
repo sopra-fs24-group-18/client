@@ -65,87 +65,95 @@ To be details, the tools are as follows:
 After 3 rounds, the player come to the rank page. Here they can see the rank of game.
 
 
-## Illustrations🖼️
+## Illustrations 🖼️
+
 ### 1. Instruction
 ![Instruction](/public/instruction.png)
 
-A brief guide on how to play this game.
+Once users open the application, the first page will display a brief guide on how to play the game. 
+After clicking the "Got It" button, the page will transition to the main page.
 
-### 2. Main page
-![Main page](/public/mainpage.png)
+### 2. Main Page
+![Main Page](/public/mainpage.png)
 
-The page that users can choose login or register.
+On the main page, users can choose to log in or register.
 
-### 3. Login page
-![Login page](/public/loginpage.png)
+### 3. Login Page
+![Login Page](/public/loginpage.png)
 
-Where users can enter their username and password to access their accounts.
+Here, users can enter their username and password to access their accounts. 
+After logging in, the page will redirect to the lobby page.
 
-### 4. Register page
-![Register page](/public/registerpage.png)
+### 4. Register Page
+![Register Page](/public/registerpage.png)
 
-Allows new users to create an account for accessing the application.
+This page allows new users to create an account for accessing the application. 
+After successful registration, it will automatically log in and navigate to the lobby page.
 
 ### 5. Lobby
 ![Lobby](/public/lobby.png)
 
-A page where users can navigate to their profile, create new game room or join a active room.
+A page where users can navigate to their profile, create a new game room, or join an active room.
 
 ### 6. Profile
 ![Profile](/public/profile.png)
 
-Where users can view and edit their username and password.
+Here, users can view and edit their username and password.
 
-### 7. Create a room
-![Create a room](/public/roomcreation.png)
+### 7. Create a Room
+![Create a Room](/public/roomcreation.png)
 
-A page for users to set up a new game room. The users need to fill out all blanks, including game mode, player amount and room name.
+A page for users to set up a new game room. Users need to fill out all fields, including game mode, player amount, and room name. 
+After creating a room, the page will proceed to the preparation page.
 
-### 8. Join a room
-![Join a room](/public/joinroom.png)
+### 8. Join a Room
+![Join a Room](/public/joinroom.png)
 
-Allows users to enter a game room by providing the correct room code.
+This page allows users to enter a game room by providing the correct room code. 
+If the entry is successful, the page will proceed to the preparation page.
 
-### 9 . Prepare page
-![Prepare page](/public/prepare.png)
+### 9. Preparation Page
+![Preparation Page](/public/prepare.png)
 
 After players create or join a room, they will wait on this page for all participants to enter the game room. 
-The right corner of the page displays the players who have already entered the game room.
+If all participants have joined, the page will navigate to the respective game room page according to the selected game mode. The right corner of the page displays the players who have already entered the game room.
 
 ### 10. Guessing Mode
 ![Guessing Mode](/public/guessingmode.png)
 
-A game mode where players need to guess one item's price in 30 seconds.
-The top of the page displays the remaining time, the current rounds, and the score of the current player, respectively.
-In the middle, there is a picture of object to be guessed.
-Below, the section shows all the players in the current room, the tools that the current player has purchased and used, and the room number.
-The player can exit the room at any time using the exit button."
+A game mode where players need to guess the price of an item within 30 seconds. 
+The top of the page displays the remaining time, the current round, and the score of the current player, respectively. 
+In the middle, there is a picture of the object to be guessed. 
+Below, the section shows all the players in the current room, the tools that the current player has purchased and used, and the room number. 
+Players can exit the room at any time using the exit button. Once the player clicks the confirm button, the page will transition to the waiting page.
 
 ### 11. Budget Mode
 ![Budget Mode](/public/budgetmode.png)
 
-A game mode where players need to select the group of items that matches the given budget from 6 items.
-Same as budget Mode,the top of the page displays the remaining time, the current rounds, and the score of the current player, respectively.
-In the middle, there are 6 pictures can be selected.
+A game mode where players need to select a group of items that matches the given budget from six items. 
+The layout is similar to Guessing Mode: the top of the page displays the remaining time, the current round, and the score of the current player, respectively. 
+In the middle, six pictures can be selected. Players can exit the room at any time using the exit button. Once the player clicks the confirm button, the page will transition to the waiting page.
 
-### 12. Shop
-![Shop](/public/shop.png)
-
-A page where players can purchase game tools.
-After clicked the buy button, the tool will be purchased and automatically used in next round.
-Only before second and before third round can buy the tools.
-
-### 13. Waiting page
-
+### 12. Waiting Page
 ![Waiting Page](/public/waiting.png)
 
-After players click the confirm button on the game page, they will wait on this page for other players to submit their answers.
-After all players have submitted their answers, it will show the points the current player earned and the correct answer.
+After players click the confirm button during the game, they will wait on this page for other players to submit their answers. 
+After all players have submitted their answers, it will display the points the current player earned and the correct answer. 
+In the first and second rounds, when the 5-second countdown finishes, the page will go to the shop page. Once the 3-round game finishes, it will proceed to the final rank page.
+
+### 13. Shop
+![Shop](/public/shop.png)
+
+A page where players can purchase game tools. 
+After clicking the buy button, the tool will be purchased and automatically used in the next round. 
+When the 15-second countdown finishes, the page will return to the game room.
 
 ### 14. Rank
 ![Rank](/public/rank.png)
 
-Displays players rankings and scores comparing their performance against others.
+Displays players' rankings and scores. 
+Players can use the exit button to return to the profile page.
+
 
 
 ## Launch & Deployment :technologist:
