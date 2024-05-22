@@ -4,10 +4,8 @@ import { useNavigate} from "react-router-dom";
 
 const Mainpage= () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    // Check if it's the user's first visit
+  useEffect(() => { // check whether first time open the app
     if (!sessionStorage.getItem("firstVisit")) {
-      // Set 'firstVisit' in sessionStorage and redirect to instruction page after 1 second
       sessionStorage.setItem("firstVisit", "true");
       const timer = setTimeout(() => {
         navigate("/instruction");
@@ -16,6 +14,7 @@ const Mainpage= () => {
       return () => clearTimeout(timer);
     }
   }, [navigate]);
+
 
   const navigateToLogin = () => {
     navigate("/login");
@@ -41,6 +40,7 @@ const Mainpage= () => {
       <button
         onClick={navigateToInstruction}
         className="Instruction-button"
+        title="Help"
       ></button>
     </div>
   );
