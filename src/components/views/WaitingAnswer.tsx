@@ -110,7 +110,6 @@ const WaitingAnswer = () => {
     try {
       const requestBody = {roomId, userId};
       await api.post(`/rooms/${roomId}/${userId}/exit`, requestBody);
-      sessionStorage.clear();
       // for game room
       sessionStorage.removeItem("playerNames");
       sessionStorage.removeItem("questionId");
@@ -152,36 +151,62 @@ const WaitingAnswer = () => {
         all players to submit their answers...</h2>)}
       {(sessionStorage.getItem("showAlert")==="true") && (
         <div id="wrap">
-          {message !== "" &&(
+          {message !== "" && (
             <div className="txt">You did not select any images </div>)}
 
           {parseInt(sessionStorage.getItem("bonus")) < 0 && (
-            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}> {sessionStorage.getItem("bonus")} points</div>
+            <div className="txt"
+              style={{ fontSize: "30px", color: "#FFFFFF" }}> {sessionStorage.getItem("bonus")} points</div>
           )}
           {parseInt(sessionStorage.getItem("bonus")) >= 0 &&
-            <div className="txt" style={{ fontSize: "30px", color: "#FFFFFF" }}>+ {parseInt(sessionStorage.getItem("myScore")) + parseInt(sessionStorage.getItem("bonus"))} points</div>
+            <div className="txt" style={{
+              fontSize: "30px",
+              color: "#FFFFFF",
+            }}>+ {parseInt(sessionStorage.getItem("myScore")) + parseInt(sessionStorage.getItem("bonus"))} points</div>
           }
           {parseInt(sessionStorage.getItem("bonus")) < 0 && (
-            <div className="txt" style={{ fontSize: "16px", color: "#FFFFFF" , fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>
+            <div className="txt"
+              style={{ fontSize: "20px", color: "#FFFFFF", fontFamily: "Arial", fontWeight: "bold" }}>
               You took a gamble but lose.
             </div>
           )}
 
           {parseInt(sessionStorage.getItem("bonus")) >= 0 &&
-            <div className="txt" style={{ fontSize: "18px", color: "#FFFFFF", fontFamily: "Microsoft YaHei", fontWeight: "bold" }}>(including bonus: {sessionStorage.getItem("bonus")} points)</div>
+            <div className="txt"
+              style={{ fontSize: "22px", color: "#FFFFFF", fontFamily: "Arial", fontWeight: "bold" }}> Including
+              bonus: {sessionStorage.getItem("bonus")} points </div>
           }
 
-          <div className="ans" style={{ fontSize: "16px", marginTop: "50px", textAlign: "center" , color: "#FFFFFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>
+          <hr style={{
+            marginTop: "50px",
+            height: "3px",
+            backgroundColor: "#ccc",
+            border: "none",
+            width: "100%",
+          }} />
+          <div className="ans" style={{
+            fontSize: "22px",
+            marginTop: "50px",
+            marginBottom: "20px",
+            textAlign: "center",
+            color: "#97ABFF",
+            fontFamily: "Arial",
+            fontWeight: "bold",
+          }}>
             {gameMode === "GUESSING" ? "The real price is: " : "The total price you selected is: "} {sessionStorage.getItem("realPrice")}
           </div>
-          <div className="tip" style={{ fontSize: "10px" , color: "#97ABFF", fontFamily: "Microsoft YaHei", fontWeight: "bold"}}>This round ends after <span id="time">{countdown}</span>s
+          <div className="tip"
+            style={{ fontSize: "18px", marginTop: "50px", color: "#97ABFF", fontWeight: "bold" }}>This round ends
+            after <span id="time">{countdown}</span>s
           </div>
         </div>
       )}
 
       <div className="exit_button-container"
         width="100%"
-        onClick={() => {leaveRoom();}}
+        onClick={() => {
+          leaveRoom();
+        }}
       >
         Exit
       </div>

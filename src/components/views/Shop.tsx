@@ -168,13 +168,13 @@ const Purchase = () => {
   return (
     <div className="background-container">
       {(sessionStorage.getItem("showAlert_shop") === "true") && (<BaseContainer>
-        <div style={{ marginTop: "80px",marginBottom: "-40px", fontSize: "22px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center" }}>
+        <div style={{ marginTop: "80px",marginBottom: "-40px", fontSize: "22px", fontFamily: "\"Arial\", sans-serif", textAlign: "center" }}>
           Tools are automatically used immediately after purchase.
         </div>
         <div className="shop container">
           {/* Display message */}
           {message.text && (
-            <div style={{ fontSize: "20px", fontFamily: "\"Microsoft YaHei\", sans-serif", textAlign: "center" }}>
+            <div style={{ fontSize: "20px", fontFamily: "\"Arial\", sans-serif", textAlign: "center" }}>
               {/*<div className={`message-container ${message.type}`}>*/}
               {message.text}
             </div>
@@ -192,7 +192,7 @@ const Purchase = () => {
             </div>
 
             {/* Get Hints */}
-            <div style={{ marginTop: "26px", textAlign: "left", fontSize: "15px" }}>
+            <div style={{ marginTop: "40px", textAlign: "left", fontSize: "15px" }}>
                 Hints: 30 Points
             </div>
             <div className="shop button-container"
