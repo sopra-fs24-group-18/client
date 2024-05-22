@@ -17,7 +17,6 @@ const Mainpage= () => {
     }
   }, [navigate]);
 
-
   const navigateToLogin = () => {
     navigate("/login");
   };
@@ -42,7 +41,6 @@ const Mainpage= () => {
       <button
         onClick={navigateToInstruction}
         className="Instruction-button"
-        title="Help"
       ></button>
     </div>
   );
