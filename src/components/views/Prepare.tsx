@@ -62,7 +62,7 @@ const Prepare = () => {
 
       if (timeLeft === 0) {
         clearTimeout(timer);
-        sessionStorage.setItem("timeLeft", "12");
+        sessionStorage.setItem("timeLeft", "32");
         if (gameMode === "GUESSING"){
           navigate(`/rooms/${roomCode}/${userId}/guessing`);}
         else{
@@ -74,6 +74,8 @@ const Prepare = () => {
   }, [isReady, timeLeft]);
 
   const [rankData, setRankData] = useState([]);
+  const [prevIsReady, setPrevIsReady] = useState(isReady);
+
   useEffect(() => {
     const fetchPoints = async () => {
       try {
@@ -83,11 +85,18 @@ const Prepare = () => {
         console.error("Error fetching points", error);
       }
     };
-    // if not ready
-    if (isReady === "false") {
-      setTimeout(fetchPoints,1000)
+
+    // if ready change
+    if (isReady !== prevIsReady) {
+      fetchPoints();
+      setPrevIsReady(isReady);
+    } else {
+      // if not ready
+      const intervalId = setInterval(fetchPoints, 1000);
+
+      return () => clearInterval(intervalId);
     }
-  }, [isReady]);
+  }, [isReady, prevIsReady]);
 
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
