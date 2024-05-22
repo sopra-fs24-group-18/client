@@ -62,11 +62,11 @@ FormField_2.propTypes = {
 
 const FormField = (props) => {
   return (
-    <div className="login field">
-      <label className="login login-label">{props.label}</label>
+    <div className="register field">
+      <label className="register register-label">{props.label}</label>
       <input
-        className="login input"
-        placeholder="enter here.."
+        className="register input"
+        placeholder={props.placeholder}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
         type={props.type} // Set the input type dynamically
@@ -80,6 +80,7 @@ FormField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   type: PropTypes.string, // Add a prop for input type
+  placeholder: PropTypes.string,
 };
 
 const Register = () => {
@@ -149,23 +150,26 @@ const Register = () => {
             <FormField
               label="Username"
               value={username}
+              placeholder ="Username should be 3-8 characters without space"
               onChange={(un: string) => setUsername(un)}
             />
             <FormField
               label="Password"
               type="password"
               value={password}
+              placeholder="Password should be 3-8 characters without space"
               onChange={(p) => setPassword(p)}
             />
             <FormField
               label="Repeat Password"
               type="password"
               value={repeatPassword}
+              placeholder="Please confirm the password"
               onChange={(rp) => setRepeatPassword(rp)}
             />
-            <div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
+            {/*<div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
               Username & Password: 3-8 characters without space
-            </div>
+            </div>*/}
             <div className="register button-container" style={{display: "flex",justifyContent: "space-between"}} >
               {/*<div className="register button-container">*/}
               <Button

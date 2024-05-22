@@ -51,6 +51,10 @@
     margin-bottom: 20px;
     background: transparentize(white, 0.85);
     color: $textColor;
+    &::placeholder {
+      font-size: 15px;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
   }
   &.register-label {
     color: $textColor;
