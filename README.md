@@ -139,7 +139,8 @@ Only before second and before third round can buy the tools.
 
 ![Waiting Page](/public/waiting.png)
 
-After players clicked confirm button during game page, they will wait for other players submit their answer on this page.
+After players click the confirm button on the game page, they will wait on this page for other players to submit their answers.
+After all players have submitted their answers, it will show the points the current player earned and the correct answer.
 
 ### 14. Rank
 ![Rank](/public/rank.png)
