@@ -64,6 +64,89 @@ To be details, the tools are as follows:
 - [Game Rank page](https://github.com/sopra-fs24-group-18/sopra-fs24-group-18-client/blob/main/src/components/views/Rank.tsx)
 After 3 rounds, the player come to the rank page. Here they can see the rank of game.
 
+
+## Illustrations🖼️
+### 1. Instruction
+![Instruction](/public/instruction.png)
+
+A brief guide on how to play this game.
+
+### 2. Main page
+![Main page](/public/mainpage.png)
+
+The page that users can choose login or register.
+
+### 3. Login page
+![Login page](/public/loginpage.png)
+
+Where users can enter their username and password to access their accounts.
+
+### 4. Register page
+![Register page](/public/registerpage.png)
+
+Allows new users to create an account for accessing the application.
+
+### 5. Lobby
+![Lobby](/public/lobby.png)
+
+A page where users can navigate to their profile, create new game room or join a active room.
+
+### 6. Profile
+![Profile](/public/profile.png)
+
+Where users can view and edit their username and password.
+
+### 7. Create a room
+![Create a room](/public/roomcreation.png)
+
+A page for users to set up a new game room. The users need to fill out all blanks, including game mode, player amount and room name.
+
+### 8. Join a room
+![Join a room](/public/joinroom.png)
+
+Allows users to enter a game room by providing the correct room code.
+
+### 9 . Prepare page
+![Prepare page](/public/prepare.png)
+
+After players create or join a room, they will wait on this page for all participants to enter the game room. 
+The right corner of the page displays the players who have already entered the game room.
+
+### 10. Guessing Mode
+![Guessing Mode](/public/guessingmode.png)
+
+A game mode where players need to guess one item's price in 30 seconds.
+The top of the page displays the remaining time, the current rounds, and the score of the current player, respectively.
+In the middle, there is a picture of object to be guessed.
+Below, the section shows all the players in the current room, the tools that the current player has purchased and used, and the room number.
+The player can exit the room at any time using the exit button."
+
+### 11. Budget Mode
+![Budget Mode](/public/budgetmode.png)
+
+A game mode where players need to select the group of items that matches the given budget from 6 items.
+Same as budget Mode,the top of the page displays the remaining time, the current rounds, and the score of the current player, respectively.
+In the middle, there are 6 pictures can be selected.
+
+### 12. Shop
+![Shop](/public/shop.png)
+
+A page where players can purchase game tools.
+After clicked the buy button, the tool will be purchased and automatically used in next round.
+Only before second and before third round can buy the tools.
+
+### 13. Waiting page
+
+![Waiting Page](/public/waiting.png)
+
+After players clicked confirm button during game page, they will wait for other players submit their answer on this page.
+
+### 14. Rank
+![Rank](/public/rank.png)
+
+Displays players rankings and scores comparing their performance against others.
+
+
 ## Launch & Deployment :technologist:
 <a name="launchanddeployment"></a>
 ### 1. Prerequisites and Installation
@@ -119,6 +202,7 @@ The Google Cloud Projects are as following:
 [Client Project](https://console.cloud.google.com/appengine/services?serviceId=default&project=sopra-fs24-group-18-client)
 
 To join the projects, please contact lu.li@uzh.ch.
+
 
 ## Roadmap :bulb:
 <a name="roadmap"></a>
