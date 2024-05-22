@@ -57,10 +57,10 @@ const GameRoom = () => {
       console.log("check:", imageUrl, Min, Max, oriMax, oriMin);
     } catch (error) {
       console.error("Error fetching image URL:", error);
-      if (error.response && error.response.status === 404 && retryCount < 2) {
+      if (error.response && error.response.status === 404 && retryCount < 20) {
         console.log(`Retry fetching image URL due to 404 error, retry count: ${retryCount + 1}`);
         setTimeout(() => fetchImageUrl(roomId, roundNumber, retryCount + 1), 1000); // Retry after 1 second
-      } else if (retryCount >= 2) {
+      } else if (retryCount >= 20) {
         console.error("Max retry limit reached, not retrying further.");
       }
     }
@@ -89,14 +89,6 @@ const GameRoom = () => {
     const min = Min;
     const percentage = ((value - min) / (max - min)) * 100;
     const newPosition = percentage * (slider.offsetWidth - 16) / 100;//-16 or -8
-    /**
-         setLabelStyle({
-         position: "absolute",
-         left: `${newPosition}px`,
-         transform: "translateX(-50%)",
-         marginTop: "-25px",
-         marginLeft:"450px"
-         });*/
   };
 
 

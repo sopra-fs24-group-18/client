@@ -47,10 +47,10 @@ const Purchase = () => {
     if (timeLeft === 0) {
       clearTimeout(timer);
       if (gameMode === "BUDGET") {
-        sessionStorage.setItem("timeLeft", "22");
+        sessionStorage.setItem("timeLeft", "32");
         navigate(`/rooms/${roomCode}/${userId}/budget`);
       } else {
-        sessionStorage.setItem("timeLeft", "22");
+        sessionStorage.setItem("timeLeft", "32");
         navigate(`/rooms/${roomCode}/${userId}/guessing`);
       }
 

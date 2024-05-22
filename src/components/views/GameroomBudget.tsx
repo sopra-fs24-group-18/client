@@ -52,10 +52,10 @@ const GameRoomBudget = () => {
       console.log("total price:", totalPrice);
     } catch (error) {
       console.error("Error fetching image URLs:", error);
-      if (error.response && error.response.status === 404 && retryCount < 2) {
+      if (error.response && error.response.status === 404 && retryCount < 20) {
         console.log(`Retry fetching image URL due to 404 error, retry count: ${retryCount + 1}`);
         setTimeout(() => fetchImageUrls(roomId, roundNumber, retryCount + 1), 1000);
-      } else if (retryCount >= 2) {
+      } else if (retryCount >= 20) {
         console.error("Max retry limit reached, not retrying further.");
       }
     }

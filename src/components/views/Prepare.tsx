@@ -62,7 +62,7 @@ const Prepare = () => {
 
       if (timeLeft === 0) {
         clearTimeout(timer);
-        sessionStorage.setItem("timeLeft", "22");
+        sessionStorage.setItem("timeLeft", "32");
         if (gameMode === "GUESSING"){
           navigate(`/rooms/${roomCode}/${userId}/guessing`);}
         else{
@@ -83,7 +83,10 @@ const Prepare = () => {
         console.error("Error fetching points", error);
       }
     };
-    fetchPoints();
+    // if not ready
+    if (isReady === "false") {
+      setTimeout(fetchPoints,1000)
+    }
   }, [isReady]);
 
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);

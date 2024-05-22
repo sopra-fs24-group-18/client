@@ -92,7 +92,7 @@ const WaitingAnswer = () => {
         } else {
           roundNumber += 1;
           sessionStorage.setItem("roundNumber", String(roundNumber));
-          sessionStorage.setItem("timeLeft", "12");
+          sessionStorage.setItem("timeLeft", "17");
           sessionStorage.setItem("isHintDisabled", "false");
           sessionStorage.setItem("isBlurDisabled", "false");
           sessionStorage.setItem("isDefenseDisabled", "false");
