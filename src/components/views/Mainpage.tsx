@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "styles/views/Mainpage.scss";
 import { useNavigate} from "react-router-dom";
 
 const Mainpage= () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    // Check if it's the user's first visit
+    if (!sessionStorage.getItem("firstVisit")) {
+      // Set 'firstVisit' in sessionStorage and redirect to instruction page after 1 second
+      sessionStorage.setItem("firstVisit", "true");
+      const timer = setTimeout(() => {
+        navigate("/instruction");
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [navigate]);
+
+
   const navigateToLogin = () => {
     navigate("/login");
   };
@@ -27,7 +41,9 @@ const Mainpage= () => {
       </div>
       <button
         onClick={navigateToInstruction}
-        className="Instruction-button"></button>
+        className="Instruction-button"
+        title="Help"
+      ></button>
     </div>
   );
 };
