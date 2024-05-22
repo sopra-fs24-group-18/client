@@ -113,7 +113,7 @@ This page allows users to enter a game room by providing the correct room code.
 If the entry is successful, the page will proceed to the preparation page.
 
 ### 9. Preparation Page
-![Preparation Page](/public/prepare.png)
+![Preparation Page](/public/prepare1.png)
 
 After players create or join a room, they will wait on this page for all participants to enter the game room. 
 If all participants have joined, the page will navigate to the respective game room page according to the selected game mode. 
