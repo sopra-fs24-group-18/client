@@ -45,12 +45,12 @@ const WaitingAnswer = () => {
           }
 
         }
-
-        if (response.data) {
+        sessionStorage.setItem("isReady_answer", "true");
+        if (response !== null) {
           //clearInterval(interval);
           console.log("All players have answered:", response.data);
           setIsReady_answer(true);
-          sessionStorage.setItem("isReady_answer", "true");
+
           sessionStorage.setItem("isReady_answer_timer", "true");
           console.log("Success:", response.data);
           sessionStorage.setItem("myScore", response.data.point.toString());
@@ -58,20 +58,18 @@ const WaitingAnswer = () => {
           sessionStorage.setItem("showAlert", "true");
           sessionStorage.setItem("bonus", response.data.bonus.toString());
           setShowAlert(true);
-
-        } else {
-          setTimeout(fetchScore, 2000);
         }
+        else{setTimeout(fetchScore,1000);}
       } catch (error) {
         console.error("Error receiving answers:", error);
       }
     };
 
     if (sessionStorage.getItem("isReady_answer") === "false"){
-      fetchScore();
+      setTimeout(fetchScore,1000);
     }
 
-  }, []);
+  }, [userAnswer]);
 
 
   useEffect(() => {

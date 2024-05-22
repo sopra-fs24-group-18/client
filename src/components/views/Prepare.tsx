@@ -62,7 +62,7 @@ const Prepare = () => {
 
       if (timeLeft === 0) {
         clearTimeout(timer);
-        sessionStorage.setItem("timeLeft", "32");
+        sessionStorage.setItem("timeLeft", "12");
         if (gameMode === "GUESSING"){
           navigate(`/rooms/${roomCode}/${userId}/guessing`);}
         else{
