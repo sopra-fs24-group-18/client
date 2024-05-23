@@ -12,9 +12,12 @@ Our game also contains exciting tools designed to enhance the entertainment valu
 
 Join us in this thrilling adventure where fun meets learning! 🎉
 
+❣️ For the **server-side introduction**, please check the [Server README](https://github.com/sopra-fs24-group-18/sopra-fs24-group-18-server/blob/main/README.md)
+
 ## Contents 📂
 - [Technologies](#technologies)
 - [High-level Components](#high-levelcomponents)
+- [Illustrations](#illustrations)
 - [Launch & Deployment](#launchanddeployment)
 - [Roadmap](#roadmap)
 - [Authors and Acknowledgment](#authorsandacknowledgment)
@@ -66,12 +69,13 @@ After 3 rounds, the player come to the rank page. Here they can see the rank of 
 
 
 ## Illustrations 🖼️
+<a name="illustrations"></a>
 
 ### 1. Instruction
 ![Instruction](/public/instruction.png)
 
 Once users open the application, the first page will display a brief guide on how to play the game. 
-After clicking the "Got It" button, the page will transition to the main page.
+After clicking the "Got It" button, the page will transit to the main page.
 
 ### 2. Main Page
 ![Main Page](/public/mainpage.png)
@@ -116,7 +120,7 @@ If the entry is successful, the page will proceed to the preparation page.
 ![Preparation Page](/public/prepare.png)
 
 After players create or join a room, they will wait on this page for all participants to enter the game room. 
-If all participants have joined, the page will navigate to the respective game room page according to the selected game mode. The right corner of the page displays the players who have already entered the game room.
+If all participants have joined, the page will navigate to the respective game room page according to the selected game mode. The upper left corner of the page displays the players who have already entered the game room.
 
 ### 10. Guessing Mode
 ![Guessing Mode](/public/guessingmode.png)
@@ -125,14 +129,14 @@ A game mode where players need to guess the price of an item within 30 seconds.
 The top of the page displays the remaining time, the current round, and the score of the current player, respectively. 
 In the middle, there is a picture of the object to be guessed. 
 Below, the section shows all the players in the current room, the tools that the current player has purchased and used, and the room number. 
-Players can exit the room at any time using the exit button. Once the player clicks the confirm button, the page will transition to the waiting page.
+Players can exit the room at any time using the exit button. Once the player clicks the confirm button, the page will transit to the waiting page.
 
 ### 11. Budget Mode
 ![Budget Mode](/public/budgetmode.png)
 
 A game mode where players need to select a group of items that matches the given budget from six items. 
 The layout is similar to Guessing Mode: the top of the page displays the remaining time, the current round, and the score of the current player, respectively. 
-In the middle, six pictures can be selected. Players can exit the room at any time using the exit button. Once the player clicks the confirm button, the page will transition to the waiting page.
+In the middle, six pictures can be selected. Players can exit the room at any time using the exit button. Once the player clicks the confirm button, the page will transit to the waiting page.
 
 ### 12. Waiting Page
 ![Waiting Page](/public/waiting.png)
