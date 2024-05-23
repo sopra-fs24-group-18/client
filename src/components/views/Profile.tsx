@@ -142,6 +142,7 @@ const Profile = () => {
               <input
                 type="text"
                 value={newUsername}
+                placeholder= "3-8 characters without space"
                 onChange={(e) => {
                   setNewUsername(e.target.value);
                 }}
@@ -152,13 +153,14 @@ const Profile = () => {
               <input
                 type="password"
                 value={newPassword}
+                placeholder= "3-8 characters without space"
                 onChange={(e) => {
                   setNewPassword(e.target.value);
                 }}
               />
             </div>
             <div className="error-message">
-              3-8 characters without space
+              Change your username or password here.
             </div>
             {errorMessage && (
               <div className="error-message">
