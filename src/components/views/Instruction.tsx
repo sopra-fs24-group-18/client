@@ -9,38 +9,68 @@ const Instruction= () => {
     navigate("/lobby/:userId");
   };
 
-  return (
-    <div className="instruction">
-      <div className="instruction_container">
-        Instruction:<br /><br />
-        After logging into Lobby, you can either set a game room or join a room using room code.<br /><br />
-        We have two game modes:<br /><br />
-        1. Guessing: You will see an image and need to use the slider bar to choose a price and then press on confirm within 20 seconds.<br /><br />
-        2. Budget: You will be given a budget and need to choose a group of images from 6 within 20 seconds.<br /><br />
-        After each round, you will have chances to buy tools with points for the next round. Every player has 100 original points.<br /><br />
-        The winner for each round gets 100 points while others get 70.<br /><br />
-        Remember to choose the closest price and enjoy!<br /><br /><br /><br /><br />
+    return (
+        <div className="instruction">
+            <div className="instruction_container">
+                <div className="instruction_container_content">
+                    <h1>Welcome to the Game! 🎉</h1>
+                    <p>Ready to dive into the fun? Here&apos;s how to play:</p>
+
+                    <h2>Getting Started 🏁</h2>
+                    <p>
+                        After logging into the Lobby, you can either create a game room or join an existing one using a room code.
+                    </p>
+
+                    <h2>Game Modes 🎮</h2>
+                    <p>We have two exciting game modes for you to enjoy:</p>
+                    <ul>
+                        <li>
+                            <strong>Guessing:</strong> You&apos;ll see an image and need to use the slider bar to choose a price. Hit confirm within 20 seconds!
+                        </li>
+                        <li>
+                            <strong>Budget:</strong> You&apos;ll get a budget and need to pick a set of images from six options within 20 seconds.
+                        </li>
+                    </ul>
+
+                    <h2>Power Up with Tools 🛠️</h2>
+                    <p>After each round, you can use your points to buy tools for the next round. <br/>
+                        Everyone starts with 100 points. Here’s what you can get:</p>
+                    <ul>
+                        <li><strong>Hint:</strong> Narrows down the price range in Guessing mode or tells you how many items to choose in Budget mode. 💡</li>
+                        <li><strong>Blur:</strong> Blurs the images of other players. 😵‍💫</li>
+                        <li><strong>Defense:</strong> Prevents your images from being blurred. 🛡️</li>
+                        <li><strong>Bonus:</strong> Earn an extra 60 points if you win the next round. 🎁</li>
+                        <li><strong>Gamble:</strong> Double your points if you win the next round, but lose them all if you don&apos;t! 🎲</li>
+                    </ul>
+
+                    <h2>Winning the Game 🏆</h2>
+                    <p>
+                        The winner of each round gets 100 points, while others receive 70 points. Remember, the key to winning is to choose the closest price!
+                    </p>
+                    <p>Good luck and have fun! 😃</p>
+                </div>
+            </div>
+
+
+          <Button
+              style={{
+                  width: "20%",
+                  position: "fixed",
+                  bottom: "10%",
+                  left: "40%",
+              }}
+              onClick={navigateToMainPage}
+              onMouseEnter={(e) => {
+                  e.target.style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                  e.target.style.transform = "scale(1)";
+              }}
+          >
+              Got it!
+          </Button>
+
       </div>
-
-      <Button
-        style={{
-          width: "20%",
-          position: "fixed",
-          bottom: "10%",
-          left: "40%",
-        }}
-        onClick={navigateToMainPage}
-        onMouseEnter={(e) => {
-          e.target.style.transform = "scale(1.05)";
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.transform = "scale(1)";
-        }}
-      >
-      Got it!
-      </Button>
-
-    </div>
 
   );
 };

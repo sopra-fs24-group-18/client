@@ -12,34 +12,37 @@
   flex-direction: column;
 }
 
-
 .instruction_container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%);
   background-image: url('../../assets/instruction_bgr.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  margin-top: 5em;
-  width: 1000px;
-  height: 1000px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px; /* Adjust width as needed */
+  height: 800px; /* Adjust height as needed */
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
   @include center;
   font-size: 1.2em;
   font-family: "Microsoft YaHei";
-  display: flex;
   padding: 50px;
-  color: hsl(0,0,100%);
+  color: hsl(0, 0, 100%);
   font-weight: bold;
+  overflow: hidden;
 }
 
-
-
+.instruction_container_content {
+  width: 100%;
+  margin-bottom: 5em;
+  max-height: 550px;
+  overflow-y: auto; /* Add vertical scroll when content exceeds the container's height */
+  padding: 15px; /* Optional: Add some padding to avoid overlap with the scrollbar */
+  box-sizing: border-box;
+  text-align: center;
+}
 
 
 
