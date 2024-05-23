@@ -69,6 +69,7 @@ After 3 rounds, the player come to the rank page. Here they can see the rank of 
 
 
 ## Illustrations 🖼️
+<a name="illustrations"></a>
 
 ### 1. Instruction
 ![Instruction](/public/instruction.png)
