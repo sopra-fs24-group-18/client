@@ -100,7 +100,7 @@ After successful registration, it will automatically log in and navigate to the 
 A page where users can navigate to their profile, create a new game room, or join an active room.
 
 ### 6. Profile
-![Profile](/public/profile.png)
+![Profile](/public/profile_v2.png)
 ![Profile](/public/profile_edit.png)
 Here, users can view and edit their username and password.
 
