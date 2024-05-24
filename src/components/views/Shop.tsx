@@ -226,7 +226,7 @@ const Purchase = () => {
 
             {/* Disturb Others */}
             <div style={{ marginTop: "10px", textAlign: "left", fontSize: "15px" }}>
-                Blur: 60 Points
+                Blur: 50 Points
             </div>
             <div className="shop button-container"
               style={{ display: "flex", justifyContent: "space-between", margin: 0, padding: 0 }}>
@@ -293,8 +293,8 @@ const Purchase = () => {
               </button>
             </div>
             <div style={{ fontSize: "10px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
-                You can use this tool to gamble. If you win 1st prize next round, your points double; if not, you lose
-                all.
+                You can use this tool to gamble. If you win 1st prize next round, your get an extra 150 points; if not,
+              you get 0 points next round and deduct an additional 100 points.
             </div>
             <br />
           </div>

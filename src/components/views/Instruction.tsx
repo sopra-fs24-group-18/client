@@ -25,10 +25,10 @@ const Instruction= () => {
           <p>We have two exciting game modes for you to enjoy:</p>
           <ul>
             <li>
-              <strong>Guessing:</strong> You&apos;ll see an image and need to use the slider bar to choose a price. Hit confirm within 20 seconds!
+              <strong>Guessing:</strong> You&apos;ll see an image and need to use the slider bar to choose a price. Hit confirm within 30 seconds!
             </li>
             <li>
-              <strong>Budget:</strong> You&apos;ll get a budget and need to pick a set of images from six options within 20 seconds.
+              <strong>Budget:</strong> You&apos;ll get a budget and need to pick a set of images from six options within 30 seconds.
             </li>
           </ul>
 
@@ -40,12 +40,12 @@ const Instruction= () => {
             <li><strong>Blur:</strong> Blurs the images of other players. 😵‍💫</li>
             <li><strong>Defense:</strong> Prevents your images from being blurred. 🛡️</li>
             <li><strong>Bonus:</strong> Earn an extra 60 points if you win the next round. 🎁</li>
-            <li><strong>Gamble:</strong> Double your points if you win the next round, but lose them all if you don&apos;t! 🎲</li>
+            <li><strong>Gamble:</strong> Earn an extra 150 points if you win the next round, but get 0 points and deduct an additional 100 points if you don&apos;t! 🎲</li>
           </ul>
 
           <h2>Winning the Game 🏆</h2>
           <p>
-            The winner of each round gets 100 points, while others receive 70 points. Remember, the key to winning is to choose the closest price!
+            The winner of each round gets 100 points, the 2nd place receives 70 points, and the 3rd place receives 40 points. Remember, the key to winning is to choose the closest price!
           </p>
           <p>Good luck and have fun! 😃</p>
         </div>
