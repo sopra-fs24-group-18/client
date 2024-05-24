@@ -72,24 +72,24 @@ After 3 rounds, the player come to the rank page. Here they can see the rank of 
 <a name="illustrations"></a>
 
 ### 1. Instruction
-![Instruction](/public/instruction.png)
+![Instruction](/public/instruction_v2.png)
 
 Once users open the application, the first page will display a brief guide on how to play the game. 
 After clicking the "Got It" button, the page will transit to the main page.
 
 ### 2. Main Page
-![Main Page](/public/mainpage.png)
+![Main Page](/public/mainpage_v2.png)
 
 On the main page, users can choose to log in or register.
 
 ### 3. Login Page
-![Login Page](/public/loginpage.png)
+![Login Page](/public/loginpage_v2.png)
 
 Here, users can enter their username and password to access their accounts. 
 After logging in, the page will redirect to the lobby page.
 
 ### 4. Register Page
-![Register Page](/public/registerpage.png)
+![Register Page](/public/registerpage_v2.png)
 
 This page allows new users to create an account for accessing the application. 
 After successful registration, it will automatically log in and navigate to the lobby page.
@@ -101,7 +101,7 @@ A page where users can navigate to their profile, create a new game room, or joi
 
 ### 6. Profile
 ![Profile](/public/profile.png)
-
+![Profile](/public/profile_edit.png)
 Here, users can view and edit their username and password.
 
 ### 7. Create a Room
@@ -146,7 +146,7 @@ After all players have submitted their answers, it will display the points the c
 In the first and second rounds, when the 5-second countdown finishes, the page will go to the shop page. Once the 3-round game finishes, it will proceed to the final rank page.
 
 ### 13. Shop
-![Shop](/public/shop.png)
+![Shop](/public/shop_v2.png)
 
 A page where players can purchase game tools. 
 After clicking the buy button, the tool will be purchased and automatically used in the next round. 
