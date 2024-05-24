@@ -102,7 +102,7 @@ A page where users can navigate to their profile, create a new game room, or joi
 ### 6. Profile
 ![Profile](/public/profile_v2.png)
 ![Profile](/public/profile_edit.png)
-Here, users can view and edit their username and password.
+Here, users can view their information, and edit their username and password.
 
 ### 7. Create a Room
 ![Create a Room](/public/roomcreation.png)
