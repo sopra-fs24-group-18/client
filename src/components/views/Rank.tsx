@@ -44,7 +44,7 @@ const Rank = () => {
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
     <div key={index}>
-      username:{item.username} | points: {item.score}
+      username: <span className={"font-style"}>{item.username}</span> | points: {item.score}
     </div>
   ));
 

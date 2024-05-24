@@ -99,9 +99,10 @@ const Prepare = () => {
   }, [isReady, prevIsReady]);
 
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
+
   const pointList = sortedRankData.map((item, index) => (
     <PlayerTable key={index}>
-      {item.username}
+      <span className="username-style">{item.username}</span>
     </PlayerTable>
   ));
 

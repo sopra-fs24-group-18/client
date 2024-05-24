@@ -65,7 +65,7 @@ const FormField = (props) => {
     <div className="login field">
       <label className="login login-label">{props.label}</label>
       <input
-        className="login input"
+        className="register input"
         placeholder="enter here.."
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
@@ -146,10 +146,12 @@ const Register = () => {
             <div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
               <br /><br /><br /><br />
             </div>
+
             <FormField
               label="Username"
               value={username}
               onChange={(un: string) => setUsername(un)}
+              classname = "register-input"
             />
             <FormField
               label="Password"

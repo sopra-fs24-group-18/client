@@ -25,9 +25,14 @@
     margin-top: 5em;
     align-items: center;
     p {
+
       font-size: 16px;
       margin-top: 0.5em;
       margin-bottom: 0.5em;
+    }
+    .arialed { /* New class for applying Arial font */
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
     }
   }
 
@@ -51,6 +56,8 @@
     }
 
     input{
+      font-family: "Arial", sans-serif;
+      font-weight: bold;
       width: 30%;
       padding: 0.5em;
       font-size: 16px;
