@@ -158,7 +158,6 @@ const Register = () => {
               label="Password"
               type="password"
               value={password}
-              type="password"
               placeholder="Password should be 3-8 characters without space"
               onChange={(p) => setPassword(p)}
             />
@@ -166,7 +165,6 @@ const Register = () => {
               label="Repeat Password"
               type="password"
               value={repeatPassword}
-              type="password"
               placeholder="Please confirm the password"
               onChange={(rp) => setRepeatPassword(rp)}
             />
