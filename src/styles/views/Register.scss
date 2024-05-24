@@ -55,11 +55,11 @@
     color: $textColor;
     &::placeholder {
       font-size: 15px;
-      font-family: 'Microsoft YaHei', sans-serif;
+      //font-family: 'Microsoft YaHei', sans-serif;
     }
   }
   &.register-label {
-    font-family: "Microsoft YaHei", sans-serif;
+    //font-family: "Microsoft YaHei", sans-serif;
     color: $textColor;
     margin-bottom: 10px;
     font-weight: 300;
