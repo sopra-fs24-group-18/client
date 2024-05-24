@@ -156,12 +156,14 @@ const Register = () => {
             <FormField
               label="Password"
               value={password}
+              type="password"
               placeholder="Password should be 3-8 characters without space"
               onChange={(p) => setPassword(p)}
             />
             <FormField
               label="Repeat Password"
               value={repeatPassword}
+              type="password"
               placeholder="Please confirm the password"
               onChange={(rp) => setRepeatPassword(rp)}
             />

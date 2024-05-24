@@ -15,6 +15,20 @@ const WaitingAnswer = () => {
   const [isReady_answer, setIsReady_answer] = useState(false);
   const gameMode = sessionStorage.getItem("gameMode");
   const [message, setMessage] = useState("");
+  const [notSingle, setNotSingle] = useState(true);
+  useEffect(() => {
+    const fetchPoints = async () => {
+      try {
+        const response_rank = await api.get(`/rooms/${roomId}/rank`);
+        if (response_rank.data.length === 1){
+          setNotSingle(false);
+        }
+      } catch (error) {
+        console.error("Error fetching points", error);
+      }
+    };
+    fetchPoints();
+  }, []);
 
 
   useEffect(() => {
@@ -147,7 +161,7 @@ const WaitingAnswer = () => {
       <div className="hheader container" style={{ height: "auto", fontSize: "10px" }}>
         <h1 className="hheader title" style={{ color: "#FFFFFF", marginBottom: "30px" }}>The Price<br />Is Right</h1>
       </div>
-      {(sessionStorage.getItem("showAlert")==="false") && (<h2 style={{ fontSize: "16px", color: "#123597",textAlign: "center" }}>Waiting for
+      {notSingle && (sessionStorage.getItem("showAlert")==="false") && (<h2 style={{ fontSize: "16px", color: "#123597",textAlign: "center" }}>Waiting for
         all players to submit their answers...</h2>)}
       {(sessionStorage.getItem("showAlert")==="true") && (
         <div id="wrap">

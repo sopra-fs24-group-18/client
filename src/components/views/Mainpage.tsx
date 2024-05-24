@@ -27,25 +27,25 @@ const Mainpage= () => {
   };
 
   return (
-      <div className="main-page">
-        <h1 className="title">The Price<br/>Is Right</h1>
-        <div className="buttons-container">
-          <button
-              onClick={navigateToRegister}
-              className="button">Enroll
-          </button>
-          <button
-              onClick={navigateToLogin}
-              className="button">Login
-          </button>
-        </div>
+    <div className="main-page">
+      <h1 className="title">The Price<br/>Is Right</h1>
+      <div className="buttons-container">
         <button
-            onClick={navigateToInstruction}
-            className="Instruction-button"
-        >
-          <div className="tooltip">Click here to get instructions of the game!</div>
+          onClick={navigateToRegister}
+          className="button">Enroll
+        </button>
+        <button
+          onClick={navigateToLogin}
+          className="button">Login
         </button>
       </div>
+      <button
+        onClick={navigateToInstruction}
+        className="Instruction-button"
+      >
+        <div className="tooltip">Click here to get instructions of the game!</div>
+      </button>
+    </div>
   );
 };
 

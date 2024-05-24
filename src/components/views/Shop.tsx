@@ -19,6 +19,22 @@ const Purchase = () => {
   const roomCode = sessionStorage.getItem("roomCode");
   const gameMode = sessionStorage.getItem("gameMode");
 
+  useEffect(() => {
+    const fetchPoints = async () => {
+      try {
+        const response_rank = await api.get(`/rooms/${roomId}/rank`);
+        if (response_rank.data.length === 1){
+          sessionStorage.setItem("isBlurDisabled", "true");
+          sessionStorage.setItem("isDefenseDisabled", "true");
+          sessionStorage.setItem("isBonusDisabled", "true");
+          sessionStorage.setItem("isGambleDisabled", "true");
+        }
+      } catch (error) {
+        console.error("Error fetching points", error);
+      }
+    };
+    fetchPoints();
+  }, []);
 
   useEffect(() => {
     async function fetchUser() {
@@ -33,7 +49,6 @@ const Purchase = () => {
 
     fetchUser();
   }, [userId]);
-
 
   // timer
   useEffect(() => {

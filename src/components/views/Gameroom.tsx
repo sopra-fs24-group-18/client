@@ -233,6 +233,7 @@ const GameRoom = () => {
       try {
         const response_rank = await api.get(`/rooms/${roomId}/rank`);
         setRankData(response_rank.data);
+        console.log(response_rank.data);
       } catch (error) {
         console.error("Error fetching points", error);
       }
