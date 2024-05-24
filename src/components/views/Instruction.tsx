@@ -34,9 +34,10 @@ const Instruction= () => {
 
           <h2>Power Up with Tools 🛠️</h2>
           <p>After each round, you can use your points to buy tools for the next round. <br/>
+            If you start the game as the only player, you will only be able to purchase the hint tool.<br/>
             Everyone starts with 100 points. Here’s what you can get:</p>
           <ul>
-            <li><strong>Hint:</strong> Narrows down the price range in Guessing mode or tells you how many items to choose in Budget mode. 💡</li>
+            <li><strong>Hint:</strong> Narrows down the price range in Guessing mode or shows how many items to choose in Budget mode.💡</li>
             <li><strong>Blur:</strong> Blurs the images of other players. 😵‍💫</li>
             <li><strong>Defense:</strong> Prevents your images from being blurred. 🛡️</li>
             <li><strong>Bonus:</strong> Earn an extra 60 points if you win the next round. 🎁</li>
