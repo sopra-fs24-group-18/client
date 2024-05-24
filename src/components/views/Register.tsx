@@ -147,6 +147,7 @@ const Register = () => {
             <div style={{ fontSize: "14px", fontFamily: "\"Microsoft YaHei\", sans-serif" }}>
               <br /><br /><br /><br />
             </div>
+
             <FormField
               label="Username"
               value={username}
@@ -155,6 +156,7 @@ const Register = () => {
             />
             <FormField
               label="Password"
+              type="password"
               value={password}
               type="password"
               placeholder="Password should be 3-8 characters without space"
@@ -162,6 +164,7 @@ const Register = () => {
             />
             <FormField
               label="Repeat Password"
+              type="password"
               value={repeatPassword}
               type="password"
               placeholder="Please confirm the password"

@@ -124,7 +124,7 @@ const Profile = () => {
           <div className="profile-info">
             <p>ID: {userData.id}</p>
             <p>Online Status: {userData.status}</p>
-            <p>Username: {userData.username}</p>
+            <p>Username: <span className="arialed">{userData.username}</span></p>
           </div>
         ) : (
           <p>Loading...</p>
