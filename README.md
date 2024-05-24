@@ -63,8 +63,7 @@ To be details, the tools are as follows:
   - Blur: other players' images of items would be blurred in the next round.
   - Defense: if other players bought blur, using this tool can prevent them from blurring your images of items.
   - Bonus: the player can use this tool to earn an extra 60 points by winning 1st prize in the next round.
-  - Gamble: You can use this tool to gamble.  If you win 1st prize next round, your get an extra 150 points; if not,
-    you get 0 points next round and deduct an additional 100 points.
+  - Gamble: The players can use this tool to gamble.  If the player wins 1st prize in the next round, the player can get an extra 150 points; if not, get 0 points next round and deduct an additional 100 points.
 - [Game Rank page](https://github.com/sopra-fs24-group-18/sopra-fs24-group-18-client/blob/main/src/components/views/Rank.tsx)
 After 3 rounds, the player come to the rank page. Here they can see the rank of game.
 
