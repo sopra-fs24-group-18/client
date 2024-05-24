@@ -148,7 +148,8 @@ In the first and second rounds, when the 5-second countdown finishes, the page w
 ### 13. Shop
 ![Shop](/public/shop_v2.png)
 
-A page where players can purchase game tools. 
+A page where players can purchase game tools.
+When the game is started with only a single player selected, they can only purchase the hint tool.
 After clicking the buy button, the tool will be purchased and automatically used in the next round. 
 When the 15-second countdown finishes, the page will return to the game room.
 
