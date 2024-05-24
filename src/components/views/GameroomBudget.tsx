@@ -243,7 +243,7 @@ const GameRoomBudget = () => {
   const sortedRankData = rankData.sort((a, b) => b.score - a.score);
   const pointList = sortedRankData.map((item, index) => (
     <PlayerTable key={index}>
-      &nbsp;&nbsp;&nbsp;&nbsp;{item.username}: {item.score}
+      &nbsp;&nbsp;&nbsp;&nbsp;<span className="username-style">{item.username}</span>: {item.score}
     </PlayerTable>
   ));
 
